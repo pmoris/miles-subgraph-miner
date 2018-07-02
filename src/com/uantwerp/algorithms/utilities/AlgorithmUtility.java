@@ -43,29 +43,37 @@ public abstract class AlgorithmUtility {
 	}
 	
 	//Support threshold calculation
-	public static int supportTreshold(){
-		int supportcutoffResult=0;
-		if (GraphPathParameters.supportcutoff == 0){
+	public static int supportTreshold() {
+		int supportcutoffResult = 0;
+		if (GraphPathParameters.supportcutoff == 0) {
 			//Estimate number of subgraphs to be tested
-			Double d = Math.pow(GraphPathParameters.maxsize,2)/2 ;
-			double stimate = (Math.pow(     2,(     d.intValue()   )    ) *  Math.pow(GraphPathParameters.graph.possibleLabels.size(),GraphPathParameters.maxsize));
-			double corrpval = GraphPathParameters.pvalue/stimate;
+			Double maxEdges;
+			if (GraphPathParameters.undirected == 1) {
+				maxEdges = ((double)GraphPathParameters.maxsize * ((double)GraphPathParameters.maxsize - 1.0)) / 2.0;
+			} else {
+				maxEdges = (double)GraphPathParameters.maxsize * ((double)GraphPathParameters.maxsize - 1.0);
+			}
+			double estimate = (Math.pow(2, maxEdges)
+					* Math.pow(GraphPathParameters.graph.possibleLabels.size(), GraphPathParameters.maxsize));
+			double corrpval = (double)GraphPathParameters.pvalue / estimate;
 			//Estimate corresponding support
-			for (int i = 1; i <= GraphPathParameters.graph.group.size();i++){
-				double prob = HypergeomDist.getProbability(GraphPathParameters.graph.bgnodes.size() - GraphPathParameters.graph.group.size(), GraphPathParameters.graph.group.size(), i, i);
-				if (prob < corrpval){
+			for (int i = 1; i <= GraphPathParameters.graph.group.size(); i++) {
+				double prob = HypergeomDist.getProbability(
+						GraphPathParameters.graph.bgnodes.size() - GraphPathParameters.graph.group.size(),
+						GraphPathParameters.graph.group.size(), i, i);
+				if (prob < corrpval) {
 					supportcutoffResult = i;
 					break;
 				}
 			}
-			if (supportcutoffResult>0){
+			if (supportcutoffResult > 0) {
 				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper bound Pvalue");
-			}
-			else{
+			} else {
 				supportcutoffResult = GraphPathParameters.graph.group.size();//interestingVertices;
-				System.out.println("Subgraph support set at " + supportcutoffResult + " for number of interesting vertices\n");
+				System.out.println(
+						"Subgraph support set at " + supportcutoffResult + " for number of interesting vertices\n");
 			}
-		}else{
+		} else {
 			return GraphPathParameters.supportcutoff;
 		}
 		return supportcutoffResult;
