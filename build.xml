@@ -1,0 +1,37 @@
+<project name="ua_graphmining">
+	<property name="source.dir" location="src/com/uantwerp/algorithms" />
+	<property name="build.dir" location="build"/>
+	<property name="build.classes.dir" location="${build.dir}/classes"/>
+	<property name="build.jar.dir" location="${build.dir}/jar"/>
+	<property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/>
+	
+	<path id="classpath">
+		<fileset dir="lib" includes="*.jar"/>
+	</path>
+	
+	<target name="compile">
+		<mkdir dir="${build.classes.dir}"/>
+		<javac includeantruntime="false" srcdir="${source.dir}"
+			destdir="${build.classes.dir}" debug="true" includes="**/*.java">
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<mkdir dir="${build.jar.dir}"/>
+		<jar destfile="${build.jar.dir}/subgraphmining.jar" basedir="${build.classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMining"/>
+			</manifest>
+			<zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
+		</jar>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="data"/>
+	</target>
+	
+	<target name="all" depends="clean,jar">
+	</target>
+</project>
