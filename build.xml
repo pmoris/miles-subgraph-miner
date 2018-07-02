@@ -3,11 +3,20 @@
 	<property name="build.dir" location="build"/>
 	<property name="build.classes.dir" location="${build.dir}/classes"/>
 	<property name="build.jar.dir" location="${build.dir}/jar"/>
-	<property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/>
+	<property name="build.subgraphMiner" location="${build.jar.dir}/subgraphMiner.jar"/>
+	<property name="test.dir" location="src/com/uantwerp/tests" />
+	<property name="test.report.dir"  value="${build.dir}/junitreport"/>
 	
 	<path id="classpath">
 		<fileset dir="lib" includes="*.jar"/>
 	</path>
+	
+    <path id="application" location="${build.jar.dir}/subgraphMiner.jar"/>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="data"/>
+	</target>
 	
 	<target name="compile">
 		<mkdir dir="${build.classes.dir}"/>
@@ -19,19 +28,35 @@
 	
 	<target name="jar" depends="compile">
 		<mkdir dir="${build.jar.dir}"/>
-		<jar destfile="${build.jar.dir}/subgraphmining.jar" basedir="${build.classes.dir}">
+		<jar destfile="${build.jar.dir}/subgraphMiner.jar" basedir="${build.classes.dir}">
 			<manifest>
-				<attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMining"/>
+				<attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMiner"/>
 			</manifest>
 			<zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
 		</jar>
 	</target>
-	
-	<target name="clean">
-		<delete dir="${build.dir}"/>
-		<delete dir="data"/>
+
+	<target name="junit" depends="jar">
+		<mkdir dir="${test.report.dir}"/>
+		<junit printsummary="yes">
+			<classpath>
+			    <path refid="classpath"/>
+			    <path refid="application"/>
+			</classpath>
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${test.report.dir}">
+                <fileset dir="${test.dir}" includes="*Test.java"/>
+            </batchtest>
+		</junit>
 	</target>
+
+	<target name="junitreport">
+	        <junitreport todir="${test.report.dir}">
+	            <fileset dir="${test.report.dir}" includes="TEST-*.xml"/>
+	            <report todir="${test.report.dir}"/>
+	        </junitreport>
+	    </target>
 	
-	<target name="all" depends="clean,jar">
+	<target name="all" depends="clean,jar, junit">
 	</target>
 </project>
