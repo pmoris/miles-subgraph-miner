@@ -30,7 +30,7 @@
         <mkdir dir="${build.jar.dir}"/>
         <jar destfile="${build.jar.dir}/subgraphMiner.jar" basedir="${build.classes.dir}">
             <manifest>
-                <attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMiner"/>
+                <attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMining"/>
             </manifest>
             <zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
         </jar>
@@ -57,6 +57,6 @@
             </junitreport>
         </target>
 
-    <target name="all" depends="clean,jar, junit">
+    <target name="all" depends="clean, jar, junit, junitreport">
     </target>
 </project>
