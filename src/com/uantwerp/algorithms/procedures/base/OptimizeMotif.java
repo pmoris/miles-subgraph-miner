@@ -119,13 +119,12 @@ public abstract class OptimizeMotif {
 	public static DFScode<DFSedge> optimizeMotif_und(DFScode<DFSedge> motifs){
 		HashMap<Integer,OptimizeParameter> params = new HashMap<Integer, OptimizeParameter>();
 		HashMap<Integer,HashSet<Integer>> edgeByNode = new HashMap<>();
-		HashMap<Integer,HashSet<Integer>> edgeByTarget = new HashMap<>();
 		HashMap<Integer, String> motifLabel = new HashMap<>();
 		for (int i=0; i < motifs.size(); i++){
 			motifLabel.put(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel());
 			motifLabel.put(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel());
 			edgeByNode=HashFuctions.updateHashHashSet(edgeByNode, motifs.get(i).getSourceId(), motifs.get(i).getTargetId());
-			edgeByTarget=HashFuctions.updateHashHashSet(edgeByTarget, motifs.get(i).getTargetId(),motifs.get(i).getSourceId());
+			edgeByNode=HashFuctions.updateHashHashSet(edgeByNode, motifs.get(i).getTargetId(),motifs.get(i).getSourceId());
 			if (motifs.get(i).getSourceId() == 1){
 				if (motifs.get(i).getTargetId() != 1){
 					AlgorithmUtility.updateParams(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel(), 1, 0, params);
@@ -183,22 +182,13 @@ public abstract class OptimizeMotif {
 				if (edgeByNode.get(1).contains(entry.getKey()))
 					newMotif.add(new DFSedge(1, motifLabel.get(1), transform.get(entry.getKey()), motifLabel.get(entry.getKey()),true));
 			}
-			if (edgeByNode.containsKey(entry.getKey()))
-				if (edgeByNode.get(entry.getKey()).contains(1))
-					newMotif.add(new DFSedge(1, motifLabel.get(1),transform.get(entry.getKey()), motifLabel.get(entry.getKey()),true));
-			if (!edgeByNode.containsKey(entry.getKey()) && !edgeByTarget.containsKey(entry.getKey()))
+			if (!edgeByNode.containsKey(entry.getKey()))
 				continue;
 			if (edgeByNode.containsKey(entry.getKey())){
 				List<Integer> orderEdgeByNode = MapUtil.sortByValueHashSet(edgeByNode.get(entry.getKey()), transform);
 				for (int i = 0; i < orderEdgeByNode.size(); i++)
 					if (transform.get(entry.getKey()).compareTo(transform.get(orderEdgeByNode.get(i))) <= 0)
 						newMotif.add(new DFSedge(transform.get(entry.getKey()), motifLabel.get(entry.getKey()),transform.get(orderEdgeByNode.get(i)),motifLabel.get(orderEdgeByNode.get(i)),true));
-			}
-			if (edgeByTarget.containsKey(entry.getKey())){
-				List<Integer> orderEdgeByTarget = MapUtil.sortByValueHashSet(edgeByTarget.get(entry.getKey()), transform);
-				for (int i = 0; i < orderEdgeByTarget.size(); i++)
-					if (transform.get(entry.getKey()).compareTo(transform.get(orderEdgeByTarget.get(i))) < 0)
-						newMotif.add(new DFSedge(transform.get(entry.getKey()), motifLabel.get(entry.getKey()),transform.get(orderEdgeByTarget.get(i)),motifLabel.get(orderEdgeByTarget.get(i)),true));
 			}
 		}
 		return newMotif;
