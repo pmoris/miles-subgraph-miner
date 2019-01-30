@@ -62,7 +62,7 @@ The following parameters can be selected at the command line:
 * `g` -> Path to the graph file.
 * `l` -> Path to the labels file if available.
 * `p` -> Path to the interesting vertices file. For frequent subgraph mining, this should contain all vertices.
-* `b` -> Path to the background file, a preselected reduced representation of the graph lo search from it.
+* `b` -> Path to the background file, a preselected reduced representation of the graph to search from it.
 * `s` -> Support threshold.
 * `i` -> When present refers to a single label run, otherwise the algorithms run in multiple-label configuration.
 * `u` -> When present set up a undirected configuration, otherwise a directed one.
@@ -93,7 +93,7 @@ java -Xms64m -Xmx4096m -jar ./build/jar/subgraphmining.jar -g ./datasets/pdb/SSM
 * Yeast dataset
 
 ```
-time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar -g ./yeast/yeastract_edges.txt -l ./datasets/yeast/yeast_gocat_mutiple.txt -p ./datasets/yeast/node_duplicate.txt -s 10 -m 4 -a base -o ./yeastS10M4Single.txt -t ./yeastS10M4SingleStats.txt
+time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar -g ./datasets/yeast/yeastract_edges.txt -l ./datasets/yeast/yeast_gocat_mutiple.txt -p ./datasets/yeast/node_duplicate.txt -s 10 -m 4 -a base -o ./yeastS10M4Single.txt -t ./yeastS10M4SingleStats.txt
 ```
 
 * Bacteria dataset
