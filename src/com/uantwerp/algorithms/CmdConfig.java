@@ -31,8 +31,8 @@ public class CmdConfig {
 				String file = FileUtility.readFile(cmd.getOptionValue('b'));
 				GraphPathParameters.pathBgNodes = file;
 			}
-			if(cmd.hasOption('p')){
-				String file = FileUtility.readFile(cmd.getOptionValue('p'));
+			if(cmd.hasOption('i')){
+				String file = FileUtility.readFile(cmd.getOptionValue('i'));
 				GraphPathParameters.pathGroupFile = file;
 			}
 			if(cmd.hasOption('s'))
@@ -43,7 +43,7 @@ public class CmdConfig {
 				GraphPathParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
 			else
 				GraphPathParameters.setDefaultMaxSize();
-			if(cmd.hasOption('i'))
+			if(cmd.hasOption("singlelabel"))
 				GraphPathParameters.singleLabel = 1;
 			else
 				GraphPathParameters.singleLabel = 0;
@@ -51,7 +51,7 @@ public class CmdConfig {
 				GraphPathParameters.undirected = 1;
 			else
 				GraphPathParameters.undirected = 0;
-			if(cmd.hasOption('d'))
+			if(cmd.hasOption('v'))
 				GraphPathParameters.verbose = 1;
 			else
 				GraphPathParameters.verbose = 0;
@@ -59,8 +59,8 @@ public class CmdConfig {
 				GraphPathParameters.nestedpval = 1;
 			else
 				GraphPathParameters.nestedpval = 0;
-			if(cmd.hasOption('v'))
-				GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('v'));
+			if(cmd.hasOption('p'))
+				GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
 			else
 				GraphPathParameters.setDefaultPValue();
 			if(cmd.hasOption('o'))
@@ -74,8 +74,8 @@ public class CmdConfig {
 			/****************************************************************************/
 			//Find a way to make this part dynamical in case of no parameter
 			/****************************************************************************/			
-			if(cmd.hasOption('t'))
-				GraphPathParameters.statistics = cmd.getOptionValue('t');
+			if(cmd.hasOption("statistics"))
+				GraphPathParameters.statistics = cmd.getOptionValue("statistics");
 			else
 				GraphPathParameters.statistics = "";
 
