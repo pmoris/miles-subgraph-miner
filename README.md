@@ -58,21 +58,21 @@ ant all
 
 The following parameters can be selected at the command line:
 
-* `h` -> Help, shows these options.
-* `g` -> Path to the graph file.
-* `l` -> Path to the labels file if available.
-* `p` -> Path to the interesting vertices file. For frequent subgraph mining, this should contain all vertices.
-* `b` -> Path to the background file, a preselected reduced representation of the graph to search from it.
-* `s` -> Support threshold.
-* `i` -> When present refers to a single label run, otherwise the algorithms run in multiple-label configuration.
-* `u` -> When present set up a undirected configuration, otherwise a directed one.
-* `v` -> P-value.
-* `m` -> Maximum number of vertices allowed.
-* `d` -> Verbose.
-* `n` -> Run with a nested p-value configuration.
-* `o` -> Output file location.
-* `t` -> In case memory statistics are necessary.
-* `a` -> The algorithm to use, the options are (base, gspan, fsg)
+* `-h`/`--help` -> Shows these options.
+* `-g`/`--graphs` -> Path to the graph file.
+* `-l`/`--labels` -> Path to the labels file (optional).
+* `-i`/`--interesting` -> Path to the interesting nodes/vertices file. For frequent subgraph mining, this should contain all vertices.
+* `-b`/`--background` -> Path to a background file, a preselected reduced representation of the graph to search from.
+* `-s`/`--support` -> Support threshold.
+* `--singlelabel` -> When present, refers to a single label run, otherwise the algorithms run in multiple-label configuration.
+* `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
+* `-p`/`--pvalue` -> Maximum P-value to  use (default = `0.05`).
+* `-m`/`maxsize` -> Maximum number of vertices allowed.
+* `-v`/`--verbose` -> Verbose option to print more intermediary output.
+* `-n`/`--nestedpvalue` -> Run with a nested p-value configuration.
+* `-o`/`--output` -> Output file location where significant motifs are stored.
+* `-a`/`--algorithm` -> The algorithm to use, the options are: `base`, `gspan` and `fsg`.
+* `--statistics` -> Display additional memory usage statistics.
 
 ## Running the example datasets
 

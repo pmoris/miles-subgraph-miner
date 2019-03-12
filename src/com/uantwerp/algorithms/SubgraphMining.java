@@ -47,20 +47,20 @@ public class SubgraphMining {
 
 		Options options = new Options();
 		options.addOption("h", "help", false, "Print help");
-		options.addOption("g", "graph", true, "path of the graph");
-		options.addOption("l", "labels", true, "path of the labels");
-		options.addOption("p", "groupfile", true, "path of the group file");
-		options.addOption("b", "bgFile", true, "path of the bgfile");
-		options.addOption("s", "support", true, "expected support of the algorithm");
-		options.addOption("i", "singleLabel", false, "Variant where each node has exactly one label and this label must exactly match for the motif");
+		options.addOption("g", "graph", true, "Path to the graph");
+		options.addOption("l", "labels", true, "Path to the labels");
+		options.addOption("i", "interest", true, "Path to nodes of interest (group file)");
+		options.addOption("b", "background", true, "Path to the background nodes (optional)");
+		options.addOption("s", "support", true, "Support threshold");
+		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label and this label must exactly match for the motif");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");			
-		options.addOption("d", "verbose", false, "verbose");	
+		options.addOption("v", "verbose", false, "Verbose option to print more intermediary output");	
 		options.addOption("m", "maxsize", true, "Maximum number of vertixes allowed in the subgraph");
-		options.addOption("v", "pvalue", true, "Maximum pvalue allowed (default 0.05)");
+		options.addOption("p", "pvalue", true, "Maximum p-value allowed (default = 0.05)");
 		options.addOption("n", "nestedpvalue", false, "Variant where the significance of the child motif is based on the parent matches");
-		options.addOption("o", "output", true, "Outputfile to print significant motifs");
-		options.addOption("a", "typeAlgorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"naive\", \"gspan\" and \"apriori\"");
-		options.addOption("t", "statistics", true, "Path for the statistics of memory usage");
+		options.addOption("o", "output", true, "Output file to store the significant motifs");
+		options.addOption("a", "algorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"base\", \"gspan\" and \"apriori\"");
+		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");
 
 		try{			
 //			Launch GUI if no options are passed
