@@ -21,6 +21,8 @@ import java.awt.Font;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -121,12 +123,13 @@ public class SubgraphMiningGUI {
 		JMenuItem mntmAbout = new JMenuItem(new AbstractAction("About") {
 			public void actionPerformed(ActionEvent e) {
 		        // Button pressed logic goes here
-				String url = new String("https://github.com/pmoris/subgraph-miner/blob/master/README.md");
-		    	try {
-                    Desktop.getDesktop().browse(new URI(url));
-		    	} catch (Exception ex) {
+				
+				try {
+					JOptionPane.showMessageDialog(frame, 
+							"SigMap v1.0- Adrem Data Lab - 2019");
+				} catch (Exception ex) {
 		    		ex.printStackTrace();
-		    	}				
+		    	}		
 			}
 		});
 		mnHelp.add(mntmAbout);
