@@ -63,7 +63,7 @@ public class SubgraphMining {
 		try{
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(options, args);			
-			transformComandLine(cmd,options);
+			transformCommandLine(cmd, options);
 			runProcesses();
 		}catch(Exception exp){
 			exp.printStackTrace();
@@ -97,7 +97,7 @@ public class SubgraphMining {
 		}	
 	}
 	
-	private static void transformComandLine(CommandLine cmd, Options options){
+	private static void transformCommandLine(CommandLine cmd, Options options){
 
 		if(cmd.hasOption("h")){
 			printHelp(options);
