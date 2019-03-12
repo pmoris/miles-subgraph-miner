@@ -78,6 +78,7 @@ public class SubgraphMining {
 			exp.printStackTrace();
 			System.err.println(exp.getMessage());
 			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.");
+			CmdConfig.printHelp(options);
 			System.exit(1);
 		}
 	}

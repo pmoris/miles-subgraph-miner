@@ -82,7 +82,7 @@ public class CmdConfig {
 		}
 	}
 	
-	private static void printHelp(Options options){
+	public static void printHelp(Options options){
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp("subgraphmining", options);
 	}
