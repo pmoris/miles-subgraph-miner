@@ -14,6 +14,7 @@ public class CmdConfig {
 
 		if(cmd.hasOption("h")){
 			printHelp(options);
+			System.exit(0);
 		}else{
 			if(!cmd.hasOption("g")){
 				SubGraphMiningException.exceptionNoFile("graph");
