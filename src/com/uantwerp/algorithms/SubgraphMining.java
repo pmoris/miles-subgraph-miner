@@ -64,7 +64,7 @@ public class SubgraphMining {
 
 		try{			
 //			Launch GUI if no options are passed
-			if (args.length == 0) {
+			if (args.length == 1) {
 //				start GUI
 				System.out.println("GUI LAUNCHED");
 			} else {
@@ -79,6 +79,7 @@ public class SubgraphMining {
 			System.err.println(exp.getMessage());
 			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.");
 			CmdConfig.printHelp(options);
+			
 			System.exit(1);
 		}
 	}
