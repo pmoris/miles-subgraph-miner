@@ -47,6 +47,11 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.event.ActionListener;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSplitPane;
+import javax.swing.JToggleButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextPane;
+import javax.swing.JInternalFrame;
 
 public class SubgraphMiningGUI {
 
@@ -55,9 +60,11 @@ public class SubgraphMiningGUI {
 	private JTextField textLabels;
 	private JTextField textInterestingVertices;
 	private JTextField textBackground;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -88,8 +95,8 @@ public class SubgraphMiningGUI {
 	private void initialize() {
 //		Define window size
 		frame = new JFrame();
-		frame.setBounds(100, 100, 758, 640);
-		frame.setMinimumSize(new Dimension(800, 500));
+		frame.setBounds(100, 100, 400, 1000);
+		frame.setMinimumSize(new Dimension(600, 400));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		Define menu bar and panes		
@@ -147,10 +154,10 @@ public class SubgraphMiningGUI {
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {30, 100, 100, 250, 20};
-		gridBagLayout.rowHeights = new int[] {30, 160, 170, 200, 30, 20};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] {30, 50, 123, 100, 250, 50, 20};
+		gridBagLayout.rowHeights = new int[] {30, 331, 0, 185, 0, 68, 0, 100, 0, 200, 0, 30, 20};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 //		First panel of input files
@@ -159,8 +166,8 @@ public class SubgraphMiningGUI {
 		GridBagConstraints gbc_pnlInput = new GridBagConstraints();
 		gbc_pnlInput.gridwidth = 3;
 		gbc_pnlInput.fill = GridBagConstraints.BOTH;
-		gbc_pnlInput.insets = new Insets(0, 0, 5, 0);
-		gbc_pnlInput.gridx = 1;
+		gbc_pnlInput.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlInput.gridx = 2;
 		gbc_pnlInput.gridy = 1;
 		frame.getContentPane().add(pnlInput, gbc_pnlInput);
 		GridBagLayout gbl_pnlInput = new GridBagLayout();
@@ -278,152 +285,250 @@ public class SubgraphMiningGUI {
 		gbc_buttonBackground.gridy = 3;
 		pnlInput.add(buttonBackground, gbc_buttonBackground);
 		
-//		Second panel for options
-		JPanel pnlOptions1 = new JPanel();
-		pnlOptions1.setBorder(new TitledBorder(null, "Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_pnlOptions1 = new GridBagConstraints();
-		gbc_pnlOptions1.gridwidth = 2;
-		gbc_pnlOptions1.fill = GridBagConstraints.BOTH;
-		gbc_pnlOptions1.insets = new Insets(0, 0, 5, 5);
-		gbc_pnlOptions1.gridx = 1;
-		gbc_pnlOptions1.gridy = 2;
-		frame.getContentPane().add(pnlOptions1, gbc_pnlOptions1);
-		GridBagLayout gbl_pnlOptions1 = new GridBagLayout();
-		gbl_pnlOptions1.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlOptions1.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_pnlOptions1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlOptions1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		pnlOptions1.setLayout(gbl_pnlOptions1);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.gridwidth = 3;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 2;
+		gbc_panel_1.gridy = 3;
+		frame.getContentPane().add(panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_1.setLayout(gbl_panel_1);
 		
-		JLabel lblPvalue = new JLabel("Minimum support:");
-		GridBagConstraints gbc_lblPvalue = new GridBagConstraints();
-		gbc_lblPvalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPvalue.anchor = GridBagConstraints.EAST;
-		gbc_lblPvalue.gridx = 0;
-		gbc_lblPvalue.gridy = 0;
-		pnlOptions1.add(lblPvalue, gbc_lblPvalue);
+		JLabel label_1 = new JLabel("Minimum support:");
+		GridBagConstraints gbc_label_1 = new GridBagConstraints();
+		gbc_label_1.anchor = GridBagConstraints.EAST;
+		gbc_label_1.insets = new Insets(0, 0, 5, 5);
+		gbc_label_1.gridx = 0;
+		gbc_label_1.gridy = 0;
+		panel_1.add(label_1, gbc_label_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 0;
+		panel_1.add(textField_1, gbc_textField_1);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
+		gbc_horizontalStrut.gridheight = 4;
+		gbc_horizontalStrut.insets = new Insets(0, 0, 0, 5);
+		gbc_horizontalStrut.gridx = 2;
+		gbc_horizontalStrut.gridy = 0;
+		panel_1.add(horizontalStrut, gbc_horizontalStrut);
+		
+		JRadioButton radioButton = new JRadioButton("Run with single label ");
+		GridBagConstraints gbc_radioButton = new GridBagConstraints();
+		gbc_radioButton.anchor = GridBagConstraints.WEST;
+		gbc_radioButton.insets = new Insets(0, 0, 5, 0);
+		gbc_radioButton.gridx = 3;
+		gbc_radioButton.gridy = 0;
+		panel_1.add(radioButton, gbc_radioButton);
+		
+		JLabel label_2 = new JLabel("p-value:");
+		GridBagConstraints gbc_label_2 = new GridBagConstraints();
+		gbc_label_2.anchor = GridBagConstraints.EAST;
+		gbc_label_2.insets = new Insets(0, 0, 5, 5);
+		gbc_label_2.gridx = 0;
+		gbc_label_2.gridy = 1;
+		panel_1.add(label_2, gbc_label_2);
+		
+		textField_2 = new JTextField("0.05");
+		textField_2.setColumns(10);
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_2.gridx = 1;
+		gbc_textField_2.gridy = 1;
+		panel_1.add(textField_2, gbc_textField_2);
+		
+		JRadioButton radioButton_1 = new JRadioButton("Undirected graph");
+		GridBagConstraints gbc_radioButton_1 = new GridBagConstraints();
+		gbc_radioButton_1.anchor = GridBagConstraints.WEST;
+		gbc_radioButton_1.insets = new Insets(0, 0, 5, 0);
+		gbc_radioButton_1.gridx = 3;
+		gbc_radioButton_1.gridy = 1;
+		panel_1.add(radioButton_1, gbc_radioButton_1);
+		
+		JLabel label_3 = new JLabel("Number of vertices:");
+		GridBagConstraints gbc_label_3 = new GridBagConstraints();
+		gbc_label_3.anchor = GridBagConstraints.EAST;
+		gbc_label_3.insets = new Insets(0, 0, 5, 5);
+		gbc_label_3.gridx = 0;
+		gbc_label_3.gridy = 2;
+		panel_1.add(label_3, gbc_label_3);
 		
 		textField_3 = new JTextField();
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 0;
-		pnlOptions1.add(textField_3, gbc_textField_3);
 		textField_3.setColumns(10);
+		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
+		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_3.gridx = 1;
+		gbc_textField_3.gridy = 2;
+		panel_1.add(textField_3, gbc_textField_3);
 		
-		JLabel lblNewLabel_2 = new JLabel("p-value:");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 1;
-		pnlOptions1.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		JRadioButton radioButton_2 = new JRadioButton("Nested p-value", true);
+		GridBagConstraints gbc_radioButton_2 = new GridBagConstraints();
+		gbc_radioButton_2.anchor = GridBagConstraints.WEST;
+		gbc_radioButton_2.insets = new Insets(0, 0, 5, 0);
+		gbc_radioButton_2.gridx = 3;
+		gbc_radioButton_2.gridy = 2;
+		panel_1.add(radioButton_2, gbc_radioButton_2);
 		
-		textField_4 = new JTextField();
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 1;
-		gbc_textField_4.gridy = 1;
-		pnlOptions1.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
-		
-		JLabel lblNumberOfVertices = new JLabel("Number of vertices:");
-		GridBagConstraints gbc_lblNumberOfVertices = new GridBagConstraints();
-		gbc_lblNumberOfVertices.anchor = GridBagConstraints.EAST;
-		gbc_lblNumberOfVertices.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNumberOfVertices.gridx = 0;
-		gbc_lblNumberOfVertices.gridy = 2;
-		pnlOptions1.add(lblNumberOfVertices, gbc_lblNumberOfVertices);
-		
-		textField_5 = new JTextField();
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 1;
-		gbc_textField_5.gridy = 2;
-		pnlOptions1.add(textField_5, gbc_textField_5);
-		textField_5.setColumns(10);
-		
-		JLabel lblAlgorithm = new JLabel("Algorithm:");
-		GridBagConstraints gbc_lblAlgorithm = new GridBagConstraints();
-		gbc_lblAlgorithm.anchor = GridBagConstraints.EAST;
-		gbc_lblAlgorithm.insets = new Insets(0, 0, 0, 5);
-		gbc_lblAlgorithm.gridx = 0;
-		gbc_lblAlgorithm.gridy = 3;
-		pnlOptions1.add(lblAlgorithm, gbc_lblAlgorithm);
+		JLabel label_4 = new JLabel("Algorithm:");
+		GridBagConstraints gbc_label_4 = new GridBagConstraints();
+		gbc_label_4.anchor = GridBagConstraints.EAST;
+		gbc_label_4.insets = new Insets(0, 0, 0, 5);
+		gbc_label_4.gridx = 0;
+		gbc_label_4.gridy = 3;
+		panel_1.add(label_4, gbc_label_4);
 		
 		JComboBox comboBox = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 3;
-		pnlOptions1.add(comboBox, gbc_comboBox);
+		panel_1.add(comboBox, gbc_comboBox);
 		
-		JPanel pnlOptions2 = new JPanel();
-		pnlOptions2.setBorder(new TitledBorder(null, "Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_pnlOptions2 = new GridBagConstraints();
-		gbc_pnlOptions2.insets = new Insets(0, 0, 5, 0);
-		gbc_pnlOptions2.fill = GridBagConstraints.BOTH;
-		gbc_pnlOptions2.gridx = 3;
-		gbc_pnlOptions2.gridy = 2;
-		frame.getContentPane().add(pnlOptions2, gbc_pnlOptions2);
-		GridBagLayout gbl_pnlOptions2 = new GridBagLayout();
-		gbl_pnlOptions2.columnWidths = new int[]{0, 0};
-		gbl_pnlOptions2.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_pnlOptions2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_pnlOptions2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		pnlOptions2.setLayout(gbl_pnlOptions2);
+		JPanel outputPanel = new JPanel();
+		outputPanel.setBorder(new TitledBorder(null, "Output files", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_outputPanel = new GridBagConstraints();
+		gbc_outputPanel.gridwidth = 3;
+		gbc_outputPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_outputPanel.fill = GridBagConstraints.BOTH;
+		gbc_outputPanel.gridx = 2;
+		gbc_outputPanel.gridy = 5;
+		frame.getContentPane().add(outputPanel, gbc_outputPanel);
+		GridBagLayout gbl_outputPanel = new GridBagLayout();
+		gbl_outputPanel.columnWidths = new int[]{80, 400, 0, 0};
+		gbl_outputPanel.rowHeights = new int[]{0, 0};
+		gbl_outputPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_outputPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		outputPanel.setLayout(gbl_outputPanel);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Run with single label ");
-		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnNewRadioButton.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnNewRadioButton.gridx = 0;
-		gbc_rdbtnNewRadioButton.gridy = 0;
-		pnlOptions2.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
+		JLabel label_8 = new JLabel("Savepath:");
+		label_8.setToolTipText("Location where output files will be stored.");
+		GridBagConstraints gbc_label_8 = new GridBagConstraints();
+		gbc_label_8.anchor = GridBagConstraints.EAST;
+		gbc_label_8.insets = new Insets(0, 0, 0, 5);
+		gbc_label_8.gridx = 0;
+		gbc_label_8.gridy = 0;
+		outputPanel.add(label_8, gbc_label_8);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Undirected graph");
-		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnNewRadioButton_1.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnNewRadioButton_1.gridx = 0;
-		gbc_rdbtnNewRadioButton_1.gridy = 1;
-		pnlOptions2.add(rdbtnNewRadioButton_1, gbc_rdbtnNewRadioButton_1);
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
+		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_7.insets = new Insets(0, 0, 0, 5);
+		gbc_textField_7.gridx = 1;
+		gbc_textField_7.gridy = 0;
+		outputPanel.add(textField_7, gbc_textField_7);
 		
-		JRadioButton rdbtnNestedPvalue = new JRadioButton("Nested p-value");
-		GridBagConstraints gbc_rdbtnNestedPvalue = new GridBagConstraints();
-		gbc_rdbtnNestedPvalue.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnNestedPvalue.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnNestedPvalue.gridx = 0;
-		gbc_rdbtnNestedPvalue.gridy = 2;
-		pnlOptions2.add(rdbtnNestedPvalue, gbc_rdbtnNestedPvalue);
+		JButton button_3 = new JButton("...");
+		GridBagConstraints gbc_button_3 = new GridBagConstraints();
+		gbc_button_3.anchor = GridBagConstraints.WEST;
+		gbc_button_3.gridx = 2;
+		gbc_button_3.gridy = 0;
+		outputPanel.add(button_3, gbc_button_3);
 		
-		JRadioButton rdbtnStatistical = new JRadioButton("Memory statistics");
-		GridBagConstraints gbc_rdbtnStatistical = new GridBagConstraints();
-		gbc_rdbtnStatistical.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnStatistical.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnStatistical.gridx = 0;
-		gbc_rdbtnStatistical.gridy = 3;
-		pnlOptions2.add(rdbtnStatistical, gbc_rdbtnStatistical);
+//		Advanced options split pane
+		JSplitPane advancedOptionsSplitPane = new JSplitPane();
+		advancedOptionsSplitPane.setBorder(new TitledBorder(null, "Advanced options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_advancedOptionsSplitPane = new GridBagConstraints();
+		gbc_advancedOptionsSplitPane.gridwidth = 3;
+		gbc_advancedOptionsSplitPane.insets = new Insets(0, 0, 5, 5);
+		gbc_advancedOptionsSplitPane.fill = GridBagConstraints.BOTH;
+		gbc_advancedOptionsSplitPane.gridx = 2;
+		gbc_advancedOptionsSplitPane.gridy = 7;
+		frame.getContentPane().add(advancedOptionsSplitPane, gbc_advancedOptionsSplitPane);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Verbose");
-		GridBagConstraints gbc_rdbtnNewRadioButton_2 = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton_2.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnNewRadioButton_2.gridx = 0;
-		gbc_rdbtnNewRadioButton_2.gridy = 4;
-		pnlOptions2.add(rdbtnNewRadioButton_2, gbc_rdbtnNewRadioButton_2);
+		JPanel panel = new JPanel();
+		advancedOptionsSplitPane.setRightComponent(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 10, 200};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JLabel label = new JLabel("Minimum support:");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 0;
+		panel.add(label, gbc_label);
+		
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 2;
+		gbc_textField.gridy = 0;
+		panel.add(textField, gbc_textField);
+		textField.setColumns(10);
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
+		gbc_verticalStrut.gridwidth = 2;
+		gbc_verticalStrut.insets = new Insets(0, 0, 5, 0);
+		gbc_verticalStrut.gridx = 1;
+		gbc_verticalStrut.gridy = 1;
+		panel.add(verticalStrut, gbc_verticalStrut);
+		
+		JRadioButton rdbtnShowStatistics = new JRadioButton("Show memory statistics");
+		GridBagConstraints gbc_rdbtnShowStatistics = new GridBagConstraints();
+		gbc_rdbtnShowStatistics.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnShowStatistics.anchor = GridBagConstraints.NORTHWEST;
+		gbc_rdbtnShowStatistics.gridx = 1;
+		gbc_rdbtnShowStatistics.gridy = 2;
+		gbc_rdbtnShowStatistics.gridwidth = 2;
+		panel.add(rdbtnShowStatistics, gbc_rdbtnShowStatistics);
+		
+		JRadioButton rdbtnVerbose = new JRadioButton("Verbose");
+		GridBagConstraints gbc_rdbtnVerbose = new GridBagConstraints();
+		gbc_rdbtnVerbose.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnVerbose.gridwidth = 2;
+		gbc_rdbtnVerbose.gridx = 1;
+		gbc_rdbtnVerbose.gridy = 3;
+		panel.add(rdbtnVerbose, gbc_rdbtnVerbose);
+		
+		
+//		Toggle button for advanced options
+		JToggleButton tglbtnShow = new JToggleButton("Hide");
+		advancedOptionsSplitPane.setLeftComponent(tglbtnShow);
+		tglbtnShow.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 if (panel.isVisible()) {
+				 	panel.setVisible(false);
+				 	tglbtnShow.setText("Show");
+	            } else {
+	            	panel.setVisible(true);
+				 	tglbtnShow.setText("Hide");
+	            }
+			 }
+		});
 		
 //		Define report panel
 		JPanel panelReport = new JPanel();
 		panelReport.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Progress Report", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelReport = new GridBagConstraints();
 		gbc_panelReport.gridwidth = 3;
-		gbc_panelReport.insets = new Insets(0, 0, 5, 0);
+		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
-		gbc_panelReport.gridx = 1;
-		gbc_panelReport.gridy = 3;
+		gbc_panelReport.gridx = 2;
+		gbc_panelReport.gridy = 9;
 		frame.getContentPane().add(panelReport, gbc_panelReport);
 		panelReport.setLayout(new BorderLayout(0, 0));
 		
@@ -433,11 +538,11 @@ public class SubgraphMiningGUI {
 //		Define progress and status panel
 		JPanel panelProgress = new JPanel();
 		GridBagConstraints gbc_panelProgress = new GridBagConstraints();
-		gbc_panelProgress.gridwidth = 3;
 		gbc_panelProgress.insets = new Insets(0, 0, 0, 5);
+		gbc_panelProgress.gridwidth = 3;
 		gbc_panelProgress.fill = GridBagConstraints.BOTH;
-		gbc_panelProgress.gridx = 1;
-		gbc_panelProgress.gridy = 4;
+		gbc_panelProgress.gridx = 2;
+		gbc_panelProgress.gridy = 11;
 		frame.getContentPane().add(panelProgress, gbc_panelProgress);
 		GridBagLayout gbl_panelProgress = new GridBagLayout();
 		gbl_panelProgress.columnWidths = new int[] {250, 351, 0};
@@ -446,7 +551,7 @@ public class SubgraphMiningGUI {
 		gbl_panelProgress.columnWeights = new double[]{0.0, 1, Double.MIN_VALUE};
 		gbl_panelProgress.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelProgress.setLayout(gbl_panelProgress);
-		
+				
 //		Progress bar
 		JProgressBar progressBar = new JProgressBar();
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
@@ -455,14 +560,14 @@ public class SubgraphMiningGUI {
 		gbc_progressBar.gridx = 1;
 		gbc_progressBar.gridy = 0;
 		panelProgress.add(progressBar, gbc_progressBar);
-		
+				
 //		Status panel
 		JLabel lblStatus = new JLabel("status");
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
-		gbc_lblStatus.fill = GridBagConstraints.BOTH;
+		gbc_lblStatus.anchor = GridBagConstraints.NORTH;
+		gbc_lblStatus.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblStatus.gridx = 0;
 		gbc_lblStatus.gridy = 0;
 		panelProgress.add(lblStatus, gbc_lblStatus);
 	}
-
 }
