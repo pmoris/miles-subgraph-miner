@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import com.uantwerp.algorithms.procedures.fsg.EdgeFSG;
 
 public class Graph{
@@ -49,6 +51,14 @@ public class Graph{
 		addSingleLabel("1", edge.to);
 	}
 
+	public void setCountWalk(int c) {
+		this.countWalk = c;
+	}
+	
+	public void setMaxId(int id) {
+		this.maxId = id;
+	}
+	
 	public void resetGraph(){
 		edgeHash = new HashMap<String, HashSet<String>>();
 		reverseEdgeHash = new HashMap<String, HashSet<String>>();
@@ -562,5 +572,30 @@ public class Graph{
 		}
 		return allNodes;
 	}
+	
+	public Graph deepClone() {
+		Graph cloneGraph = new Graph();
+		cloneGraph.edgeHash = SerializationUtils.clone(this.edgeHash);
+		cloneGraph.reverseEdgeHash = SerializationUtils.clone(this.reverseEdgeHash);
+		cloneGraph.group = SerializationUtils.clone(this.group);
+		cloneGraph.bgnodes = SerializationUtils.clone(this.bgnodes);
+		cloneGraph.labelHash = SerializationUtils.clone(this.labelHash);
+		cloneGraph.reverseEdgeHash = SerializationUtils.clone(this.reverseEdgeHash);
+		cloneGraph.vertex = SerializationUtils.clone(this.vertex);
+		
+        for (String s: this.possibleLabels) {
+            cloneGraph.possibleLabels.add(s);
+        }
+        
+        cloneGraph.reverseVertexOneLabel = SerializationUtils.clone(this.reverseVertexOneLabel);
+        cloneGraph.vertexOneLabel = SerializationUtils.clone(this.vertexOneLabel);
+        
+        cloneGraph.setCountWalk(this.countWalk);
+        cloneGraph.setMaxId(this.maxId);
+        
+		return cloneGraph;
+	}
+	
+	
 }
 		

@@ -39,6 +39,11 @@ public class DFSedge {
 		this.isOrdered = true;
 		this.isBackward = false;
 	}
+	
+	public DFSedge(DFSedge e) {
+		this(e.getSourceId(), e.getSourceLabel(), e.getTargetId(), e.getTargetLabel(), e.isOrdered(), e.isBackward());
+		
+	}
 
 	public int getSourceId() {
 		return SourceId;

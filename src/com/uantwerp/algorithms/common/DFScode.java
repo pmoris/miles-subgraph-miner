@@ -495,5 +495,21 @@ public class DFScode<E> extends ArrayList<E> {
 		}
 		return "DFScode [elementData=[" + elements + "], modCount=" + modCount + "]";
 	}
+	
+	public DFScode<DFSedge> deepClone(){
+		
+		DFScode<DFSedge> clonecode = new DFScode<DFSedge>();
+		Iterator<E> it = this.iterator();
+		while (it.hasNext()){
+			DFSedge e = (DFSedge) it.next();
+			clonecode.add(new DFSedge(e));
+		}
+		
+		clonecode.rmpath = new ArrayList<Integer>();
+		for (Integer i: this.rmpath)
+			clonecode.rmpath.add(i);
+		
+		return clonecode;
+	}
 
 }

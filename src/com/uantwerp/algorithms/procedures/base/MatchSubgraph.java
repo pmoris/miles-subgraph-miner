@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import com.rits.cloning.Cloner;
+import org.apache.commons.lang3.SerializationUtils;
+//import com.rits.cloning.Cloner;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphPathParameters;
@@ -19,9 +20,11 @@ import com.uantwerp.algorithms.utilities.AlgorithmUtility;
  * @author gerardo
  *
  */
-public 	abstract class MatchSubgraph {
+public 	abstract class MatchSubgraph { 
 
-	private static final Cloner cloner = new Cloner();
+	//private static final Cloner cloner = new Cloner();
+	
+	
 	//Check if a node set is a potential match for a given subgraph
 	//Is called iteratively by always extending with new nodes until all nodes in the subgraph are covered
 	//motifref the motifs which are pairs of nodes
@@ -60,7 +63,8 @@ public 	abstract class MatchSubgraph {
 							if (GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).size()<edgesLoop.getEdgecountbytarget().get(ep.getTargetId())){ continue GRAPHTARGET; }
 						}else { continue GRAPHTARGET; }
 						
-						HashMap<Integer,String> trymatch = cloner.deepClone(match);
+						//HashMap<Integer,String> trymatch = cloner.deepClone(match);
+						HashMap<Integer,String> trymatch = SerializationUtils.clone(match);
 						trymatch.put(ep.getTargetId(), graphtarget);
 						
 						
@@ -100,7 +104,8 @@ public 	abstract class MatchSubgraph {
 							}else { continue GRAPHTARGET; }
 						}
 						
-						HashMap<Integer,String> trymatch = cloner.deepClone(match);
+						//HashMap<Integer,String> trymatch = cloner.deepClone(match);
+						HashMap<Integer,String> trymatch = SerializationUtils.clone(match);
 						trymatch.put(ep.getSourceId(), graphtarget);
 						
 						HashMap<Integer,String> returnmatchref = matchSubgraph(motifref,trymatch);
@@ -176,7 +181,8 @@ public 	abstract class MatchSubgraph {
 							continue GRAPHTARGET;
 					}
 					
-					HashMap<Integer,String> trymatch = cloner.deepClone(match);
+					//HashMap<Integer,String> trymatch = cloner.deepClone(match);
+					HashMap<Integer,String> trymatch = SerializationUtils.clone(match);
 					trymatch.put(ep.getTargetId(), graphtarget);
 					
 					HashMap<Integer,String> returnmatchref = matchSubgraph_und(motifref,trymatch);
