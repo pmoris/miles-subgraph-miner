@@ -18,24 +18,17 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
-import java.awt.Font;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-import java.awt.Button;
-import java.awt.FlowLayout;
-import java.awt.Label;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.net.URI;
 
 import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -43,16 +36,8 @@ import java.awt.Desktop;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.event.ActionListener;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSplitPane;
-import javax.swing.JToggleButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JTabbedPane;
 
 public class SubgraphMiningGUI {
@@ -397,7 +382,7 @@ public class SubgraphMiningGUI {
 		gbc_labelAlgorithm.gridy = 3;
 		panelOptions.add(labelAlgorithm, gbc_labelAlgorithm);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
