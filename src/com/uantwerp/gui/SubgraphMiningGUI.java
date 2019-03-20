@@ -1,4 +1,4 @@
-package com.uantwerp.algorithms;
+package com.uantwerp.gui;
 
 /** Class governing the GUI
 *
@@ -25,6 +25,9 @@ import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import com.uantwerp.algorithms.ParameterConfig;
+
 import java.awt.event.ActionEvent;
 import java.net.URI;
 

@@ -13,6 +13,7 @@ import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphPathParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.FileUtility;
+import com.uantwerp.gui.SubgraphMiningGUI;
 
 /** Class in charge of running the process of the algorithm  
 *
