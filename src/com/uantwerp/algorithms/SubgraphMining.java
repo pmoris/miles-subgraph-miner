@@ -25,7 +25,7 @@ public class SubgraphMining {
 								int support, int singleLabel, int undirected, int maxsize, int verbose,
 								double pvalue, int nestedpval, String output, String typeAlgorithm) {
 		super();
-		CmdConfig.resetVariables();
+		ParameterConfig.resetVariables();
 		GraphPathParameters.pathGraph = graphPath;
 		GraphPathParameters.pathLabels = labelsPath;
 		GraphPathParameters.pathBgNodes = bgFilePath;
@@ -43,7 +43,7 @@ public class SubgraphMining {
 	}		
 	
 	public static void main(String[] args) {
-		CmdConfig.resetVariables();
+		ParameterConfig.resetVariables();
 
 		Options options = new Options();
 		options.addOption("h", "help", false, "Print help");
@@ -72,14 +72,14 @@ public class SubgraphMining {
 //				Parse command line
 				CommandLineParser parser = new DefaultParser();
 				CommandLine cmd = parser.parse(options, args);			
-				CmdConfig.transformCommandLine(cmd, options);
+				ParameterConfig.transformCommandLine(cmd, options);
 				runProcesses();
 		    }
 		} catch(Exception exp){
 			exp.printStackTrace();
 			System.err.println(exp.getMessage());
 			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.");
-			CmdConfig.printHelp(options);
+			ParameterConfig.printHelp(options);
 			System.exit(1);
 		}
 	}

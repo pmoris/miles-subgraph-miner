@@ -8,7 +8,7 @@ import com.uantwerp.algorithms.common.GraphPathParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.FileUtility;
 
-public class CmdConfig {
+public class ParameterConfig {
 
 	public static void transformCommandLine(CommandLine cmd, Options options){
 
