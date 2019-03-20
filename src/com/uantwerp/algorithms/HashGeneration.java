@@ -15,7 +15,7 @@ public abstract class HashGeneration {
 	public static void graphGeneration(){		
 		readGraph(GraphPathParameters.pathGraph, 1);
 		readGraph(GraphPathParameters.pathLabels, 2);
-		readGraph(GraphPathParameters.pathGroupFile, 3);
+		readGraph(GraphPathParameters.pathInterestFile, 3);
 		readGraph(GraphPathParameters.pathBgNodes, 4);
 		GraphPathParameters.graph.possibleLabels = AlgorithmUtility.getPossibleLables();
 	}
@@ -65,7 +65,7 @@ public abstract class HashGeneration {
 						SubGraphMiningException.exceptionNoFile("Labels file is needed when the single label parameter is activated");					
 				}
 			}else if (type==3){
-				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathGroupFile)){
+				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
 					if (GraphPathParameters.graph.vertex.containsKey(nodeArray[0])){
 						GraphPathParameters.graph.group.add(nodeArray[0]);
 					}else
@@ -77,7 +77,7 @@ public abstract class HashGeneration {
 						GraphPathParameters.graph.bgnodes.add(it.next());
 				}
 			}else if (type==4){
-				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathGroupFile)){
+				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
 					if (GraphPathParameters.pathBgNodes != null){
 						if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathBgNodes))
 							GraphPathParameters.graph.bgnodes.add(nodeArray[0]);

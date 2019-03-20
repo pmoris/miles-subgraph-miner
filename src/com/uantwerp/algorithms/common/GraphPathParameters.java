@@ -9,7 +9,7 @@ public abstract class GraphPathParameters {
 	public static String pathGraph;
 	public static String pathLabels;
 	public static String pathBgNodes;
-	public static String pathGroupFile;
+	public static String pathInterestFile;
 	public static int supportcutoff; 
 	public static int singleLabel; 
 	public static int undirected;
@@ -39,7 +39,7 @@ public abstract class GraphPathParameters {
 		pathGraph = null;
 		pathLabels = null;
 		pathBgNodes=null;
-		pathGroupFile = null;
+		pathInterestFile = null;
 		setDefaultSupport();
 		singleLabel = 0;
 		undirected = 0;

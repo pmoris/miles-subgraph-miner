@@ -33,7 +33,7 @@ public class CmdConfig {
 			}
 			if(cmd.hasOption('i')){
 				String file = FileUtility.readFile(cmd.getOptionValue('i'));
-				GraphPathParameters.pathGroupFile = file;
+				GraphPathParameters.pathInterestFile = file;
 			}
 			if(cmd.hasOption('s'))
 				GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));

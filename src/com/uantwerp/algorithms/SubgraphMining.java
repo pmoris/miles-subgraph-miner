@@ -29,7 +29,7 @@ public class SubgraphMining {
 		GraphPathParameters.pathGraph = graphPath;
 		GraphPathParameters.pathLabels = labelsPath;
 		GraphPathParameters.pathBgNodes = bgFilePath;
-		GraphPathParameters.pathGroupFile = groupfilePath;
+		GraphPathParameters.pathInterestFile = groupfilePath;
 		GraphPathParameters.supportcutoff = support;
 		GraphPathParameters.singleLabel = singleLabel;
 		GraphPathParameters.undirected = undirected;
