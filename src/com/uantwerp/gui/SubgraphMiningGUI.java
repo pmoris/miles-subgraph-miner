@@ -186,13 +186,21 @@ public class SubgraphMiningGUI {
 		textGraphFile.setColumns(10);
 		
 		JButton buttonGraph = new JButton("...");
+//		Browse for file
+//		buttonGraph.addActionListener(new OpenFileAction(textGraphFile, frame));
+		buttonGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openAction(textGraphFile);
+			}
+		});		
+//		Set layout
 		GridBagConstraints gbc_buttonGraphFile = new GridBagConstraints();
 		gbc_buttonGraphFile.anchor = GridBagConstraints.WEST;
 		gbc_buttonGraphFile.insets = new Insets(0, 0, 5, 0);
 		gbc_buttonGraphFile.gridx = 2;
 		gbc_buttonGraphFile.gridy = 0;
 		pnlInput.add(buttonGraph, gbc_buttonGraphFile);
-
+		
 //		Interesting vertices file
 		JLabel lblInterestingVertices = new JLabel("Nodes of interest:");
 		lblInterestingVertices.setToolTipText("Location of the nodes of interest file");
@@ -555,5 +563,15 @@ public class SubgraphMiningGUI {
 		gbc_lblStatus.gridx = 0;
 		gbc_lblStatus.gridy = 0;
 		panelProgress.add(lblStatus, gbc_lblStatus);
+	}
+	
+//	Methods
+	private void openAction(JTextField textField) {
+		JFileChooser chooser = new JFileChooser();
+		int returnVal = chooser.showOpenDialog(frame);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String filePath = chooser.getSelectedFile().getAbsolutePath();
+			textField.setText(filePath);	
+		}
 	}
 }
