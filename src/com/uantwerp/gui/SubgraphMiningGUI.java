@@ -187,12 +187,7 @@ public class SubgraphMiningGUI {
 		
 		JButton buttonGraph = new JButton("...");
 //		Browse for file
-//		buttonGraph.addActionListener(new OpenFileAction(textGraphFile, frame));
-		buttonGraph.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openAction(textGraphFile);
-			}
-		});		
+		buttonGraph.addActionListener(new OpenFileAction(textGraphFile, frame));
 //		Set layout
 		GridBagConstraints gbc_buttonGraphFile = new GridBagConstraints();
 		gbc_buttonGraphFile.anchor = GridBagConstraints.WEST;
