@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.net.URI;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -42,6 +43,7 @@ import javax.swing.JToolBar;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTabbedPane;
+import java.awt.event.ActionListener;
 
 public class SubgraphMiningGUI {
 
@@ -130,7 +132,7 @@ public class SubgraphMiningGUI {
 		});
 		mnHelp.add(mntmAbout);
 		
-//		Define separate toolbar for start button
+//		Define separate tool bar for start button
 		JToolBar toolBar = new JToolBar();
 		menuBar.add(toolBar);
 		
@@ -144,9 +146,9 @@ public class SubgraphMiningGUI {
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {30, 10, 123, 100, 250, 10, 20};
-		gridBagLayout.rowHeights = new int[] {10, 200, 10, 150, 10, 75, 100, 0, 20, 20};
+		gridBagLayout.rowHeights = new int[] {10, 200, 10, 200, 10, 75, 0, 100, 0, 20, 20};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 //		First panel of input files
@@ -227,7 +229,7 @@ public class SubgraphMiningGUI {
 		
 //		Labels file
 		JLabel lblLabels = new JLabel("Labels (optional):");
-		lblLabels.setToolTipText("Location of the labels file (optional)");
+		lblLabels.setToolTipText("Location of the node labels file (optional).");
 		GridBagConstraints gbc_lblLabels = new GridBagConstraints();
 		gbc_lblLabels.anchor = GridBagConstraints.EAST;
 		gbc_lblLabels.insets = new Insets(0, 0, 5, 5);
@@ -257,7 +259,7 @@ public class SubgraphMiningGUI {
 		
 //		Background file
 		JLabel lblBackground = new JLabel("Reduced background (optional):");
-		lblBackground.setToolTipText("Location of the reduced background file (optional)");
+		lblBackground.setToolTipText("Location of the reduced background file (optional).");
 		GridBagConstraints gbc_lblBackground = new GridBagConstraints();
 		gbc_lblBackground.anchor = GridBagConstraints.EAST;
 		gbc_lblBackground.insets = new Insets(0, 0, 0, 5);
@@ -304,24 +306,6 @@ public class SubgraphMiningGUI {
 		gbl_panelOptions.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelOptions.setLayout(gbl_panelOptions);
 		
-////		Support field
-//		JLabel labelSupport = new JLabel("Minimum support:");
-//		GridBagConstraints gbc_labelSupport = new GridBagConstraints();
-//		gbc_labelSupport.anchor = GridBagConstraints.EAST;
-//		gbc_labelSupport.insets = new Insets(0, 0, 5, 5);
-//		gbc_labelSupport.gridx = 0;
-//		gbc_labelSupport.gridy = 0;
-//		panelOptions.add(labelSupport, gbc_labelSupport);
-//		
-//		textFieldSupport = new JTextField();
-//		textFieldSupport.setColumns(10);
-//		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-//		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-//		gbc_textField_1.gridx = 1;
-//		gbc_textField_1.gridy = 0;
-//		panelOptions.add(textFieldSupport, gbc_textField_1);
-		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
 		gbc_horizontalStrut.gridheight = 4;
@@ -331,7 +315,8 @@ public class SubgraphMiningGUI {
 		panelOptions.add(horizontalStrut, gbc_horizontalStrut);
 		
 //		P-value
-		JLabel labelPValue = new JLabel("p-value:");
+		JLabel labelPValue = new JLabel("P-value:");
+		labelPValue.setToolTipText("P-value threshold to use (default = 0.05).");
 		GridBagConstraints gbc_labelPValue = new GridBagConstraints();
 		gbc_labelPValue.anchor = GridBagConstraints.EAST;
 		gbc_labelPValue.insets = new Insets(0, 0, 5, 5);
@@ -349,7 +334,8 @@ public class SubgraphMiningGUI {
 		panelOptions.add(textFieldPValue, gbc_textFieldPValue);
 		
 //		Single label
-		JCheckBox radioButtonSingleLabel = new JCheckBox("Run with single label ");
+		JCheckBox radioButtonSingleLabel = new JCheckBox("Single-label mode");
+		radioButtonSingleLabel.setToolTipText("Use this if each node has exactly one label.");
 		GridBagConstraints gbc_radioButtonSingleLabel = new GridBagConstraints();
 		gbc_radioButtonSingleLabel.anchor = GridBagConstraints.WEST;
 		gbc_radioButtonSingleLabel.insets = new Insets(0, 0, 5, 0);
@@ -377,7 +363,8 @@ public class SubgraphMiningGUI {
 		panelOptions.add(textFieldVerticesSize, gbc_textField_3);
 		
 //		Undirected
-		JCheckBox radioButtonUndirected = new JCheckBox("Undirected graph");
+		JCheckBox radioButtonUndirected = new JCheckBox("Undirected network");
+		radioButtonUndirected.setToolTipText("Treat the network as undirected, e.g. where A -> B = B -> A and self-loops aren't allowed.");
 		GridBagConstraints gbc_radioButtonUndirected = new GridBagConstraints();
 		gbc_radioButtonUndirected.anchor = GridBagConstraints.WEST;
 		gbc_radioButtonUndirected.insets = new Insets(0, 0, 5, 0);
@@ -387,6 +374,7 @@ public class SubgraphMiningGUI {
 		
 //		Algorithm
 		JLabel labelAlgorithm = new JLabel("Algorithm:");
+		labelAlgorithm.setToolTipText("Type of algorithm to use (default = base).");
 		GridBagConstraints gbc_labelAlgorithm = new GridBagConstraints();
 		gbc_labelAlgorithm.anchor = GridBagConstraints.EAST;
 		gbc_labelAlgorithm.insets = new Insets(0, 0, 0, 5);
@@ -404,18 +392,15 @@ public class SubgraphMiningGUI {
 		comboBox.addItem("Base");
 		comboBox.addItem("gSpan");
 		comboBox.addItem("FSG");
-
-//		comboBox.addItem(new ComboItem("Visible String 1", "Value 1"));
-//		comboBox.addItem(new ComboItem("Visible String 2", "Value 2"));
-//		comboBox.addItem(new ComboItem("Visible String 3", "Value 3"));
 		
-//		Nested P-values
-		JCheckBox radioButtonNested = new JCheckBox("Nested p-value", true);
-		GridBagConstraints gbc_radioButtonNested = new GridBagConstraints();
-		gbc_radioButtonNested.anchor = GridBagConstraints.WEST;
-		gbc_radioButtonNested.gridx = 3;
-		gbc_radioButtonNested.gridy = 3;
-		panelOptions.add(radioButtonNested, gbc_radioButtonNested);
+////		Nested P-values
+//		JCheckBox radioButtonNested = new JCheckBox("Nested p-value", true);
+//		radioButtonNested.setToolTipText("Use nested P-value configuration (default = true)");
+//		GridBagConstraints gbc_radioButtonNested = new GridBagConstraints();
+//		gbc_radioButtonNested.anchor = GridBagConstraints.WEST;
+//		gbc_radioButtonNested.gridx = 3;
+//		gbc_radioButtonNested.gridy = 3;
+//		panelOptions.add(radioButtonNested, gbc_radioButtonNested);
 		
 //		Advanced options
 		JPanel panelAdvanced = new JPanel();
@@ -443,37 +428,35 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
 		
-		Component verticalStrut = Box.createVerticalStrut(20);
-		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
-		gbc_verticalStrut.gridwidth = 2;
-		gbc_verticalStrut.insets = new Insets(0, 0, 5, 5);
-		gbc_verticalStrut.gridx = 1;
-		gbc_verticalStrut.gridy = 2;
-		panelAdvanced.add(verticalStrut, gbc_verticalStrut);
+		JCheckBox checkBoxPValue = new JCheckBox("Nested p-value", true);
+		checkBoxPValue.setToolTipText("Use nested P-value configuration (default = true).");
+		GridBagConstraints gbc_checkBoxPValue = new GridBagConstraints();
+		gbc_checkBoxPValue.anchor = GridBagConstraints.WEST;
+		gbc_checkBoxPValue.gridwidth = 2;
+		gbc_checkBoxPValue.insets = new Insets(0, 0, 5, 5);
+		gbc_checkBoxPValue.gridx = 1;
+		gbc_checkBoxPValue.gridy = 2;
+		panelAdvanced.add(checkBoxPValue, gbc_checkBoxPValue);
 		
-		JCheckBox rdbtnShowStatistics = new JCheckBox("Show memory statistics");
-		GridBagConstraints gbc_rdbtnShowStatistics = new GridBagConstraints();
-		gbc_rdbtnShowStatistics.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnShowStatistics.anchor = GridBagConstraints.NORTHWEST;
-		gbc_rdbtnShowStatistics.gridx = 1;
-		gbc_rdbtnShowStatistics.gridy = 3;
-		gbc_rdbtnShowStatistics.gridwidth = 2;
-		panelAdvanced.add(rdbtnShowStatistics, gbc_rdbtnShowStatistics);
+		JCheckBox checkBoxShowStatistics = new JCheckBox("Show memory statistics");
+		checkBoxShowStatistics.setToolTipText("Log additional information about memory usage.");
+		GridBagConstraints gbc_checkBoxShowStatistics = new GridBagConstraints();
+		gbc_checkBoxShowStatistics.insets = new Insets(0, 0, 5, 5);
+		gbc_checkBoxShowStatistics.anchor = GridBagConstraints.NORTHWEST;
+		gbc_checkBoxShowStatistics.gridx = 1;
+		gbc_checkBoxShowStatistics.gridy = 3;
+		gbc_checkBoxShowStatistics.gridwidth = 2;
+		panelAdvanced.add(checkBoxShowStatistics, gbc_checkBoxShowStatistics);
 		
-		JCheckBox rdbtnVerbose = new JCheckBox("Verbose");
-		GridBagConstraints gbc_rdbtnVerbose = new GridBagConstraints();
-		gbc_rdbtnVerbose.insets = new Insets(0, 0, 0, 5);
-		gbc_rdbtnVerbose.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnVerbose.gridwidth = 2;
-		gbc_rdbtnVerbose.gridx = 1;
-		gbc_rdbtnVerbose.gridy = 4;
-		panelAdvanced.add(rdbtnVerbose, gbc_rdbtnVerbose);
-		
-		
-		
-		
-		
-		
+		JCheckBox checkBoxVerbose = new JCheckBox("Verbose");
+		checkBoxVerbose.setToolTipText("Additional logging information.");
+		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
+		gbc_checkBoxVerbose.insets = new Insets(0, 0, 0, 5);
+		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
+		gbc_checkBoxVerbose.gridwidth = 2;
+		gbc_checkBoxVerbose.gridx = 1;
+		gbc_checkBoxVerbose.gridy = 4;
+		panelAdvanced.add(checkBoxVerbose, gbc_checkBoxVerbose);
 		
 //		Output files panel
 		JPanel outputPanel = new JPanel();
@@ -525,7 +508,7 @@ public class SubgraphMiningGUI {
 		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
 		gbc_panelReport.gridx = 2;
-		gbc_panelReport.gridy = 6;
+		gbc_panelReport.gridy = 7;
 		frame.getContentPane().add(panelReport, gbc_panelReport);
 		panelReport.setLayout(new BorderLayout(0, 0));
 		
@@ -539,7 +522,7 @@ public class SubgraphMiningGUI {
 		gbc_panelProgress.gridwidth = 3;
 		gbc_panelProgress.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelProgress.gridx = 2;
-		gbc_panelProgress.gridy = 8;
+		gbc_panelProgress.gridy = 9;
 		frame.getContentPane().add(panelProgress, gbc_panelProgress);
 		GridBagLayout gbl_panelProgress = new GridBagLayout();
 		gbl_panelProgress.columnWidths = new int[] {75, 351, 0};
@@ -564,15 +547,5 @@ public class SubgraphMiningGUI {
 		gbc_lblStatus.gridx = 0;
 		gbc_lblStatus.gridy = 0;
 		panelProgress.add(lblStatus, gbc_lblStatus);
-	}
-	
-//	Methods
-	private void openAction(JTextField textField) {
-		JFileChooser chooser = new JFileChooser();
-		int returnVal = chooser.showOpenDialog(frame);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			String filePath = chooser.getSelectedFile().getAbsolutePath();
-			textField.setText(filePath);	
-		}
 	}
 }
