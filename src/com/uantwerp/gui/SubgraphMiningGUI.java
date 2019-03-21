@@ -216,6 +216,8 @@ public class SubgraphMiningGUI {
 		textInterestingVertices.setColumns(10);
 		
 		JButton buttonInterestingVertices = new JButton("...");
+//		Browse for file
+		buttonInterestingVertices.addActionListener(new OpenFileAction(textInterestingVertices, frame));
 		GridBagConstraints gbc_buttonInterestingVertices = new GridBagConstraints();
 		gbc_buttonInterestingVertices.anchor = GridBagConstraints.WEST;
 		gbc_buttonInterestingVertices.insets = new Insets(0, 0, 5, 0);
@@ -244,6 +246,8 @@ public class SubgraphMiningGUI {
 		textLabels.setColumns(10);
 		
 		JButton buttonLabels = new JButton("...");
+//		Browse for file
+		buttonLabels.addActionListener(new OpenFileAction(textLabels, frame));
 		GridBagConstraints gbc_buttonLabels = new GridBagConstraints();
 		gbc_buttonLabels.anchor = GridBagConstraints.WEST;
 		gbc_buttonLabels.insets = new Insets(0, 0, 5, 0);
@@ -271,6 +275,8 @@ public class SubgraphMiningGUI {
 		textBackground.setColumns(10);
 		
 		JButton buttonBackground = new JButton("...");
+//		Browse for file
+		buttonBackground.addActionListener(new OpenFileAction(textBackground, frame));
 		GridBagConstraints gbc_buttonBackground = new GridBagConstraints();
 		gbc_buttonBackground.anchor = GridBagConstraints.WEST;
 		gbc_buttonBackground.gridx = 2;
