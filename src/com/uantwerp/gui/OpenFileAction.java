@@ -22,6 +22,7 @@ public class OpenFileAction implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Choose input file");    
 		// Show dialog; this method does not return until dialog is closed
 		int returnVal = chooser.showOpenDialog(frame);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
