@@ -494,6 +494,7 @@ public class SubgraphMiningGUI {
 		outputPanel.add(textFieldSavePath, gbc_textFieldSavePath);
 		
 		JButton buttonSavePath = new JButton("...");
+		buttonSavePath.addActionListener(new SaveFileAction(textFieldSavePath, frame));
 		GridBagConstraints gbc_buttonSavePath = new GridBagConstraints();
 		gbc_buttonSavePath.anchor = GridBagConstraints.WEST;
 		gbc_buttonSavePath.gridx = 2;

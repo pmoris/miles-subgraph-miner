@@ -10,22 +10,22 @@ import javax.swing.JTextField;
 //Methods
 
 //This action creates and shows a modal open-file dialog.
-public class OpenFileAction implements ActionListener {
+public class SaveFileAction implements ActionListener {
 	
 	JTextField textField;
 	JFrame frame;
 	
-	public OpenFileAction(JTextField textField, JFrame frame) {
+	public SaveFileAction(JTextField textField, JFrame frame) {
 		this.textField = textField;
 		this.frame = frame;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-		chooser.setDialogTitle("Choose input file");
+//		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		chooser.setDialogTitle("Specify a file to save the output");
 		// Show dialog; this method does not return until dialog is closed
-		int returnVal = chooser.showOpenDialog(frame);
+		int returnVal = chooser.showSaveDialog(frame);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			String filePath = chooser.getSelectedFile().getAbsolutePath();
 			textField.setText(filePath);	
