@@ -64,7 +64,7 @@ The following parameters can be selected at the command line:
 * `-i`/`--interesting` -> Path to the interesting nodes/vertices file. For frequent subgraph mining, this should contain all vertices.
 * `-b`/`--background` -> Path to a background file, a preselected reduced representation of the graph to search from.
 * `-s`/`--support` -> Support threshold.
-* `--singlelabel` -> When present, refers to a single label run, otherwise the algorithms run in multiple-label configuration.
+* `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 * `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
 * `-p`/`--pvalue` -> Maximum P-value to  use (default = `0.05`).
 * `-m`/`maxsize` -> Maximum number of vertices allowed.
