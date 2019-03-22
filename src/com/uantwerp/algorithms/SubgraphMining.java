@@ -12,8 +12,8 @@ import org.apache.commons.cli.Options;
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphPathParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
+import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 import com.uantwerp.algorithms.utilities.FileUtility;
-import com.uantwerp.gui.SubgraphMiningGUI;
 
 /** Class in charge of running the process of the algorithm  
 *
@@ -69,6 +69,7 @@ public class SubgraphMining {
 //				start GUI
 				System.out.println("GUI LAUNCHED");
 				SubgraphMiningGUI.launchGUI(args);
+				
 			} else {
 //				Parse command line
 				CommandLineParser parser = new DefaultParser();
@@ -85,7 +86,7 @@ public class SubgraphMining {
 		}
 	}
 	
-	private static void runProcesses(){
+	public static void runProcesses(){
 		VariablesTimer.initializeVariable();
 		Timer t1 = new Timer();
 		Thread thread1 = new Thread() {

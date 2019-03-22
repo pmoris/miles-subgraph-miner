@@ -1,4 +1,4 @@
-package com.uantwerp.gui;
+package com.uantwerp.algorithms.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +12,8 @@ import javax.swing.JTextField;
 //This action creates and shows a modal open-file dialog.
 public class OpenFileAction implements ActionListener {
 	
-	JTextField textField;
-	JFrame frame;
+	private JTextField textField;
+	private JFrame frame;
 	
 	public OpenFileAction(JTextField textField, JFrame frame) {
 		this.textField = textField;
