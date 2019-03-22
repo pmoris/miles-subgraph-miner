@@ -48,15 +48,15 @@ public class SubgraphMining {
 
 		Options options = new Options();
 		options.addOption("h", "help", false, "Print help");
-		options.addOption("g", "graph", true, "Path to the graph");
-		options.addOption("l", "labels", true, "Path to the labels");
+		options.addOption("g", "graph", true, "Path to the graph or network");
+		options.addOption("l", "labels", true, "Path to the labels (optional)");
 		options.addOption("i", "interest", true, "Path to nodes of interest (group file)");
 		options.addOption("b", "background", true, "Path to the background nodes (optional)");
-		options.addOption("s", "support", true, "Support threshold");
+		options.addOption("s", "support", true, "Support threshold (default = dynamic)");
 		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label and this label must exactly match for the motif");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");			
 		options.addOption("v", "verbose", false, "Verbose option to print more intermediary output");	
-		options.addOption("m", "maxsize", true, "Maximum number of vertixes allowed in the subgraph");
+		options.addOption("m", "maxsize", true, "Maximum number of vertixes allowed in the subgraph (default = 5)");
 		options.addOption("p", "pvalue", true, "Maximum p-value allowed (default = 0.05)");
 		options.addOption("n", "nestedpvalue", false, "Variant where the significance of the child motif is based on the parent matches");
 		options.addOption("o", "output", true, "Output file to store the significant motifs");

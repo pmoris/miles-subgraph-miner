@@ -38,7 +38,7 @@ public abstract class GraphPathParameters {
 	public static void reset(){
 		pathGraph = null;
 		pathLabels = null;
-		pathBgNodes=null;
+		pathBgNodes= null;
 		pathInterestFile = null;
 		setDefaultSupport();
 		singleLabel = 0;
