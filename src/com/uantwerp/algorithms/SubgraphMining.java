@@ -12,6 +12,7 @@ import org.apache.commons.cli.Options;
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphPathParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
+import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 import com.uantwerp.algorithms.utilities.FileUtility;
 
 /** Class in charge of running the process of the algorithm  
@@ -25,11 +26,11 @@ public class SubgraphMining {
 								int support, int singleLabel, int undirected, int maxsize, int verbose,
 								double pvalue, int nestedpval, String output, String typeAlgorithm) {
 		super();
-		resetVariables();
+		ParameterConfig.resetVariables();
 		GraphPathParameters.pathGraph = graphPath;
 		GraphPathParameters.pathLabels = labelsPath;
 		GraphPathParameters.pathBgNodes = bgFilePath;
-		GraphPathParameters.pathGroupFile = groupfilePath;
+		GraphPathParameters.pathInterestFile = groupfilePath;
 		GraphPathParameters.supportcutoff = support;
 		GraphPathParameters.singleLabel = singleLabel;
 		GraphPathParameters.undirected = undirected;
@@ -43,35 +44,49 @@ public class SubgraphMining {
 	}		
 	
 	public static void main(String[] args) {
-		resetVariables();
+		ParameterConfig.resetVariables();
+
 		Options options = new Options();
 		options.addOption("h", "help", false, "Print help");
-		options.addOption("g", "graph", true, "path of the graph");
-		options.addOption("l", "labels", true, "path of the labels");
-		options.addOption("p", "groupfile", true, "path of the group file");
-		options.addOption("b", "bgFile", true, "path of the bgfile");
-		options.addOption("s", "support", true, "expected support of the algorithm");
-		options.addOption("i", "singleLabel", false, "Variant where each node has exactly one label and this label must exactly match for the motif");
+		options.addOption("g", "graph", true, "Path to the graph or network");
+		options.addOption("l", "labels", true, "Path to the labels (optional)");
+		options.addOption("i", "interest", true, "Path to nodes of interest (group file)");
+		options.addOption("b", "background", true, "Path to the background nodes (optional)");
+		options.addOption("s", "support", true, "Support threshold (default = dynamic)");
+		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label and this label must exactly match for the motif");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");			
-		options.addOption("d", "verbose", false, "verbose");	
-		options.addOption("m", "maxsize", true, "Maximum number of vertixes allowed in the subgraph");
-		options.addOption("v", "pvalue", true, "Maximum pvalue allowed (default 0.05)");
+		options.addOption("v", "verbose", false, "Verbose option to print more intermediary output");	
+		options.addOption("m", "maxsize", true, "Maximum number of vertixes allowed in the subgraph (default = 5)");
+		options.addOption("p", "pvalue", true, "Maximum p-value allowed (default = 0.05)");
 		options.addOption("n", "nestedpvalue", false, "Variant where the significance of the child motif is based on the parent matches");
-		options.addOption("o", "output", true, "Outputfile to print significant motifs");
-		options.addOption("a", "typeAlgorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"naive\", \"gspan\" and \"apriori\"");
-		options.addOption("t", "statistics", true, "Path for the statistics of memory usage");		
-		try{
-			CommandLineParser parser = new DefaultParser();
-			CommandLine cmd = parser.parse(options, args);			
-			transformComandLine(cmd,options);
-			runProcesses();
-		}catch(Exception exp){
+		options.addOption("o", "output", true, "Output file to store the significant motifs");
+		options.addOption("a", "algorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"base\", \"gspan\" and \"apriori\"");
+		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");
+
+		try{			
+//			Launch GUI if no options are passed
+			if (args.length == 0) {
+//				start GUI
+				System.out.println("GUI LAUNCHED");
+				SubgraphMiningGUI.launchGUI(args);
+				
+			} else {
+//				Parse command line
+				CommandLineParser parser = new DefaultParser();
+				CommandLine cmd = parser.parse(options, args);			
+				ParameterConfig.transformCommandLine(cmd, options);
+				runProcesses();
+		    }
+		} catch(Exception exp){
 			exp.printStackTrace();
 			System.err.println(exp.getMessage());
+			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.");
+			ParameterConfig.printHelp(options);
+			System.exit(1);
 		}
 	}
 	
-	private static void runProcesses(){
+	public static void runProcesses(){
 		VariablesTimer.initializeVariable();
 		Timer t1 = new Timer();
 		Thread thread1 = new Thread() {
@@ -95,87 +110,5 @@ public class SubgraphMining {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}	
-	}
-	
-	private static void transformComandLine(CommandLine cmd, Options options){
-
-		if(cmd.hasOption("h")){
-			printHelp(options);
-		}else{
-			if(!cmd.hasOption("g")){
-				SubGraphMiningException.exceptionNoFile("graph");
-				printHelp(options);
-			}else{
-				String graph = FileUtility.readFile(cmd.getOptionValue('g'));
-				GraphPathParameters.pathGraph = graph;
-			}
-			if(cmd.hasOption('l')){
-				String labels = FileUtility.readFile(cmd.getOptionValue('l'));
-				GraphPathParameters.pathLabels = labels;
-			}
-			if(cmd.hasOption('b')){
-				String file = FileUtility.readFile(cmd.getOptionValue('b'));
-				GraphPathParameters.pathBgNodes = file;
-			}
-			if(cmd.hasOption('p')){
-				String file = FileUtility.readFile(cmd.getOptionValue('p'));
-				GraphPathParameters.pathGroupFile = file;
-			}
-			if(cmd.hasOption('s'))
-				GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
-			else
-				GraphPathParameters.setDefaultSupport();
-			if(cmd.hasOption('m'))
-				GraphPathParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
-			else
-				GraphPathParameters.setDefaultMaxSize();
-			if(cmd.hasOption('i'))
-				GraphPathParameters.singleLabel = 1;
-			else
-				GraphPathParameters.singleLabel = 0;
-			if(cmd.hasOption('u'))
-				GraphPathParameters.undirected = 1;
-			else
-				GraphPathParameters.undirected = 0;
-			if(cmd.hasOption('d'))
-				GraphPathParameters.verbose = 1;
-			else
-				GraphPathParameters.verbose = 0;
-			if(cmd.hasOption('n'))
-				GraphPathParameters.nestedpval = 1;
-			else
-				GraphPathParameters.nestedpval = 0;
-			if(cmd.hasOption('v'))
-				GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('v'));
-			else
-				GraphPathParameters.setDefaultPValue();
-			if(cmd.hasOption('o'))
-				GraphPathParameters.output = cmd.getOptionValue('o');
-			else
-				GraphPathParameters.output = "none";
-			if (cmd.hasOption('a'))
-				GraphPathParameters.typeAlgorithm = cmd.getOptionValue('a');
-			else
-				GraphPathParameters.typeAlgorithm = "base";
-			/****************************************************************************/
-			//Find a way to make this part dynamical in case of no parameter
-			/****************************************************************************/			
-			if(cmd.hasOption('t'))
-				GraphPathParameters.statistics = cmd.getOptionValue('t');
-			else
-				GraphPathParameters.statistics = "";
-
-		}
-	}
-	
-	private static void printHelp(Options options){
-		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("subgraphmining", options);
-	}
-	
-	public static void resetVariables(){
-		GraphPathParameters.reset();
-		GraphPathParameters.graph.resetGraph();
-		MiningState.resetMiningState();
 	}
 }
