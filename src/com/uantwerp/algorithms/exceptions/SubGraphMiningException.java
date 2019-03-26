@@ -3,27 +3,33 @@ package com.uantwerp.algorithms.exceptions;
 public abstract class SubGraphMiningException {
 	
 	public static void exceptionEmptyFile(){
-		try {
-			throw new Exception("The graph file is empty, try again");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		throw new CustomizedUncheckedException ("The graph file is empty, try again");
+		//try {
+			//throw new Exception("The graph file is empty, try again");
+		//} catch (Exception e) {
+			//e.printStackTrace();
+			
+		//}
 	}
 	
 	public static void exceptionNoFile(String nameFile){
-		try {
+		/*try {
 			throw new Exception("Please provide a "+nameFile+" file where each node has exactly one label in 'single-label-mode'");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
+		throw new CustomizedUncheckedException("Please provide a "+nameFile+" file where each node has exactly one label in 'single-label-mode'");
 	}
 	
 	public static void exceptionNoVertexInLabels(String node){
+		throw new CustomizedUncheckedException(node + " not in graph, excluded from interesting vertices");
+		/*
 		try {
 			System.out.println(node + " not in graph, excluded from interesting vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	public static void exceptionOldId(String newId){

@@ -8,7 +8,7 @@ import com.uantwerp.algorithms.common.GraphPathParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.FileUtility;
 
-public class CmdConfig {
+public class ParameterConfig {
 
 	public static void transformCommandLine(CommandLine cmd, Options options){
 
@@ -33,7 +33,7 @@ public class CmdConfig {
 			}
 			if(cmd.hasOption('i')){
 				String file = FileUtility.readFile(cmd.getOptionValue('i'));
-				GraphPathParameters.pathGroupFile = file;
+				GraphPathParameters.pathInterestFile = file;
 			}
 			if(cmd.hasOption('s'))
 				GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
@@ -91,6 +91,80 @@ public class CmdConfig {
 		GraphPathParameters.reset();
 		GraphPathParameters.graph.resetGraph();
 		MiningState.resetMiningState();
+	}
+
+	public static void transformGUI(
+			String graphPath,
+			String labelsPath,
+			String interestingPath,
+			String backgroundPath,
+			String support,
+			String pValue,
+			String verticesSize,
+			String savePath,
+			String algorithm,
+			Boolean singleLabel,
+			Boolean undirected,
+			Boolean nestedPValue,
+			Boolean showStatistics,
+			Boolean verbose,
+			String areaProgressReport) {
+
+		if(graphPath.isEmpty()){
+			SubGraphMiningException.exceptionNoFile("graph");
+		}else{
+			String graph = FileUtility.readFile(graphPath);
+			GraphPathParameters.pathGraph = graph;
+		}
+		if(!labelsPath.isEmpty()){
+			String labels = FileUtility.readFile(labelsPath);
+			GraphPathParameters.pathLabels = labels;
+		}
+		if(!backgroundPath.isEmpty()){
+			String background = FileUtility.readFile(backgroundPath);
+			GraphPathParameters.pathBgNodes = background;
+		}
+		if(!interestingPath.isEmpty()){
+			String interesting = FileUtility.readFile(interestingPath);
+			GraphPathParameters.pathInterestFile = interesting;
+		}
+		if(!support.isEmpty())
+			GraphPathParameters.supportcutoff = Integer.valueOf(support);
+		else
+			GraphPathParameters.setDefaultSupport();
+		if(!verticesSize.isEmpty())
+			GraphPathParameters.maxsize = Integer.valueOf(verticesSize);
+		else
+			GraphPathParameters.setDefaultMaxSize();
+		if(singleLabel)
+			GraphPathParameters.singleLabel = 1;
+		else
+			GraphPathParameters.singleLabel = 0;
+		if(undirected)
+			GraphPathParameters.undirected = 1;
+		else
+			GraphPathParameters.undirected = 0;
+		if(verbose)
+			GraphPathParameters.verbose = 1;
+		else
+			GraphPathParameters.verbose = 0;
+		if(nestedPValue)
+			GraphPathParameters.nestedpval = 1;
+		else
+			GraphPathParameters.nestedpval = 0;
+		if(!pValue.isEmpty())
+			GraphPathParameters.pvalue = Double.valueOf(pValue);
+		else
+			GraphPathParameters.setDefaultPValue();
+		if(!savePath.isEmpty())
+			GraphPathParameters.output = savePath;
+		else
+			GraphPathParameters.output = "none";
+		GraphPathParameters.typeAlgorithm = algorithm;
+//		if(showStatistics)
+//			GraphPathParameters.statistics = ;
+//		else
+//			GraphPathParameters.statistics = "";
 	}
 
 }
