@@ -18,7 +18,7 @@ public abstract class FileUtility {
 			encoded = Files.readAllBytes(Paths.get(path));
 			return new String(encoded, Charset.defaultCharset());
 		} catch (IOException e) {
-			SubGraphMiningException.exceptionFileNotExists(e, path);
+			SubGraphMiningException.exceptionFileNotExists(path);
 		}
 		return null;
     }

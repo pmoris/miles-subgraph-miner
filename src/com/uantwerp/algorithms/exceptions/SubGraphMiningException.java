@@ -13,8 +13,8 @@ public abstract class SubGraphMiningException {
 		throw new CustomizedUncheckedException("Please provide a " + nameFile + " file.");
 	}
 	
-	public static void exceptionFileNotExists(IOException e, String filepath){
-		throw new CustomizedUncheckedException(e);
+	public static void exceptionFileNotExists(String filepath){
+		throw new CustomizedUncheckedException(filepath + "could not be found.");
 //		throw new CustomizedUncheckedException(e + "\n" + filepath + " could not be found.");
 //		try {
 //			throw new Exception(e);
