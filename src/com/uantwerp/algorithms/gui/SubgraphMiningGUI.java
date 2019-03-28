@@ -316,7 +316,6 @@ public class SubgraphMiningGUI {
 		pnlInput.add(lblNetwork, gbc_lblNetwork);
 		
 		textGraphFile = new JTextField();
-		System.out.println("Inside creation sdgfjdskgsd");
 		GridBagConstraints gbc_textGraphFile = new GridBagConstraints();
 		gbc_textGraphFile.insets = new Insets(0, 0, 5, 5);
 		gbc_textGraphFile.fill = GridBagConstraints.HORIZONTAL;

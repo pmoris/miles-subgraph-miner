@@ -3,7 +3,7 @@ package com.uantwerp.algorithms.exceptions;
 public abstract class SubGraphMiningException {
 	
 	public static void exceptionEmptyFile(){
-		throw new CustomizedUncheckedException ("The graph file is empty, try again");
+		throw new CustomizedUncheckedException("The graph file is empty, try again");
 		//try {
 			//throw new Exception("The graph file is empty, try again");
 		//} catch (Exception e) {
@@ -42,7 +42,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionNoMatchSourceTarget(String edge){
 		try {
-			System.out.println("Undefined targetid and sourceid in motif "+edge+". Continuing anyway");
+			System.out.println("Undefined targetid and sourceid in motif "+edge+". Continuing anyway.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,7 +50,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionDirectedGraphInUndirectedAlgorithm(){
 		try {
-			throw new Exception("You are trying to run an Algorithm which only works with undirected graph in a directed mode, recalculate in another mode");
+			throw new Exception("You are trying to run an algorithm which only works with undirected graph in a directed mode, recalculate in another mode.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,7 +58,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionDFSCodesDifferenSizes(){
 		try {
-			throw new Exception("When determining the minimum DFS code the two motif lists have a different size");
+			throw new Exception("When determining the minimum DFS code the two motif lists have a different size.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

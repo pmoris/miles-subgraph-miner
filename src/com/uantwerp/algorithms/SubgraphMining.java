@@ -67,9 +67,7 @@ public class SubgraphMining {
 //			Launch GUI if no options are passed
 			if (args.length == 0) {
 //				start GUI
-				System.out.println("GUI LAUNCHED");
 				SubgraphMiningGUI.launchGUI(args);
-				
 			} else {
 //				Parse command line
 				CommandLineParser parser = new DefaultParser();
