@@ -21,6 +21,15 @@ public abstract class SubGraphMiningException {
 		throw new CustomizedUncheckedException("Please provide a "+nameFile+" file.");
 	}
 	
+	public static void exceptionNoFileSingleLabel(String message){
+		try {
+			throw new Exception(message);
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+			System.exit(1);
+		} 
+	}
+	
 	public static void exceptionNoVertexInLabels(String node){
 		throw new CustomizedUncheckedException(node + " not in graph, excluded from interesting vertices");
 		/*
