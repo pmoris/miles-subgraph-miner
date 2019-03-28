@@ -9,16 +9,21 @@ public abstract class SubGraphMiningException {
 		//} catch (Exception e) {
 			//e.printStackTrace();
 			
-		//}
+	public static void exceptionNoFileProvided(String nameFile){
+		throw new CustomizedUncheckedException("Please provide a " + nameFile + " file.");
 	}
 	
-	public static void exceptionNoFileProvided(String nameFile){
-		/*try {
-			throw new Exception("Please provide a "+nameFile+" file where each node has exactly one label in 'single-label-mode'");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		throw new CustomizedUncheckedException("Please provide a "+nameFile+" file.");
+	public static void exceptionFileNotExists(IOException e, String filepath){
+		throw new CustomizedUncheckedException(e);
+//		throw new CustomizedUncheckedException(e + "\n" + filepath + " could not be found.");
+//		try {
+//			throw new Exception(e);
+//		} catch (Exception message) {
+//			message.printStackTrace();
+//			System.out.println("\nThe file " + filepath + " could not be found.");
+//			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
+//			System.exit(1);	
+//		}
 	}
 	
 	public static void exceptionNoFileSingleLabel(String message){

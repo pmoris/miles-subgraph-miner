@@ -8,9 +8,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public abstract class FileUtility {
+import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 
-	public static String getFile(String pathFile){
+public abstract class FileUtility {
 		String charFile = "";
 		File file = new File(pathFile);
 		FileInputStream fis = null;
@@ -36,13 +36,13 @@ public abstract class FileUtility {
 	public static String readFile(String path)
     {
         byte[] encoded;
-		try {
+        try {
 			encoded = Files.readAllBytes(Paths.get(path));
 			return new String(encoded, Charset.defaultCharset());
 		} catch (IOException e) {
-			e.printStackTrace();
+			SubGraphMiningException.exceptionFileNotExists(e, path);
 		}
-        return null;
+		return null;
     }
 	
 	public static void writeFile(String path, String message){
