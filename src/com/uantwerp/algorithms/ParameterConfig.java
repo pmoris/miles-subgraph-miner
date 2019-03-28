@@ -1,5 +1,7 @@
 package com.uantwerp.algorithms;
 
+import java.io.File;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
@@ -63,8 +65,12 @@ public class ParameterConfig {
 				GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
 			else
 				GraphPathParameters.setDefaultPValue();
-			if(cmd.hasOption('o'))
-				GraphPathParameters.output = cmd.getOptionValue('o');
+			if(cmd.hasOption('o')) {
+				if(new File(cmd.getOptionValue('o')).isFile())
+					GraphPathParameters.output = cmd.getOptionValue('o');
+				else
+					SubGraphMiningException.exceptionFileNotExists(cmd.getOptionValue('o'));
+			}
 			else
 				GraphPathParameters.output = "none";
 			if (cmd.hasOption('a'))
@@ -156,8 +162,12 @@ public class ParameterConfig {
 			GraphPathParameters.pvalue = Double.valueOf(pValue);
 		else
 			GraphPathParameters.setDefaultPValue();
-		if(!savePath.isEmpty())
-			GraphPathParameters.output = savePath;
+		if(!savePath.isEmpty()) {
+			if(new File(savePath).isFile())			
+				GraphPathParameters.output = savePath;
+			else
+				SubGraphMiningException.exceptionFileNotExists(savePath);
+		}
 		else
 			GraphPathParameters.output = "none";
 		GraphPathParameters.typeAlgorithm = algorithm;
