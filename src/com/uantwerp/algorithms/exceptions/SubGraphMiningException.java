@@ -27,12 +27,14 @@ public abstract class SubGraphMiningException {
 	}
 	
 	public static void exceptionNoFileSingleLabel(String message){
-		try {
-			throw new Exception(message);
-		} catch (Exception e) { 
-			e.printStackTrace(); 
-			System.exit(1);
-		} 
+		throw new CustomizedUncheckedException(message);
+//		try {
+//			throw new Exception(message);
+//		} catch (Exception e) { 
+//			e.printStackTrace(); 
+//			System.exit(1);
+//		} 
+	}
 	}
 	
 	public static void exceptionNoVertexInLabels(String node){
