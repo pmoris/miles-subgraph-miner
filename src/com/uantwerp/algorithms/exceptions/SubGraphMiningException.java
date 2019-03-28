@@ -2,13 +2,10 @@ package com.uantwerp.algorithms.exceptions;
 
 public abstract class SubGraphMiningException {
 	
-	public static void exceptionEmptyFile(){
-		throw new CustomizedUncheckedException("The graph file is empty, try again");
-		//try {
-			//throw new Exception("The graph file is empty, try again");
-		//} catch (Exception e) {
-			//e.printStackTrace();
-			
+	public static void exceptionEmptyFile(String nameFile){
+		throw new CustomizedUncheckedException("The file " + nameFile + " appears to be empty.");
+	}
+		
 	public static void exceptionNoFileProvided(String nameFile){
 		throw new CustomizedUncheckedException("Please provide a " + nameFile + " file.");
 	}

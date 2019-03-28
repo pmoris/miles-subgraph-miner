@@ -18,7 +18,7 @@ public abstract class AlgorithmUtility {
 	
 	public static void checkGraphFile(String graph){
 		if (GraphPathParameters.graph.equals(""))
-			SubGraphMiningException.exceptionEmptyFile();		
+			SubGraphMiningException.exceptionEmptyFile(graph);		
 	}
 	
 	public static boolean checkEmptyGraph(String graph){
