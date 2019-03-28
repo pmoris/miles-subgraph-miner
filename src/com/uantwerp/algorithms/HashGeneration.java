@@ -1,7 +1,6 @@
 package com.uantwerp.algorithms;
 
 import java.io.BufferedReader;
-//import java.io.IOException;
 import java.io.StringReader;
 import java.util.Iterator;
 
@@ -61,8 +60,8 @@ public abstract class HashGeneration {
 					else
 						GraphPathParameters.graph.labelHash.put(nodeArray[1], GraphPathParameters.graph.labelHash.get(nodeArray[1])+1);
 				}else{
-					if (GraphPathParameters.singleLabel == 1)
-						SubGraphMiningException.exceptionNoFile("Labels file is needed when the single label parameter is activated");					
+					if (GraphPathParameters.singleLabel == 1) 
+						SubGraphMiningException.exceptionNoFileSingleLabel("Labels file is needed when the single-label parameter is activated.");
 				}
 			}else if (type==3){
 				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
