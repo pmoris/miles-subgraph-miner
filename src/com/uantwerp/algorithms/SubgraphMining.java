@@ -77,12 +77,8 @@ public class SubgraphMining {
 				ParameterConfig.transformCommandLine(cmd, options);
 				runProcesses();
 		    }
-		} catch(Exception exp){
-			exp.printStackTrace();
-			System.err.println(exp.getMessage());
-			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.");
-			ParameterConfig.printHelp(options);
-			System.exit(1);
+		} catch(Exception e){
+			exceptionBehaviour(e);
 		}
 	}
 	
@@ -110,5 +106,10 @@ public class SubgraphMining {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}	
+	public static void exceptionBehaviour(Exception e) {
+//		e.printStackTrace();
+		System.err.println(e.getMessage());
+		System.out.println("\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
+		System.exit(1);
 	}
 }
