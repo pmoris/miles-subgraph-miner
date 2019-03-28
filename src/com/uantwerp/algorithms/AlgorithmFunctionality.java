@@ -71,24 +71,24 @@ public class AlgorithmFunctionality {
 		recalculateAndPrintResults(t1);
 	}
 	
-	public void printGraphVariables(){
-		System.out.println("print graph");
-		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.edgeHash);
-		System.out.println("print reverse graph");
-		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseEdgeHash);
-		System.out.println("print labels");
-		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.vertex);
-		System.out.println("print reverse labels");
-		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseVertex);
-		System.out.println("print possible labels");
-		PrintUtility.printListString(GraphPathParameters.graph.possibleLabels);
-		System.out.println("print group, size: " + GraphPathParameters.graph.group.size());
-		PrintUtility.printHSetString(GraphPathParameters.graph.group);
-		System.out.println("print bgnodes");
-		PrintUtility.printHashSet(GraphPathParameters.graph.bgnodes);
-		System.out.println("Label hash");
-		PrintUtility.printHasMap2(GraphPathParameters.graph.labelHash);
-	}
+//	public void printGraphVariables(){
+//		System.out.println("print graph");
+//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.edgeHash);
+//		System.out.println("print reverse graph");
+//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseEdgeHash);
+//		System.out.println("print labels");
+//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.vertex);
+//		System.out.println("print reverse labels");
+//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseVertex);
+//		System.out.println("print possible labels");
+//		PrintUtility.printListString(GraphPathParameters.graph.possibleLabels);
+//		System.out.println("print group, size: " + GraphPathParameters.graph.group.size());
+//		PrintUtility.printHSetString(GraphPathParameters.graph.group);
+//		System.out.println("print bgnodes");
+//		PrintUtility.printHashSet(GraphPathParameters.graph.bgnodes);
+//		System.out.println("Label hash");
+//		PrintUtility.printHasMap2(GraphPathParameters.graph.labelHash);
+//	}
 	
 	public static void printStatistics(){
 //		if (GraphPathParameters.verbose == 1){

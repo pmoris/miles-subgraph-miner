@@ -1,7 +1,6 @@
 package com.uantwerp.algorithms.utilities;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -11,27 +10,6 @@ import java.nio.file.Paths;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 
 public abstract class FileUtility {
-		String charFile = "";
-		File file = new File(pathFile);
-		FileInputStream fis = null;
-		try{
-			fis = new FileInputStream(file);
-			int content;
-			while ((content = fis.read()) != -1) {
-				charFile = charFile + (char) content;
-			}
-		} catch (IOException e) {
-			charFile = "";
-		} finally {
-			try {
-				if (fis != null)
-					fis.close();
-			} catch (IOException ex) {
-				charFile = "";
-			}
-		}
-		return charFile;
-	}
 	
 	public static String readFile(String path)
     {
