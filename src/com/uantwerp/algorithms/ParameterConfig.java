@@ -17,7 +17,7 @@ public class ParameterConfig {
 			System.exit(0);
 		}else{
 			if(!cmd.hasOption("g")){
-				SubGraphMiningException.exceptionNoFile("graph");
+				SubGraphMiningException.exceptionNoFileProvided("network");
 				printHelp(options);
 			}else{
 				String graph = FileUtility.readFile(cmd.getOptionValue('g'));
@@ -111,7 +111,7 @@ public class ParameterConfig {
 			String areaProgressReport) {
 
 		if(graphPath.isEmpty()){
-			SubGraphMiningException.exceptionNoFile("graph");
+			SubGraphMiningException.exceptionNoFileProvided("network");
 		}else{
 			String graph = FileUtility.readFile(graphPath);
 			GraphPathParameters.pathGraph = graph;

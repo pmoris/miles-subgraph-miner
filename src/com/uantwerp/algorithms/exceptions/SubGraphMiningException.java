@@ -12,13 +12,13 @@ public abstract class SubGraphMiningException {
 		//}
 	}
 	
-	public static void exceptionNoFile(String nameFile){
+	public static void exceptionNoFileProvided(String nameFile){
 		/*try {
 			throw new Exception("Please provide a "+nameFile+" file where each node has exactly one label in 'single-label-mode'");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}*/
-		throw new CustomizedUncheckedException("Please provide a "+nameFile+" file where each node has exactly one label in 'single-label-mode'");
+		throw new CustomizedUncheckedException("Please provide a "+nameFile+" file.");
 	}
 	
 	public static void exceptionNoVertexInLabels(String node){
