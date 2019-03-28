@@ -85,14 +85,22 @@ public class SubgraphMining {
 		Timer t1 = new Timer();
 		Thread thread1 = new Thread() {
 		    public void run() {
-		        new AlgorithmFunctionality().mainProcedure(t1);
+		    	try {
+			        new AlgorithmFunctionality().mainProcedure(t1);
+		    	} catch (Exception e) {
+		    		exceptionBehaviour(e);
+		    	}
 		    }
 		};
 		if (!GraphPathParameters.statistics.equals("")){
 			t1.scheduleAtFixedRate(new TimerTask() {
 		        @Override
-		         public void run(){ 
-		        	VariablesTimer.addStatistic();
+		         public void run(){
+		        	try {
+			        	VariablesTimer.addStatistic();
+		        	} catch (Exception e) {
+			    		exceptionBehaviour(e);
+			    	}
 		         }
 			 },1000,1000);
 		}
@@ -103,7 +111,9 @@ public class SubgraphMining {
 				VariablesTimer.writeResults(GraphPathParameters.statistics);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}	
+		}
+	}
+
 	public static void exceptionBehaviour(Exception e) {
 //		e.printStackTrace();
 		System.err.println(e.getMessage());
