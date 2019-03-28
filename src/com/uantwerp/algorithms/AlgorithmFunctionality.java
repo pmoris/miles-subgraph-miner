@@ -7,6 +7,7 @@ import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.procedures.base.BuildMotif;
 import com.uantwerp.algorithms.procedures.fsg.FSG;
 import com.uantwerp.algorithms.procedures.gspan.GSpan;
@@ -26,6 +27,8 @@ public class AlgorithmFunctionality {
 			gspanRepresentationStart(t1);
 		}else if (GraphPathParameters.typeAlgorithm.equals("fsg")) {
 			aprioriRepresentation(t1);
+		}else {
+			SubGraphMiningException.exceptionWrongAlgorithmChoice(GraphPathParameters.typeAlgorithm);
 		}
 	}
 			
