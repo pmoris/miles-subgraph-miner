@@ -35,6 +35,15 @@ public abstract class SubGraphMiningException {
 //			System.exit(1);
 //		} 
 	}
+	
+	public static void exceptionWrongAlgorithmChoice(String algorithm){
+//		try {
+//			throw new Exception(algorithm);
+//		} catch (Exception e) {
+//			e.printStackTrace(); 
+//			System.exit(1);
+//		}
+		throw new CustomizedUncheckedException(algorithm + " is not a valid algorithm choice. Please provide one of the following options instead: base, fsg or gspan.");
 	}
 	
 	public static void exceptionNoVertexInLabels(String node){
