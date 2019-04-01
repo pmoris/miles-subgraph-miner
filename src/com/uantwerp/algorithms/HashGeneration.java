@@ -36,7 +36,7 @@ public abstract class HashGeneration {
 		if (node != null){
 			String[] nodeArray = new String[2];
 			if (node != null){
-				nodeArray = node.split("\t");
+				nodeArray = node.split("\\s+");
 			}
 			if (type==1){
 				GraphPathParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphPathParameters.graph.edgeHash,nodeArray[0],nodeArray[1]);
