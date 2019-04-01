@@ -44,14 +44,14 @@ public abstract class SubGraphMiningException {
 	}
 	
 	public static void exceptionNoVertexInLabels(String node){
-		throw new CustomizedUncheckedException(node + " not in graph, excluded from interesting vertices");
-		/*
+//		throw new CustomizedUncheckedException(node + " not in graph, excluded from interesting vertices");
+		
 		try {
 			System.out.println(node + " not in graph, excluded from interesting vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
+		
 	}
 	
 	public static void exceptionOldId(String newId){
