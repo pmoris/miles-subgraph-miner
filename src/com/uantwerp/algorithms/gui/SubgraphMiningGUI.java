@@ -337,7 +337,7 @@ public class SubgraphMiningGUI {
 		
 //		Interesting vertices file
 		JLabel lblInterestingVertices = new JLabel("Nodes of interest:");
-		lblInterestingVertices.setToolTipText("Location of the nodes of interest file");
+		lblInterestingVertices.setToolTipText("Location of the nodes of interest file (optional - omit for frequent subgraph mining)");
 		GridBagConstraints gbc_lblInterestingVertices = new GridBagConstraints();
 		gbc_lblInterestingVertices.anchor = GridBagConstraints.EAST;
 		gbc_lblInterestingVertices.insets = new Insets(0, 0, 5, 5);

@@ -60,12 +60,12 @@ The following parameters can be selected at the command line:
 * `-h`/`--help` -> Shows these options.
 * `-g`/`--graph` -> Path to the graph file.
 * `-l`/`--labels` -> Path to the labels file (optional).
-* `-i`/`--interesting` -> Path to the interesting nodes/vertices file. For frequent subgraph mining, this should contain all vertices.
+* `-i`/`--interesting` -> Path to the interesting nodes/vertices file. For frequent subgraph mining, this argument should be omitted (i.e. all nodes will be considered interesting/valid starting points).
 * `-b`/`--background` -> Path to a background file, a preselected reduced representation of the graph to search from.
-* `-s`/`--support` -> Support threshold.
+* `-s`/`--support` -> Support threshold the subgraphs must meet (support is defined as the ratio of the number of valid source vertices in the set of interesting nodes compared to those in the entire network).
 * `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 * `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
-* `-p`/`--pvalue` -> Maximum P-value to  use (default = `0.05`).
+* `-p`/`--pvalue` -> Maximum P-value to use (default = `0.05`).
 * `-m`/`maxsize` -> Maximum number of vertices allowed.
 * `-v`/`--verbose` -> Verbose option to print more intermediary output.
 * `-n`/`--nestedpvalue` -> Run with a nested p-value configuration.
@@ -103,6 +103,7 @@ time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar --graph ./datas
 
 ## Authors
 
-* [Pieter Meysman - UAntwerpen](https://www.uantwerpen.be/nl/personeel/pieter-meysman/)
+* [Pieter Meysman - UAntwerpen](https://www.uantwerpen.be/en/staff/pieter-meysman/)
 * [Gerardo Orellana](https://github.com/geraore)
-* [Pieter Moris - UAntwerpen](https://www.uantwerpen.be/nl/personeel/pieter-moris/)
+* [Pieter Moris - UAntwerpen](https://www.uantwerpen.be/en/staff/pieter-moris/)
+* [Danh Bui-Thi - UAntwerpen](https://www.uantwerpen.be/en/staff/danh-bui-thi/)
