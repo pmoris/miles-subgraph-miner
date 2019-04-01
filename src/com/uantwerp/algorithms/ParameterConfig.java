@@ -37,8 +37,12 @@ public class ParameterConfig {
 				String file = FileUtility.readFile(cmd.getOptionValue('i'));
 				GraphPathParameters.pathInterestFile = file;
 			}
-			if(cmd.hasOption('s'))
-				GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
+			if(cmd.hasOption('s')) {
+				if (Integer.valueOf(cmd.getOptionValue('s')) >= 0)
+					GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
+				else
+					SubGraphMiningException.exceptionInvalidValue("support");
+			}
 			else
 				GraphPathParameters.setDefaultSupport();
 			if(cmd.hasOption('m'))
@@ -61,8 +65,12 @@ public class ParameterConfig {
 				GraphPathParameters.nestedpval = 1;
 			else
 				GraphPathParameters.nestedpval = 0;
-			if(cmd.hasOption('p'))
-				GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
+			if(cmd.hasOption('p')) {
+				if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
+					GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
+				else
+					SubGraphMiningException.exceptionInvalidValue("p-value");
+			}
 			else
 				GraphPathParameters.setDefaultPValue();
 			if(cmd.hasOption('o')) {
@@ -134,8 +142,12 @@ public class ParameterConfig {
 			String interesting = FileUtility.readFile(interestingPath);
 			GraphPathParameters.pathInterestFile = interesting;
 		}
-		if(!support.isEmpty())
-			GraphPathParameters.supportcutoff = Integer.valueOf(support);
+		if(!support.isEmpty()) {
+			if (Integer.valueOf(support) >= 0)
+				GraphPathParameters.supportcutoff = Integer.valueOf(support);
+			else
+				SubGraphMiningException.exceptionInvalidValue("support");
+		}
 		else
 			GraphPathParameters.setDefaultSupport();
 		if(!verticesSize.isEmpty())
@@ -158,8 +170,12 @@ public class ParameterConfig {
 			GraphPathParameters.nestedpval = 1;
 		else
 			GraphPathParameters.nestedpval = 0;
-		if(!pValue.isEmpty())
-			GraphPathParameters.pvalue = Double.valueOf(pValue);
+		if(!pValue.isEmpty()) {
+			if (Double.valueOf(pValue) <= 1 && Double.valueOf(pValue) >= 0)
+				GraphPathParameters.pvalue = Double.valueOf(pValue);
+			else
+				SubGraphMiningException.exceptionInvalidValue("p-value");
+		}
 		else
 			GraphPathParameters.setDefaultPValue();
 		if(!savePath.isEmpty()) {

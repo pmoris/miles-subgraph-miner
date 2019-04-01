@@ -43,9 +43,11 @@ public abstract class SubGraphMiningException {
 		throw new CustomizedUncheckedException(algorithm + " is not a valid algorithm choice. Please provide one of the following options instead: base, fsg or gspan.");
 	}
 	
+	public static void exceptionInvalidValue(String argument){
+		throw new CustomizedUncheckedException("Please provide a valid value for the option " + argument + ".");
+	}
+	
 	public static void exceptionNoVertexInLabels(String node){
-//		throw new CustomizedUncheckedException(node + " not in graph, excluded from interesting vertices");
-		
 		try {
 			System.out.println(node + " not in graph, excluded from interesting vertices");
 		} catch (Exception e) {
