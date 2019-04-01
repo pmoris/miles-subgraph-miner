@@ -11,7 +11,7 @@ public abstract class SubGraphMiningException {
 	}
 	
 	public static void exceptionFileNotExists(String filepath){
-		throw new CustomizedUncheckedException(filepath + "could not be found.");
+		throw new CustomizedUncheckedException(filepath + " could not be found.");
 //		throw new CustomizedUncheckedException(e + "\n" + filepath + " could not be found.");
 //		try {
 //			throw new Exception(e);
