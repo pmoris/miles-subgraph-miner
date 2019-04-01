@@ -23,8 +23,8 @@ public abstract class SubGraphMiningException {
 //		}
 	}
 	
-	public static void exceptionNoFileSingleLabel(String message){
-		throw new CustomizedUncheckedException(message);
+	public static void exceptionNoFileSingleLabel(){
+		throw new CustomizedUncheckedException("Label file is needed when the single-label parameter is selected.");
 //		try {
 //			throw new Exception(message);
 //		} catch (Exception e) { 
