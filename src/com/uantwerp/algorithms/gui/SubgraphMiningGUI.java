@@ -555,7 +555,7 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
 		
-		checkBoxNestedPValue = new JCheckBox("Nested p-value", true);
+		checkBoxNestedPValue = new JCheckBox("Nested p-value", false);
 		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = true).");
 		GridBagConstraints gbc_checkBoxPValue = new GridBagConstraints();
 		gbc_checkBoxPValue.anchor = GridBagConstraints.WEST;
