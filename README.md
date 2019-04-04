@@ -217,12 +217,11 @@ In the subgraph setting, are the instances of the subgraph pattern $S$ over-repr
 
 The test answers the question: **are the instances of the subgraph pattern $S$ over-represented in the selected vertices of interest _or_ are the selected vertices enriched with subgraph instances?**
 
-
 > **DISCLAIMER**: technically this is also equivalent to the following question: are the selected vertices of interest over-represented in the discovered source vertex instances of the subgraph pattern $S$? This way of looking at things is more in line with the way the probability mass function was defined earlier and is analogous to checking whether a specific colour of marble is over-represented in a draw (high proportion of $K$).
 >
 > The test does not discern between the direction (or causality) of the two aspects of the data we are considering (selection and occurrence of subgraph instances).
 
-The p-value ($X >= k$) thus gives the probability that we discover $k$ or more selected vertices as source vertices of $S$, under the null hypothesis that all vertices in the graph have the same probability of being a source vertex (_~ the source vertices are uniformly distributed_).
+The p-value ($X >= k$) thus gives the probability that we discover $k$ or more selected vertices as source vertices of $S$, under the null hypothesis that all vertices in the graph have the same probability of being a source vertex (_~ the source vertices are uniformly distributed_). If the p-value falls below our chosen significance level, we can reject the null hypothesis and can conclude that the selected vertices are enriched for the subgraph pattern $S$.
 
 ### Equivalence to Fisher's exact test
 
@@ -234,13 +233,13 @@ The hypergeometric test is equivalent to a **one-tailed Fisher's exact test** fo
 |**Non-source vertices**|$K-k$|$N-K-n+k$|$N-n$|
 ||$K$|$N-K$|$N$|
 
-The null hypothesis is then defined as there being no association between a vertex belonging to the selected set of interest (_i.e. the marble colour_) and a vertex being a source vertex for an instance of the subgraph pattern $S$ (_i.e. being drawn from the urn_).
+The null hypothesis is then defined as there being no association between a vertex belonging to the selected set of interest (_i.e. the marble colour_) and a vertex being a source vertex for an instance of the subgraph pattern $S$ (_i.e. being drawn from the urn_). A low p-value indicates that it is unlikely to obtain $k$ or more source vertices in the selected vertices $K$ if the occurrence of the subgraph pattern is independent from the selected vertices.
 
 <!-- the probability of $k$ successes (i.e. a selected vertex of interest being the source vertex for a given subgraph pattern $S$) in $n$ random draws (i.e. the number of selected vertices), _without replacement_, from a population of size $N$ (i.e. the size of the entire graph) that contains $K$ successes (i.e. the number of source vertices/discovered subgraphs $S$). -->
 
 #### Multiple testing correction
 
-Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ $S$ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed, which retains the desired family-wise error rate by testing each individual hypothesis at a significance level of $\frac{\alpha}{m}$.
+Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ $S$ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed, which retains the desired family-wise error rate by testing each individual hypothesis at a significance level of $\frac{\alpha}{m}$. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested.
 
 ## History of the algorithm
 
