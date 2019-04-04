@@ -74,10 +74,10 @@ public class ParameterConfig {
 			else
 				GraphPathParameters.setDefaultPValue();
 			if(cmd.hasOption('o')) {
-				if(new File(cmd.getOptionValue('o')).isFile())
+				if(new File(cmd.getOptionValue('o')).getParentFile().exists())
 					GraphPathParameters.output = cmd.getOptionValue('o');
 				else
-					SubGraphMiningException.exceptionFileNotExists(cmd.getOptionValue('o'));
+					SubGraphMiningException.exceptionDirNotExists(new File(cmd.getOptionValue('o')).getParentFile().getAbsolutePath());
 			}
 			else
 				GraphPathParameters.output = "none";
@@ -179,10 +179,10 @@ public class ParameterConfig {
 		else
 			GraphPathParameters.setDefaultPValue();
 		if(!savePath.isEmpty()) {
-			if(new File(savePath).isFile())			
+			if(new File(savePath).getParentFile().exists())			
 				GraphPathParameters.output = savePath;
 			else
-				SubGraphMiningException.exceptionFileNotExists(savePath);
+				SubGraphMiningException.exceptionDirNotExists(new File(savePath).getParentFile().getAbsolutePath());
 		}
 		else
 			GraphPathParameters.output = "none";

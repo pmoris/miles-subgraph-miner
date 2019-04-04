@@ -23,6 +23,10 @@ public abstract class SubGraphMiningException {
 //		}
 	}
 	
+	public static void exceptionDirNotExists(String dirpath){
+		throw new CustomizedUncheckedException(dirpath + " directory could not be found.");
+	}
+	
 	public static void exceptionNoFileSingleLabel(){
 		throw new CustomizedUncheckedException("Label file is needed when the single-label parameter is selected.");
 //		try {
