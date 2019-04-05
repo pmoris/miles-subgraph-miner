@@ -540,6 +540,7 @@ public class SubgraphMiningGUI {
 		panelAdvanced.setLayout(gbl_panelAdvanced);
 		
 		JLabel labelSupport = new JLabel("Minimum support:");
+		labelSupport.setToolTipText("Support value threshold to use (default = automatic calculation).");
 		GridBagConstraints gbc_labelSupport = new GridBagConstraints();
 		gbc_labelSupport.insets = new Insets(0, 0, 5, 5);
 		gbc_labelSupport.gridx = 1;
