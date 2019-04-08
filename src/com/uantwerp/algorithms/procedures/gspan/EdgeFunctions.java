@@ -8,7 +8,7 @@ import org.javatuples.Pair;
 
 import com.uantwerp.algorithms.common.Edge;
 import com.uantwerp.algorithms.common.Graph;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.common.History;
 
 public abstract class EdgeFunctions {
@@ -19,7 +19,7 @@ public abstract class EdgeFunctions {
 			nodeToCompare = e1.from;
 		else
 			nodeToCompare = e1.to;
-		if (GraphPathParameters.undirected == 1 && e1.equals(e2))
+		if (GraphParameters.undirected == 1 && e1.equals(e2))
 			return null;		
 		List<String> neighbords = new ArrayList<>();
 		if (isOrderedE2)
@@ -37,7 +37,7 @@ public abstract class EdgeFunctions {
 				return new Pair<Edge,String>(new Edge(e2.from, nodeTo),"outgoing");
 			}
 		}
-		if (GraphPathParameters.undirected == 0){
+		if (GraphParameters.undirected == 0){
 			if (isOrderedE2)
 				neighbords = graph.getIncomingEdges(e2.to,graph);
 			else

@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.Iterator;
 
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.HashFuctions;
@@ -12,11 +12,11 @@ import com.uantwerp.algorithms.utilities.HashFuctions;
 public abstract class HashGeneration {
 	
 	public static void graphGeneration(){		
-		readGraph(GraphPathParameters.pathGraph, 1);
-		readGraph(GraphPathParameters.pathLabels, 2);
-		readGraph(GraphPathParameters.pathInterestFile, 3);
-		readGraph(GraphPathParameters.pathBgNodes, 4);
-		GraphPathParameters.graph.possibleLabels = AlgorithmUtility.getPossibleLables();
+		readGraph(GraphParameters.pathGraph, 1);
+		readGraph(GraphParameters.pathLabels, 2);
+		readGraph(GraphParameters.pathInterestFile, 3);
+		readGraph(GraphParameters.pathBgNodes, 4);
+		GraphParameters.graph.possibleLabels = AlgorithmUtility.getPossibleLables();
 	}
 
 	public static void readGraph(String file, int type){
@@ -39,55 +39,55 @@ public abstract class HashGeneration {
 				nodeArray = node.split("\\s+");
 			}
 			if (type==1){
-				GraphPathParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphPathParameters.graph.edgeHash,nodeArray[0],nodeArray[1]);
-				GraphPathParameters.graph.reverseEdgeHash = HashFuctions.updateHashHashSet(GraphPathParameters.graph.reverseEdgeHash,nodeArray[1],nodeArray[0]);
-				if (GraphPathParameters.singleLabel == 0){
-					GraphPathParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphPathParameters.graph.vertex,nodeArray[0]," ");
-					GraphPathParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphPathParameters.graph.vertex,nodeArray[1]," ");
-					if (!GraphPathParameters.graph.labelHash.containsKey(" "))
-						GraphPathParameters.graph.labelHash.put(" ", 1);
+				GraphParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.edgeHash,nodeArray[0],nodeArray[1]);
+				GraphParameters.graph.reverseEdgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseEdgeHash,nodeArray[1],nodeArray[0]);
+				if (GraphParameters.singleLabel == 0){
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,nodeArray[0]," ");
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,nodeArray[1]," ");
+					if (!GraphParameters.graph.labelHash.containsKey(" "))
+						GraphParameters.graph.labelHash.put(" ", 1);
 					else
-						GraphPathParameters.graph.labelHash.put(" ", GraphPathParameters.graph.labelHash.get(" ")+1);
+						GraphParameters.graph.labelHash.put(" ", GraphParameters.graph.labelHash.get(" ")+1);
 				}
 			}else if (type==2){
-				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathLabels)){
-					GraphPathParameters.graph.reverseVertex = HashFuctions.updateHashHashSet(GraphPathParameters.graph.reverseVertex,nodeArray[1],nodeArray[0]);
-					GraphPathParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphPathParameters.graph.vertex,nodeArray[0],nodeArray[1]);
-					GraphPathParameters.graph.vertexOneLabel.put(nodeArray[0], nodeArray[1]);
-					GraphPathParameters.graph.reverseVertexOneLabel.put(nodeArray[1], nodeArray[0]);
-					if (!GraphPathParameters.graph.labelHash.containsKey(nodeArray[1]))
-						GraphPathParameters.graph.labelHash.put(nodeArray[1], 1);
+				if (AlgorithmUtility.checkEmptyGraph(GraphParameters.pathLabels)){
+					GraphParameters.graph.reverseVertex = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseVertex,nodeArray[1],nodeArray[0]);
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,nodeArray[0],nodeArray[1]);
+					GraphParameters.graph.vertexOneLabel.put(nodeArray[0], nodeArray[1]);
+					GraphParameters.graph.reverseVertexOneLabel.put(nodeArray[1], nodeArray[0]);
+					if (!GraphParameters.graph.labelHash.containsKey(nodeArray[1]))
+						GraphParameters.graph.labelHash.put(nodeArray[1], 1);
 					else
-						GraphPathParameters.graph.labelHash.put(nodeArray[1], GraphPathParameters.graph.labelHash.get(nodeArray[1])+1);
+						GraphParameters.graph.labelHash.put(nodeArray[1], GraphParameters.graph.labelHash.get(nodeArray[1])+1);
 				}else{
-					if (GraphPathParameters.singleLabel == 1) 
+					if (GraphParameters.singleLabel == 1) 
 						SubGraphMiningException.exceptionNoFileSingleLabel();
 				}
 			}else if (type==3){
-				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
-					if (GraphPathParameters.graph.vertex.containsKey(nodeArray[0])){
-						GraphPathParameters.graph.group.add(nodeArray[0]);
+				if (AlgorithmUtility.checkEmptyGraph(GraphParameters.pathInterestFile)){
+					if (GraphParameters.graph.vertex.containsKey(nodeArray[0])){
+						GraphParameters.graph.group.add(nodeArray[0]);
 					}else
 						SubGraphMiningException.exceptionVertexNotFound(nodeArray[0], "interesting");
 				}else{
-					GraphPathParameters.graph.group = HashFuctions.returnKeySetHash(GraphPathParameters.graph.vertex);
-					Iterator<String> it = GraphPathParameters.graph.vertex.keySet().iterator();
+					GraphParameters.graph.group = HashFuctions.returnKeySetHash(GraphParameters.graph.vertex);
+					Iterator<String> it = GraphParameters.graph.vertex.keySet().iterator();
 					while (it.hasNext())
-						GraphPathParameters.graph.bgnodes.add(it.next());
+						GraphParameters.graph.bgnodes.add(it.next());
 				}
 			}else if (type==4){
-				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
-					if (GraphPathParameters.pathBgNodes != null){
-						if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathBgNodes)) {
-							if(GraphPathParameters.graph.vertex.containsKey(nodeArray[0])) {
-								GraphPathParameters.graph.bgnodes.add(nodeArray[0]);
+				if (AlgorithmUtility.checkEmptyGraph(GraphParameters.pathInterestFile)){
+					if (GraphParameters.pathBgNodes != null){
+						if (AlgorithmUtility.checkEmptyGraph(GraphParameters.pathBgNodes)) {
+							if(GraphParameters.graph.vertex.containsKey(nodeArray[0])) {
+								GraphParameters.graph.bgnodes.add(nodeArray[0]);
 							}else
 								SubGraphMiningException.exceptionVertexNotFound(nodeArray[0], "background");
 						}
 					}else{
-						Iterator<String> it = GraphPathParameters.graph.vertex.keySet().iterator();
+						Iterator<String> it = GraphParameters.graph.vertex.keySet().iterator();
 						while (it.hasNext())
-							GraphPathParameters.graph.bgnodes.add(it.next());
+							GraphParameters.graph.bgnodes.add(it.next());
 					}
 				}
 			}

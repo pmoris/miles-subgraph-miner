@@ -9,7 +9,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 
 /** Class in charge of running the process of the algorithm  
@@ -68,7 +68,7 @@ public class SubgraphMining {
 		    	}
 		    }
 		};
-		if (!GraphPathParameters.statistics.equals("")){
+		if (!GraphParameters.statistics.equals("")){
 			t1.scheduleAtFixedRate(new TimerTask() {
 		        @Override
 		         public void run(){
@@ -84,7 +84,7 @@ public class SubgraphMining {
 		try {
 			thread1.join();
 			if (VariablesTimer.stateFinish)
-				VariablesTimer.writeResults(GraphPathParameters.statistics);
+				VariablesTimer.writeResults(GraphParameters.statistics);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

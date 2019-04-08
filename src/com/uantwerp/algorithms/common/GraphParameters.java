@@ -1,6 +1,6 @@
 package com.uantwerp.algorithms.common;
 
-public abstract class GraphPathParameters {
+public abstract class GraphParameters {
 	
 	private static int DEFAULTSUPPORT = 0;
 	private static int DEFAULTMAXSIZE = 5;
@@ -24,15 +24,15 @@ public abstract class GraphPathParameters {
 	public static String statistics;
 
 	public static void setDefaultMaxSize(){
-		GraphPathParameters.maxsize = DEFAULTMAXSIZE;
+		GraphParameters.maxsize = DEFAULTMAXSIZE;
 	}
 	
 	public static void setDefaultSupport(){
-		GraphPathParameters.supportcutoff = DEFAULTSUPPORT;
+		GraphParameters.supportcutoff = DEFAULTSUPPORT;
 	}
 	
 	public static void setDefaultPValue(){
-		GraphPathParameters.pvalue = DEFAULTPVALUE;
+		GraphParameters.pvalue = DEFAULTPVALUE;
 	}
 	
 	public static void reset(){

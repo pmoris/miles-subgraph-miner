@@ -64,7 +64,7 @@ public class Graph{
 	
 	public List<String> getIncomingEdges(String node, Graph graph){
 		List<String> result = new ArrayList<>();
-		if (GraphPathParameters.undirected == 0){			
+		if (GraphParameters.undirected == 0){			
 			if (reverseEdgeHash.containsKey(node)){
 				for (String nodeIncoming: reverseEdgeHash.get(node)){
 					if (!node.equals(nodeIncoming)){
@@ -80,7 +80,7 @@ public class Graph{
 		List<String> result = new ArrayList<>();
 		if (edgeHash.containsKey(node)){
 			for (String nodeConnected: edgeHash.get(node)){
-				if (GraphPathParameters.undirected == 1){
+				if (GraphParameters.undirected == 1){
 					if (!node.equals(nodeConnected)){
 						result.add(nodeConnected);
 					}
@@ -88,7 +88,7 @@ public class Graph{
 					result.add(nodeConnected); //this condition is here due to the self edges that a vertex can have		
 			}
 		}
-		if (GraphPathParameters.undirected == 1){
+		if (GraphParameters.undirected == 1){
 			if (reverseEdgeHash.containsKey(node)){
 				for  (String nodeConnected: reverseEdgeHash.get(node)){
 					if (!node.equals(nodeConnected)){
@@ -104,7 +104,7 @@ public class Graph{
 		List<String> result = new ArrayList<>();
 		if (edgeHash.containsKey(node)){
 			for (String nodeConnected: edgeHash.get(node)){
-				if (GraphPathParameters.undirected == 1){
+				if (GraphParameters.undirected == 1){
 					if (!node.equals(nodeConnected)){
 						result.add(nodeConnected);
 					}
@@ -126,7 +126,7 @@ public class Graph{
 		List<String> result = new ArrayList<>();
 		if (edgeHash.containsKey(node)){
 			for (String nodeConnected: edgeHash.get(node)){
-				if (GraphPathParameters.undirected == 1){
+				if (GraphParameters.undirected == 1){
 					if (vertexOneLabel.get(node).compareTo(vertexOneLabel.get(nodeConnected))<=0){
 						result.add(nodeConnected);
 					}
@@ -135,7 +135,7 @@ public class Graph{
 				}
 			}
 		}
-		if (GraphPathParameters.undirected == 1){
+		if (GraphParameters.undirected == 1){
 			if (reverseEdgeHash.containsKey(node)){
 				for (String nodeConnected: reverseEdgeHash.get(node)){
 					if (vertexOneLabel.get(node).compareTo(vertexOneLabel.get(nodeConnected))<=0 && !node.equals(nodeConnected)){
@@ -157,7 +157,7 @@ public class Graph{
 			neighbords = graph.getAllEdges(rmEdge.from,graph);
 		for (int i = 0; i < neighbords.size(); i++) {
 			String nodeTo = neighbords.get(i);
-			if (GraphPathParameters.undirected == 1){
+			if (GraphParameters.undirected == 1){
 				if ( /*(min_vlb.compareTo(graph.vertexOneLabel.get(nodeTo)) <= 0) &&*/ (!history.hasVertex(nodeTo))) {
 					result.add(new Edge(rmEdge.to, nodeTo));
 				}
@@ -185,7 +185,7 @@ public class Graph{
 		while (it.hasNext()) {
 			String nodeTo = it.next();
 			String newToVlb = graph.vertexOneLabel.get(nodeTo);
-			if (GraphPathParameters.undirected == 1){
+			if (GraphParameters.undirected == 1){
 				if (rmEdge.to.equals(nodeTo) || /*minVlb.compareTo(newToVlb) > 0 ||*/ history.hasVertex(nodeTo))
 					continue;
 				if (toVlb.compareTo(newToVlb) <= 0){
@@ -377,7 +377,7 @@ public class Graph{
 				edges.add(new EdgeFSG(nodeFrom, vertexOneLabel.get(nodeFrom), nodeTo, vertexOneLabel.get(nodeTo)));
 			}
 		}
-		if (GraphPathParameters.undirected == 1){
+		if (GraphParameters.undirected == 1){
 			for (String nodeFrom: reverseEdgeHash.keySet()){
 				for (String nodeTo: reverseEdgeHash.get(nodeFrom)){
 					if (!edges.contains(new EdgeFSG(nodeTo, vertexOneLabel.get(nodeTo),nodeFrom, vertexOneLabel.get(nodeFrom))))
@@ -448,7 +448,7 @@ public class Graph{
 	}
 	
 	public DFScode<DFSedge> fromGraphToDFS(){
-		if (GraphPathParameters.undirected == 0){
+		if (GraphParameters.undirected == 0){
 			DFScode<DFSedge> code =  new DFScode<>();
 			for(String node1: edgeHash.keySet()){
 				for(String node2: edgeHash.get(node1)){
@@ -471,7 +471,7 @@ public class Graph{
 		List<String> neighbords = getneighbords(node);
 		for (String neighbor: neighbords){			
 			if (!visited.contains(node+"@"+neighbor)){
-				if (GraphPathParameters.undirected == 1){
+				if (GraphParameters.undirected == 1){
 					visited.add(node+"@"+neighbor);
 					visited.add(neighbor+"@"+node);
 				}else
@@ -482,7 +482,7 @@ public class Graph{
 					dfsCode.add(new DFSedge(mapNodes.get(node), vertexOneLabel.get(node), maxId, vertexOneLabel.get(neighbor)));
 					dfsCode = generateDFSCode(neighbor, mapNodes, visited, dfsCode);
 				}else{
-					if (GraphPathParameters.undirected == 1)
+					if (GraphParameters.undirected == 1)
 						if (mapNodes.get(node) < mapNodes.get(neighbor))
 							dfsCode.add(new DFSedge(mapNodes.get(node), vertexOneLabel.get(node), mapNodes.get(neighbor), vertexOneLabel.get(neighbor)));
 						else

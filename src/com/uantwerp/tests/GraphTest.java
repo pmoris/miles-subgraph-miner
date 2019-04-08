@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 
 public class GraphTest {
 
 	@Test
 	public void TestIsConnectedGraphUndirected(){
-		GraphPathParameters.undirected = 1;
+		GraphParameters.undirected = 1;
 		DFScode<DFSedge> code = new DFScode<>();
 		code.add(new DFSedge(1, "S", 2, "S"));
 		code.add(new DFSedge(1, "S", 3, "C"));
@@ -49,7 +49,7 @@ public class GraphTest {
 	
 	@Test
 	public void TestIsConnectedGraphDirected(){
-		GraphPathParameters.undirected = 0;
+		GraphParameters.undirected = 0;
 		DFScode<DFSedge> code = new DFScode<>();
 		code.add(new DFSedge(1, "S", 2, "S"));
 		code.add(new DFSedge(1, "S", 3, "C"));
@@ -80,7 +80,7 @@ public class GraphTest {
 		code4.add(new DFSedge(1, "S", 2, "S"));
 		code4.add(new DFSedge(2, "S", 4, "C"));
 		code4.add(new DFSedge(5, "C", 3, "C"));
-		GraphPathParameters.undirected = 1;
+		GraphParameters.undirected = 1;
 		assertFalse(code4.dfsCodeToGraph().isConnected());
 	}
 }

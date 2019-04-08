@@ -12,7 +12,7 @@ import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.Edge;
 import com.uantwerp.algorithms.common.Graph;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.procedures.base.MatchSubgraph;
 import com.uantwerp.algorithms.utilities.HashFuctions;
 
@@ -71,7 +71,7 @@ public class FSG {
 						if (frequentGraphs.get(k).contains(canonicalCode))
 							continue CANDIDATES;
 					HashSet<String> support = matchCandidate(candidate, candidates.get(candidate));
-					if (AuxFSG.calculateGroupSupport(support) >= GraphPathParameters.supportcutoff){
+					if (AuxFSG.calculateGroupSupport(support) >= GraphParameters.supportcutoff){
 						HashFuctions.updateHashHashSet(frequentGraphs, k, canonicalCode);
 						supportedNodes.put(canonicalCode, support);	
 					}else
@@ -95,7 +95,7 @@ public class FSG {
 		for(String sup: supportedNodes){
 			HashMap<Integer,String> matchGraph = new HashMap<>();
 			matchGraph.put(1, sup);
-			if (GraphPathParameters.undirected == 0)
+			if (GraphParameters.undirected == 0)
 				matchGraph = MatchSubgraph.matchSubgraph(code, matchGraph);
 			else
 				matchGraph = MatchSubgraph.matchSubgraph_und(code, matchGraph);
@@ -139,7 +139,7 @@ public class FSG {
 				if (suppCores.size() > 0){ //if the two graphs share more than one core then join
 					HashSet<String> candidatesIntersection = getIntersection(code1, code2);
 					int groupIntersection = AuxFSG.calculateGroupSupport(candidatesIntersection);  
-					if (groupIntersection >= GraphPathParameters.supportcutoff){//if the intersection between the frequent graphs reaches the support threshold
+					if (groupIntersection >= GraphParameters.supportcutoff){//if the intersection between the frequent graphs reaches the support threshold
 						for (String core: suppCores){
 		/**********adds the support of the intersection of each of the candidates which havent been checked already************/
 							for(Graph candidate: fsg_join(code1, code2, core)){								
@@ -188,7 +188,7 @@ public class FSG {
 		for (EdgeFSG edge: core.getAllEdges()){						
 			if (!doubleSideE){
 				List<String> graphDirections = new ArrayList<>();
-				if (GraphPathParameters.undirected==1){
+				if (GraphParameters.undirected==1){
 					graphDirections.add("outgoing");
 				}else{
 					graphDirections.add("outgoing");
@@ -212,7 +212,7 @@ public class FSG {
 			}else{
 				Graph core2 = cloner.deepClone(core);
 				for (EdgeFSG edgeTo: core2.getAllEdges()){
-					if (e.getSourceId().equals(e.getTargetId()) && GraphPathParameters.undirected == 0){ //the algorithm detects a self edge on a directed configuration
+					if (e.getSourceId().equals(e.getTargetId()) && GraphParameters.undirected == 0){ //the algorithm detects a self edge on a directed configuration
 						if (edge.getSourceId().equals(edgeTo.getSourceId()) && edge.getTargetId().equals(edgeTo.getTargetId())){
 							Quintet<Graph, String, Edge, Boolean, String> gNew = addEdge(core, edge.getSourceId(), edgeTo.getSourceId(), edge.getSourceLabel(), edgeTo.getSourceLabel(), e, canStr, candidatesCan, doubleSideE);
 							if (gNew != null){
@@ -266,28 +266,28 @@ public class FSG {
 				Edge edgeSource2 = candidate2.getValue2();
 				if (!candidate1.getValue3() && !candidate2.getValue3()){ //when both of the graphs add a single edge
 					if (sourceVertex.equals(sourceVertex2)){ //check if the candidates start from the same vertex, then just add one edge
-						if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 2) > GraphParameters.maxsize)
 							continue LOOP2;
 						joinHelper(candidate1, candidate2, sourceVertex, edgeSource2, candidates);
 					}else{
 						if (edgeSource.getTo().equals(edgeSource2.getTo())){ //check if the candidates start from different vertices , then add one independent edge and one edge connecting the the source with the new vertex
-							if ((coreNroVertices + 1) > GraphPathParameters.maxsize)
+							if ((coreNroVertices + 1) > GraphParameters.maxsize)
 								continue LOOP2;
 							Graph candidateComplete1 = cloner.deepClone(candidate1.getValue0());
 							addEdgeJoinedUnion(candidateComplete1, sourceVertex2, candidateComplete1.getMaxIdVertex());		
 							candidateChecker(candidateComplete1, candidate1.getValue0(), candidate2.getValue0(), candidates);
-							if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+							if ((coreNroVertices + 2) > GraphParameters.maxsize)
 								continue LOOP2;
 							joinHelper(candidate1, candidate2, sourceVertex2, edgeSource2, candidates);
 						}else{//when the candidates have different source vertices and different labels, then just adds one independent edge
-							if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+							if ((coreNroVertices + 2) > GraphParameters.maxsize)
 								continue LOOP2;
 							joinHelper(candidate1, candidate2, sourceVertex2, edgeSource2, candidates);
 						}
 					}
 				}else if (candidate1.getValue3() && !candidate2.getValue3()){
 					if (candidate1.getValue2().from.equals(candidate1.getValue2().to) || candidate2.getValue2().from.equals(candidate2.getValue2().to)){
-						if ((coreNroVertices + 1) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 1) > GraphParameters.maxsize)
 							continue LOOP2;
 						if (candidate2.getValue2().from.equals(candidate2.getValue2().to)){
 							Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
@@ -297,13 +297,13 @@ public class FSG {
 							joinHelper(candidate1, candidate2, sourceVertex2, edgeSource2, candidates);
 						}
 					}else{
-						if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 2) > GraphParameters.maxsize)
 							continue LOOP2;
 						joinHelper(candidate1, candidate2, sourceVertex2, edgeSource2, candidates);
 					}
 				}else if (!candidate1.getValue3() && !candidate2.getValue3()){
 					if (candidate1.getValue2().from.equals(candidate1.getValue2().to) || candidate2.getValue2().from.equals(candidate2.getValue2().to)){
-						if ((coreNroVertices + 1) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 1) > GraphParameters.maxsize)
 							continue LOOP2;
 						if (candidate2.getValue2().from.equals(candidate2.getValue2().to)){
 							Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
@@ -313,14 +313,14 @@ public class FSG {
 							joinHelper(candidate1, candidate2, sourceVertex2, edgeSource2, candidates);
 						}
 					}else{
-						if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 2) > GraphParameters.maxsize)
 							continue LOOP2;
 						joinHelper(candidate2, candidate1, sourceVertex, edgeSource, candidates);
 					}
 				}else{ //both of the graphs add an connected and different edge
 					if (!(edgeSource.from.equals(edgeSource2.from) && edgeSource.to.equals(edgeSource2.to)) &&
 							!(edgeSource.to.equals(edgeSource2.from) && (edgeSource.from.equals(edgeSource2.to)))){
-						if ((coreNroVertices + 2) > GraphPathParameters.maxsize)
+						if ((coreNroVertices + 2) > GraphParameters.maxsize)
 							continue LOOP2;
 						Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
 						addEdgeJoinedUnion(candidateComplete, edgeSource2.from, edgeSource2.to);
@@ -339,7 +339,7 @@ public class FSG {
 	}
 	
 	private void candidateChecker(Graph candidateComplete, Graph candidate1, Graph candidate2, List<Graph> candidates){
-		if (candidateComplete.getNumberVertices() <= GraphPathParameters.maxsize){
+		if (candidateComplete.getNumberVertices() <= GraphParameters.maxsize){
 			HashFuctions.updateHashHashSet(codeCoresAux, getCanCode(candidateComplete), getCanCode(candidate1));
 			HashFuctions.updateHashHashSet(codeCoresAux, getCanCode(candidateComplete), getCanCode(candidate2));
 			candidates.add(candidateComplete);
@@ -369,9 +369,9 @@ public class FSG {
 	private Quintet<Graph, String, Edge, Boolean, String> addEdge(Graph core, String fromId, String toId, String sourceLabel, String targetLabel,  EdgeFSG e, String g1Str, HashSet<String> candidatesCan, Boolean doubleEdge){		
 		Graph c = cloner.deepClone(core);
 		boolean foundEdge = false;
-		if (e.getSourceId().equals(e.getTargetId()) && GraphPathParameters.undirected == 1)
+		if (e.getSourceId().equals(e.getTargetId()) && GraphParameters.undirected == 1)
 			return null;
-		else if (e.getSourceId().equals(e.getTargetId()) && GraphPathParameters.undirected == 0){
+		else if (e.getSourceId().equals(e.getTargetId()) && GraphParameters.undirected == 0){
 			if (fromId.equals(toId) && sourceLabel.equals(targetLabel)){
 				if (sourceLabel.equals(e.getSourceLabel())){
 					addEdgeJoinedUnion(c,fromId,toId);
@@ -468,13 +468,13 @@ public class FSG {
 	private List<Graph> generateLinearCandidate(String code){
 		List<Graph> candidates = new ArrayList<>();
 		Graph core = canonicalToGraphs.get(code);
-		for (String label: GraphPathParameters.graph.possibleLabels){
+		for (String label: GraphParameters.graph.possibleLabels){
 			Graph c = cloner.deepClone(core);
 			String lastNode = c.getLinearLastNode("1", new HashSet<>());
 			c.addEdge(lastNode, label, "outgoing");			
 			linearGraphs.add(getCanCode(c));
 			candidateChecker(c,canonicalToGraphs.get(code),canonicalToGraphs.get(code),candidates);
-			if (GraphPathParameters.undirected==0){
+			if (GraphParameters.undirected==0){
 				Graph c2 = cloner.deepClone(core);
 				c2.addEdge(lastNode, label, "incoming");
 				linearGraphs.add(getCanCode(c2));

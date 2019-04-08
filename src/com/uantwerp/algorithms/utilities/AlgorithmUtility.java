@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.procedures.base.EdgesLoop;
 import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
@@ -17,24 +17,24 @@ import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 public abstract class AlgorithmUtility {
 	
 	public static void checkGraphFileNotEmpty(String graph){
-		if (GraphPathParameters.graph.equals(""))
+		if (GraphParameters.graph.equals(""))
 			SubGraphMiningException.exceptionEmptyFile(graph);		
 	}
 	
 	public static boolean checkEmptyGraph(String graph){
 		if (graph == null)
 			return false;
-		if (GraphPathParameters.graph.equals(""))
+		if (GraphParameters.graph.equals(""))
 			return false;	
 		return true;
 	}
 	
 	public static List<String> getPossibleLables(){
 		List<String> possibleLabels = new ArrayList<String>();
-		if (GraphPathParameters.singleLabel == 0){
+		if (GraphParameters.singleLabel == 0){
 			possibleLabels.add(" ");
 		}
-		Set<String> keys = GraphPathParameters.graph.reverseVertex.keySet();
+		Set<String> keys = GraphParameters.graph.reverseVertex.keySet();
 	    Iterator<String> itr = keys.iterator();
 	    while (itr.hasNext()) { 
 	        possibleLabels.add(itr.next());
@@ -45,22 +45,22 @@ public abstract class AlgorithmUtility {
 	//Support threshold calculation
 	public static int supportTreshold() {
 		int supportcutoffResult = 0;
-		if (GraphPathParameters.supportcutoff == 0) {
+		if (GraphParameters.supportcutoff == 0) {
 			//Estimate number of subgraphs to be tested
 			Double maxEdges;
-			if (GraphPathParameters.undirected == 1) {
-				maxEdges = ((double)GraphPathParameters.maxsize * ((double)GraphPathParameters.maxsize - 1.0)) / 2.0;
+			if (GraphParameters.undirected == 1) {
+				maxEdges = ((double)GraphParameters.maxsize * ((double)GraphParameters.maxsize - 1.0)) / 2.0;
 			} else {
-				maxEdges = (double)GraphPathParameters.maxsize * ((double)GraphPathParameters.maxsize - 1.0);
+				maxEdges = (double)GraphParameters.maxsize * ((double)GraphParameters.maxsize - 1.0);
 			}
 			double estimate = (Math.pow(2, maxEdges)
-					* Math.pow(GraphPathParameters.graph.possibleLabels.size(), GraphPathParameters.maxsize));
-			double corrpval = (double)GraphPathParameters.pvalue / estimate;
+					* Math.pow(GraphParameters.graph.possibleLabels.size(), GraphParameters.maxsize));
+			double corrpval = (double)GraphParameters.pvalue / estimate;
 			//Estimate corresponding support
-			for (int i = 1; i <= GraphPathParameters.graph.group.size(); i++) {
+			for (int i = 1; i <= GraphParameters.graph.group.size(); i++) {
 				double prob = HypergeomDist.getProbability(
-						GraphPathParameters.graph.bgnodes.size() - GraphPathParameters.graph.group.size(),
-						GraphPathParameters.graph.group.size(), i, i);
+						GraphParameters.graph.bgnodes.size() - GraphParameters.graph.group.size(),
+						GraphParameters.graph.group.size(), i, i);
 				if (prob < corrpval) {
 					supportcutoffResult = i;
 					break;
@@ -69,12 +69,12 @@ public abstract class AlgorithmUtility {
 			if (supportcutoffResult > 0) {
 				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper bound Pvalue");
 			} else {
-				supportcutoffResult = GraphPathParameters.graph.group.size();//interestingVertices;
+				supportcutoffResult = GraphParameters.graph.group.size();//interestingVertices;
 				System.out.println(
 						"Subgraph support set at " + supportcutoffResult + " for number of interesting vertices\n");
 			}
 		} else {
-			return GraphPathParameters.supportcutoff;
+			return GraphParameters.supportcutoff;
 		}
 		return supportcutoffResult;
 	}
@@ -116,13 +116,13 @@ public abstract class AlgorithmUtility {
 	
 	public static double getProbability(int prevhits, int checkedgroupnodes, int totalsupport, int hitSupport){
 		double prob = 0.0;
-		if (GraphPathParameters.nestedpval==1){
+		if (GraphParameters.nestedpval==1){
 			//Nested P-value behaviour: Enrichment P-value is calculated against parent subgraph matches
 			prob = HypergeomDist.getProbability(prevhits-checkedgroupnodes,checkedgroupnodes, totalsupport, hitSupport);
 
 		}else{
-			//Normal behaviour: Enrichment p-value is calculated against the entire GraphPathParameters.graph.
-			prob = HypergeomDist.getProbability(GraphPathParameters.graph.bgnodes.size()-GraphPathParameters.graph.group.size(),GraphPathParameters.graph.group.size(), totalsupport, hitSupport);
+			//Normal behaviour: Enrichment p-value is calculated against the entire GraphPathParameters.graph
+			prob = HypergeomDist.getProbability(GraphParameters.graph.bgnodes.size()-GraphParameters.graph.group.size(),GraphParameters.graph.group.size(), totalsupport, hitSupport);
 		}
 		return prob;
 	}
@@ -143,7 +143,7 @@ public abstract class AlgorithmUtility {
 			seen.add(ep.getSourceId());
 			seen.add(ep.getTargetId());
 			edges.getEdgecountbynode().put(ep.getSourceId(), edges.getEdgecountbynode().get(ep.getSourceId())==null ? 1 : edges.getEdgecountbynode().get(ep.getSourceId())+1);
-			if (GraphPathParameters.undirected==0)
+			if (GraphParameters.undirected==0)
 				edges.getEdgecountbytarget().put(ep.getTargetId(), edges.getEdgecountbytarget().get(ep.getTargetId())==null ? 1 : edges.getEdgecountbytarget().get(ep.getTargetId())+1);
 			else
 				edges.getEdgecountbynode().put(ep.getTargetId(), edges.getEdgecountbynode().get(ep.getTargetId())==null ? 1 : edges.getEdgecountbynode().get(ep.getTargetId())+1);
@@ -152,12 +152,12 @@ public abstract class AlgorithmUtility {
 	}
 	
 	public static boolean checkTargetLabel(String graphtarget, String targetLabel){
-		if (GraphPathParameters.singleLabel == 1){
-			if (!GraphPathParameters.graph.vertex.containsKey(graphtarget)){
+		if (GraphParameters.singleLabel == 1){
+			if (!GraphParameters.graph.vertex.containsKey(graphtarget)){
 				return true;
 			}
 		}
-		HashSet<String> labelsTargetGraph = GraphPathParameters.graph.vertex.get(graphtarget);
+		HashSet<String> labelsTargetGraph = GraphParameters.graph.vertex.get(graphtarget);
 		if (!labelsTargetGraph.contains(targetLabel)){
 			return true;
 		}
@@ -170,21 +170,21 @@ public abstract class AlgorithmUtility {
 			while (it.hasNext()){
 				Integer fowlooptarget = it.next();
 				if (match.containsKey(fowlooptarget)){
-					if (GraphPathParameters.undirected == 1){
+					if (GraphParameters.undirected == 1){
 						boolean cond1 = false;
 						boolean cond2 = false;
-						if (GraphPathParameters.graph.edgeHash.containsKey(graphtarget))
+						if (GraphParameters.graph.edgeHash.containsKey(graphtarget))
 							if (match.containsKey(fowlooptarget))
-								cond1 = !GraphPathParameters.graph.edgeHash.get(graphtarget).contains(match.get(fowlooptarget));
-						if (GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget))
+								cond1 = !GraphParameters.graph.edgeHash.get(graphtarget).contains(match.get(fowlooptarget));
+						if (GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget))
 							if (match.containsKey(fowlooptarget))
-								cond2 = !GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(fowlooptarget));
+								cond2 = !GraphParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(fowlooptarget));
 						if (cond1 && cond2)
 							return true;
 					}else{
-						if (!GraphPathParameters.graph.edgeHash.containsKey(graphtarget))
+						if (!GraphParameters.graph.edgeHash.containsKey(graphtarget))
 							return true;
-						if (!GraphPathParameters.graph.edgeHash.get(graphtarget).contains(match.get(fowlooptarget)))
+						if (!GraphParameters.graph.edgeHash.get(graphtarget).contains(match.get(fowlooptarget)))
 							return true;
 					}
 				}
@@ -195,21 +195,21 @@ public abstract class AlgorithmUtility {
 			while (it.hasNext()){
 				Integer backlooptarget = it.next();
 				if (match.containsKey(backlooptarget)){
-					if (GraphPathParameters.undirected == 1){
+					if (GraphParameters.undirected == 1){
 						boolean cond1 = false;
 						boolean cond2 = false;
-						if (GraphPathParameters.graph.edgeHash.containsKey(graphtarget))
+						if (GraphParameters.graph.edgeHash.containsKey(graphtarget))
 							if (match.containsKey(backlooptarget))
-								cond1 = !GraphPathParameters.graph.edgeHash.get(graphtarget).contains(match.get(backlooptarget));
-						if (GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget))
+								cond1 = !GraphParameters.graph.edgeHash.get(graphtarget).contains(match.get(backlooptarget));
+						if (GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget))
 							if (match.containsKey(backlooptarget))
-								cond2 = !GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(backlooptarget));
+								cond2 = !GraphParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(backlooptarget));
 						if (cond1 && cond2)
 							return true;
 					}else{
-						if (!GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget))
+						if (!GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget))
 							return true;
-						if (!GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(backlooptarget)))
+						if (!GraphParameters.graph.reverseEdgeHash.get(graphtarget).contains(match.get(backlooptarget)))
 							return true;
 					}
 				}

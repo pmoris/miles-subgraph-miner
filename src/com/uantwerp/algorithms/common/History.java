@@ -21,7 +21,7 @@ public class History {
 			verticesUsed.add(e.from);
 			verticesUsed.add(e.to);
 			edgesUsed.add(e.from + "@" + e.to);
-			if (GraphPathParameters.undirected ==1)
+			if (GraphParameters.undirected ==1)
 				edgesUsed.add(e.to + "@"  + e.from);
 			pdfs = pdfs.prev;
 		}
@@ -35,7 +35,7 @@ public class History {
 			verticesUsed.add(e.from);
 			verticesUsed.add(e.to);
 			edgesUsed.add(e.from + "@" + e.to);
-			if (GraphPathParameters.undirected ==1)
+			if (GraphParameters.undirected ==1)
 				edgesUsed.add(e.to + "@"  + e.from);
 		}
 		Collections.reverse(edges);

@@ -11,7 +11,7 @@ import java.util.Map;
 
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.HashFuctions;
@@ -59,8 +59,8 @@ public abstract class OptimizeMotif {
 					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), params.get(motifs.get(i).getTargetId()).getLenghtToOne()+1, 0, params);
 				}else{
 					//This should not happen as motifs are constructed away from the root node; but just in case
-					AlgorithmUtility.updateParams(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel(), GraphPathParameters.maxsize, 0, params);
-					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), GraphPathParameters.maxsize, 0, params);
+					AlgorithmUtility.updateParams(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel(), GraphParameters.maxsize, 0, params);
+					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), GraphParameters.maxsize, 0, params);
 				}
 			}
 		}
@@ -151,8 +151,8 @@ public abstract class OptimizeMotif {
 					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), params.get(motifs.get(i).getTargetId()).getLenghtToOne()+1, 0, params);
 				}else{
 					//This should not happen as motifs are constructed away from the root node; but just in case
-					AlgorithmUtility.updateParams(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel(), GraphPathParameters.maxsize, 0, params);
-					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), GraphPathParameters.maxsize, 0, params);
+					AlgorithmUtility.updateParams(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel(), GraphParameters.maxsize, 0, params);
+					AlgorithmUtility.updateParams(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel(), GraphParameters.maxsize, 0, params);
 				}
 			}
 		}

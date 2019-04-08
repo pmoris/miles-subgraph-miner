@@ -23,13 +23,13 @@ public class DFScode<E> extends ArrayList<E> {
 	public List<Integer> rmpath;
 	
 	public DFScode<DFSedge> getMinDfsCode() {
-		if (GraphPathParameters.verbose == 1 && GraphPathParameters.undirected == 1) System.out.println(this.dfsCodeToString() + " checking by normal root");
+		if (GraphParameters.verbose == 1 && GraphParameters.undirected == 1) System.out.println(this.dfsCodeToString() + " checking by normal root");
 		Graph g = this.dfsCodeToGraph();
 		DFScode<DFSedge> DFScode_min = new DFScode<>();
 		HashMap<Quintet<Integer, String, Integer, String, Boolean>, Projection<PDFS>> root = getFirstCentricProjection(g);
 		Quintet<Integer, String, Integer, String,Boolean> min = minEdgeQ(root.keySet());
 		DFScode_min.add(new DFSedge(min.getValue0(),min.getValue1(),min.getValue2(),min.getValue3(),min.getValue4()));
-		if (GraphPathParameters.undirected==0)
+		if (GraphParameters.undirected==0)
 			return project_get_min_directed(g, DFScode_min, root.get(min));
 		else
 			return project_get_min_undirected(g, DFScode_min, root.get(min));
@@ -300,12 +300,12 @@ public class DFScode<E> extends ArrayList<E> {
 			else
 				rootSelf = AddEdgeRoot(0,g,root,vertex,e);
 		}
-		if (GraphPathParameters.undirected==0)
+		if (GraphParameters.undirected==0)
 			if (!rootSelf.isEmpty())
 				return rootSelf;
 		if (!root.isEmpty())
 			return root;
-		if (GraphPathParameters.undirected==0){
+		if (GraphParameters.undirected==0){
 			List<String> incomingVertices = g.getIncomingEdges(vertex, g);
 			for (String e: incomingVertices){
 				if (!vertex.equals(e))
@@ -440,7 +440,7 @@ public class DFScode<E> extends ArrayList<E> {
 		int old_frm = -1;
 		for (int i = this.size() - 1; i >= 0; i--) {
 			DFSedge edge = (DFSedge) this.get(i);
-			if (GraphPathParameters.undirected == 1){
+			if (GraphParameters.undirected == 1){
 				if (edge.getSourceId() < edge.getTargetId() && (old_frm == -1 || edge.getTargetId() == old_frm)) {
 					rmpath.add(i);
 					old_frm = edge.getSourceId();

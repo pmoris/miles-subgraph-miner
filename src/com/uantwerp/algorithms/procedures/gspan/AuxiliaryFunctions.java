@@ -12,7 +12,7 @@ import org.javatuples.Quintet;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.Edge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.common.PDFS;
 import com.uantwerp.algorithms.common.PairStrValues;
 import com.uantwerp.algorithms.common.Projection;
@@ -152,7 +152,7 @@ public abstract class AuxiliaryFunctions {
 	}
 	
 	public static PairStrValues orderEdgesFirstIt(String sourceLabel, String targetLabel){
-		if (GraphPathParameters.undirected == 1){
+		if (GraphParameters.undirected == 1){
 			if (sourceLabel.compareTo(targetLabel) > 0){ // if the label of the first node is greater than the label of the target node							
 				return null;				
 			}else{
@@ -186,7 +186,7 @@ public abstract class AuxiliaryFunctions {
 		
 		for (int i = 0; i < dfsCode.size(); i++){
 			if (i==0)
-				if (GraphPathParameters.undirected == 1){
+				if (GraphParameters.undirected == 1){
 					newDFS.add(new DFSedge(1, dfsCode.get(i).getTargetLabel(), 2, dfsCode.get(i).getSourceLabel(),true));
 				}else{
 					newDFS.add(new DFSedge(2, dfsCode.get(i).getSourceLabel(), 1, dfsCode.get(i).getTargetLabel(),true));

@@ -6,13 +6,13 @@ import org.junit.Test;
 
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 
 public class DFSCodeTest {
 
 	@Test
 	public void TestUndirectedRepresentation(){
-		GraphPathParameters.undirected = 1;
+		GraphParameters.undirected = 1;
 		DFScode<DFSedge> code = new DFScode<>();
 		code.add(new DFSedge(1, "S", 2, "S"));
 		code.add(new DFSedge(1, "S", 3, "C"));
@@ -39,7 +39,7 @@ public class DFSCodeTest {
 	
 	@Test
 	public void TestDirectedRepresentation(){
-		GraphPathParameters.undirected = 0;
+		GraphParameters.undirected = 0;
 		DFScode<DFSedge> code = new DFScode<>();
 		code.add(new DFSedge(1, "S", 2, "S"));
 		code.add(new DFSedge(1, "S", 3, "C"));
