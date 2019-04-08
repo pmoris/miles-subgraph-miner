@@ -25,7 +25,7 @@ public abstract class HashGeneration {
 		}
 		BufferedReader reader = new BufferedReader(new StringReader(file));
 		if (type==1)
-			AlgorithmUtility.checkGraphFileNotEmpty(reader.toString());
+			AlgorithmUtility.checkInputContentNotEmpty(reader.toString());
 		String[] lines = file.split("\r\n|\r|\n");
 		for (String line : lines) {
 			generateHashTable(type, line);

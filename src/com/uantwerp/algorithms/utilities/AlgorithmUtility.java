@@ -16,7 +16,7 @@ import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 
 public abstract class AlgorithmUtility {
 	
-	public static void checkGraphFileNotEmpty(String graph){
+	public static void checkInputContentNotEmpty(String graph){
 		if (GraphParameters.graph.equals(""))
 			SubGraphMiningException.exceptionEmptyFile(graph);		
 	}
