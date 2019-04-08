@@ -18,6 +18,7 @@ import com.uantwerp.algorithms.utilities.PrintUtility;
 public class AlgorithmFunctionality {
 
 	public void mainProcedure(Timer t1){
+//		Import graphs, labels, set of interest and background files and store as HashMaps and HashSets
 		HashGeneration.graphGeneration();
 		if (GraphParameters.verbose == 1) PrintUtility.printSummary();
 		GraphParameters.supportcutoff = AlgorithmUtility.supportTreshold();
@@ -35,21 +36,24 @@ public class AlgorithmFunctionality {
 	private void naiveRepresentationStart(Timer t1){
 		for (int i = 0; i<GraphParameters.graph.possibleLabels.size(); i++){
 			if (GraphParameters.undirected == 0){
+//				For directed graphs, generate potential self-loops i -> i (cannot occur in undirected graph)
 				DFScode<DFSedge> motif = new DFScode<>();
 				motif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),1,GraphParameters.graph.possibleLabels.get(i),true));				
 				BuildMotif.build_motif(motif,GraphParameters.graph.bgnodes);
 			}
 			for (int j = 0; j < GraphParameters.graph.possibleLabels.size(); j++){
 				if (GraphParameters.undirected == 1){
+//				For undirected graphs, generate motifs i -> j
 					DFScode<DFSedge> forwardmotif = new DFScode<>();
 					forwardmotif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),2,GraphParameters.graph.possibleLabels.get(j),true));
 					BuildMotif.build_motif_und(forwardmotif,GraphParameters.graph.bgnodes);
 				}else{
-					//Single edge to start building from
+//				For directed graphs, generate both motifs i -> j and j -> i
+//					Single edge to start building from
 					DFScode<DFSedge> forwardmotif = new DFScode<>();
 					forwardmotif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),2,GraphParameters.graph.possibleLabels.get(j),true));
 					BuildMotif.build_motif(forwardmotif,GraphParameters.graph.bgnodes);
-					//Single edge to start building from
+//					Single edge to start building from
 					DFScode<DFSedge> backwardmotif = new DFScode<>();
 					backwardmotif.add(new DFSedge(2,GraphParameters.graph.possibleLabels.get(i),1,GraphParameters.graph.possibleLabels.get(j),true));
 					BuildMotif.build_motif(backwardmotif,GraphParameters.graph.bgnodes);
@@ -60,7 +64,7 @@ public class AlgorithmFunctionality {
 		recalculateAndPrintResults(t1);
 	}
 	
-	//for a start this representation works only with undirected graphs, if you pic this with directed we gen an exception
+//	for a start this representation works only with undirected graphs, if you pick this with directed we get an exception
 	private void gspanRepresentationStart(Timer t1){
 		GSpan.startAlgorithm();
 		printStatistics();
