@@ -18,30 +18,6 @@ public class StartButton implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("pressed run analysis");
-		System.out.println(gui.getTextGraphFile().getText());
-//		System.out.println(textGraphFile);
-//		System.out.println(textGraphFile.getText());
-//		System.out.println(gui.getTextGraphFile().getText());
-
-//		System.out.println(checkBoxNestedPValue.isSelected());
-
-		System.out.println(gui.getTextGraphFile().getText()+
-				gui.getTextLabels().getText()+
-				gui.getTextInterestingVertices().getText()+
-				gui.getTextBackground().getText()+
-				gui.getTextFieldSupport().getText()+ 
-				gui.getTextFieldPValue().getText()+
-				gui.getTextFieldVerticesSize().getText()+
-				gui.getTextFieldSavePath().getText()+
-				gui.getComboBoxAlgorithm().getSelectedItem().toString()+
-				gui.getCheckBoxSingleLabel().isSelected()+
-				gui.getCheckBoxUndirected().isSelected()+
-				gui.getCheckBoxNestedPValue().isSelected()+
-				gui.getCheckBoxShowStatistics().isSelected()+
-				gui.getCheckBoxVerbose().isSelected()+
-				gui.getTextAreaProgressReport().getText());
-		
 		ParameterConfig.transformGUI(
 				gui.getTextGraphFile().getText(),
 				gui.getTextLabels().getText(), 
@@ -59,7 +35,6 @@ public class StartButton implements ActionListener {
 				gui.getCheckBoxVerbose().isSelected(),
 				gui.getTextAreaProgressReport().getText()
 				);
-	
 		SubgraphMining.runProcesses();
 	}
 };
