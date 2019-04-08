@@ -78,8 +78,12 @@ public abstract class HashGeneration {
 			}else if (type==4){
 				if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathInterestFile)){
 					if (GraphPathParameters.pathBgNodes != null){
-						if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathBgNodes))
-							GraphPathParameters.graph.bgnodes.add(nodeArray[0]);
+						if (AlgorithmUtility.checkEmptyGraph(GraphPathParameters.pathBgNodes)) {
+							if(GraphPathParameters.graph.vertex.containsKey(nodeArray[0])) {
+								GraphPathParameters.graph.bgnodes.add(nodeArray[0]);
+							}else
+								SubGraphMiningException.exceptionVertexNotFound(nodeArray[0], "background");
+						}
 					}else{
 						Iterator<String> it = GraphPathParameters.graph.vertex.keySet().iterator();
 						while (it.hasNext())
