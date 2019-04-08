@@ -1,16 +1,16 @@
-# SiGMAp - Significant subGraph Mining App
+# MULES - Mining (Un)Labeled Enriched Subgraphs
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
-* [SiGMAp - Significant subGraph Mining App](#sigmap-significant-subgraph-mining-app)
+* [MULES - Mining (Un)Labeled Enriched Subgraphs](#mules-mining-unlabeled-enriched-subgraphs)
 	* [Purpose of the tool](#purpose-of-the-tool)
 	* [Getting started](#getting-started)
 		* [Prerequisites](#prerequisites)
 		* [Setup](#setup)
 		* [Compiling from source](#compiling-from-source)
-	* [How to use SiGMap](#how-to-use-sigmap)
+	* [How to use MULES](#how-to-use-MULES)
 		* [Input files](#input-files)
 		* [Options](#options)
 		* [Output](#output)
@@ -32,11 +32,11 @@ INSERT IMAGE HERE
 
 ## Purpose of the tool
 
-SiGMAp is a Java tool to retrieve **subgraphs** (or patterns/motifs) from a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes). In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
+MULES is a Java tool to retrieve **subgraphs** (or patterns/motifs) from a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes). In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
 
 Graph data is becoming more and more prevalent in various fields, including biology and bio-medicine, and subgraph discovery methods can provide valuable insight into these, often large and complex, data structures.
 
-SiGMAp should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
+MULES should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
 
 The included [example datasets](#examples) are for illustrative and testing purposes.
 
@@ -48,13 +48,13 @@ We would appreciate any comments, bug descriptions, suggestions or success stori
 
 ### Prerequisites
 
-The standard JAR version of SiGMAp requires Java version 8 or higher. Installation instructions for various operating systems can be found on the [Java website](https://www.java.com/en/download/help/download_options.xml).
+The standard JAR version of MULES requires Java version 8 or higher. Installation instructions for various operating systems can be found on the [Java website](https://www.java.com/en/download/help/download_options.xml).
 
 ### Setup
 
 The latest version of the runnable JAR file is available from our [release page]().
 
-SiGMAp requires no true installation. The JAR file can be launched directly to open the GUI version of the tool. Alternatively, it can be invoked via the [command line](#command-line-options). The required input files and analysis options are described [below](#usage).
+MULES requires no true installation. The JAR file can be launched directly to open the GUI version of the tool. Alternatively, it can be invoked via the [command line](#command-line-options). The required input files and analysis options are described [below](#usage).
 
 ### Compiling from source
 
@@ -65,7 +65,7 @@ These instructions will give you a copy of the project on your local machine for
     - [Apache Ant](http://ant.apache.org/): `ant all`.
     - Or an IDE such as Eclipse (don't forget to add the external jar libraries in the `lib` directory and JUnit 5 to the classpath).
 
-## How to use SiGMap
+## How to use MULES
 
 ### Input files
 
