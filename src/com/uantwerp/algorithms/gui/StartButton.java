@@ -3,11 +3,6 @@ package com.uantwerp.algorithms.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import com.uantwerp.algorithms.ParameterConfig;
 import com.uantwerp.algorithms.SubgraphMining;
 

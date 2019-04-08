@@ -6,14 +6,11 @@ import java.util.TimerTask;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphPathParameters;
-import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
-import com.uantwerp.algorithms.utilities.FileUtility;
 
 /** Class in charge of running the process of the algorithm  
 *
