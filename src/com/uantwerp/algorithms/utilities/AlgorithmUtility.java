@@ -29,6 +29,10 @@ public abstract class AlgorithmUtility {
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @return	all possible labels, including an empty label for graph structure (unless single label mode is used) 
+	 */
 	public static List<String> getPossibleLables(){
 		List<String> possibleLabels = new ArrayList<String>();
 		if (GraphParameters.singleLabel == 0){
