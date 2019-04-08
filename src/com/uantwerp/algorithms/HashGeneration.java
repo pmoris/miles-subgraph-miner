@@ -48,9 +48,7 @@ public abstract class HashGeneration {
 	public static void generateHashTable(int type, String line){
 		if (line != null){
 			String[] nodeArray = new String[2];
-			if (line != null){
-				nodeArray = line.split("\\s+");		// split line on tab/space separation characters
-			}
+			nodeArray = line.split("\\s+");		// split line on tab/space separation characters
 
 			// Graph file: node -> node
 			if (type==1){
