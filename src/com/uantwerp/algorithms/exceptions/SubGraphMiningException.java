@@ -51,9 +51,9 @@ public abstract class SubGraphMiningException {
 		throw new CustomizedUncheckedException("Please provide a valid value for the option " + argument + ".");
 	}
 	
-	public static void exceptionNoVertexInLabels(String node){
+	public static void exceptionVertexNotFound(String node, String type){
 		try {
-			System.out.println(node + " not in graph, excluded from interesting vertices");
+			System.out.println(node + " not in graph, excluded from " + type + " vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

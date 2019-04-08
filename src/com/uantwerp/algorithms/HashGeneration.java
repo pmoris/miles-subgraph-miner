@@ -68,7 +68,7 @@ public abstract class HashGeneration {
 					if (GraphPathParameters.graph.vertex.containsKey(nodeArray[0])){
 						GraphPathParameters.graph.group.add(nodeArray[0]);
 					}else
-						SubGraphMiningException.exceptionNoVertexInLabels(nodeArray[0]);
+						SubGraphMiningException.exceptionVertexNotFound(nodeArray[0], "interesting");
 				}else{
 					GraphPathParameters.graph.group = HashFuctions.returnKeySetHash(GraphPathParameters.graph.vertex);
 					Iterator<String> it = GraphPathParameters.graph.vertex.keySet().iterator();
