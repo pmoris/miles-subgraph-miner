@@ -22,27 +22,6 @@ import com.uantwerp.algorithms.utilities.FileUtility;
 */
 public class SubgraphMining {
 	
-	public SubgraphMining(String graphPath, String labelsPath, String groupfilePath, String bgFilePath, 
-								int support, int singleLabel, int undirected, int maxsize, int verbose,
-								double pvalue, int nestedpval, String output, String typeAlgorithm) {
-		super();
-		ParameterConfig.resetVariables();
-		GraphPathParameters.pathGraph = graphPath;
-		GraphPathParameters.pathLabels = labelsPath;
-		GraphPathParameters.pathBgNodes = bgFilePath;
-		GraphPathParameters.pathInterestFile = groupfilePath;
-		GraphPathParameters.supportcutoff = support;
-		GraphPathParameters.singleLabel = singleLabel;
-		GraphPathParameters.undirected = undirected;
-		GraphPathParameters.verbose = verbose;
-		GraphPathParameters.maxsize = maxsize;
-		GraphPathParameters.pvalue = pvalue;
-		GraphPathParameters.nestedpval = nestedpval;
-		GraphPathParameters.output = output;
-		GraphPathParameters.typeAlgorithm = typeAlgorithm;
-		runProcesses();		
-	}		
-	
 	public static void main(String[] args) {
 		ParameterConfig.resetVariables();
 
