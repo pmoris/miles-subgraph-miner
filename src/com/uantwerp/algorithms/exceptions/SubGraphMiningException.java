@@ -26,6 +26,10 @@ public abstract class SubGraphMiningException {
 	public static void exceptionDirNotExists(String dirpath){
 		throw new CustomizedUncheckedException(dirpath + " directory could not be found.");
 	}
+
+	public static void exceptionBackgroundWithoutInterest() {
+		throw new CustomizedUncheckedException("When a background file is supplied, the interest file is required as well.");
+	}
 	
 	public static void exceptionNoFileSingleLabel(){
 		throw new CustomizedUncheckedException("Label file is needed when the single-label parameter is selected.");
@@ -36,7 +40,7 @@ public abstract class SubGraphMiningException {
 //			System.exit(1);
 //		} 
 	}
-	
+
 	public static void exceptionWrongAlgorithmChoice(String algorithm){
 //		try {
 //			throw new Exception(algorithm);
@@ -91,4 +95,5 @@ public abstract class SubGraphMiningException {
 			e.printStackTrace();
 		}
 	}
+
 }

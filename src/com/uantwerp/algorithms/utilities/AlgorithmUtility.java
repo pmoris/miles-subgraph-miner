@@ -16,16 +16,26 @@ import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 
 public abstract class AlgorithmUtility {
 	
-	public static void checkInputContentNotEmpty(String graph){
-		if (GraphParameters.graph.equals(""))
-			SubGraphMiningException.exceptionEmptyFile(graph);		
+	/**
+	 * Raise an exception when the graph file contents are empty.
+	 * @param graphFileContents
+	 */
+	public static void checkGraphFileNotEmpty(String graphFileContents){
+		if (graphFileContents.equals("")) {
+			SubGraphMiningException.exceptionEmptyFile("containing the input graph");
+		}
 	}
 	
-	public static boolean checkEmptyGraph(String graph){
-		if (graph == null)
+	/**
+	 *
+	 * @param fileContent	A String representation of an input file's contents
+	 * @return	False when the file content is empty or the file is not supplied (null), true otherwise
+	 */
+	public static boolean checkNotEmptyFileContent(String fileContent){
+		if (fileContent == null)	// in case no file was supplied
 			return false;
-		if (GraphParameters.graph.equals(""))
-			return false;	
+		if (fileContent.equals(""))	// in case an empty file was supplied
+			return false;
 		return true;
 	}
 	
@@ -46,7 +56,10 @@ public abstract class AlgorithmUtility {
 		return possibleLabels;
 	}
 	
-	//Support threshold calculation
+	/**
+	 * 
+	 * @return	support threshold calculation
+	 */
 	public static int supportTreshold() {
 		int supportcutoffResult = 0;
 		if (GraphParameters.supportcutoff == 0) {

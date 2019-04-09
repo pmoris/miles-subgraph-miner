@@ -23,19 +23,19 @@ public class ParameterConfig {
 				printHelp(options);
 			}else{
 				String graph = FileUtility.readFile(cmd.getOptionValue('g'));
-				GraphParameters.pathGraph = graph;
+				GraphParameters.graphFileContents = graph;
 			}
 			if(cmd.hasOption('l')){
 				String labels = FileUtility.readFile(cmd.getOptionValue('l'));
-				GraphParameters.pathLabels = labels;
+				GraphParameters.labelsFileContents = labels;
 			}
 			if(cmd.hasOption('b')){
 				String file = FileUtility.readFile(cmd.getOptionValue('b'));
-				GraphParameters.pathBgNodes = file;
+				GraphParameters.backgroundFileContents = file;
 			}
 			if(cmd.hasOption('i')){
 				String file = FileUtility.readFile(cmd.getOptionValue('i'));
-				GraphParameters.pathInterestFile = file;
+				GraphParameters.interestFileContents = file;
 			}
 			if(cmd.hasOption('s')) {
 				if (Integer.valueOf(cmd.getOptionValue('s')) >= 0)
@@ -128,19 +128,19 @@ public class ParameterConfig {
 			SubGraphMiningException.exceptionNoFileProvided("network");
 		}else{
 			String graph = FileUtility.readFile(graphPath);
-			GraphParameters.pathGraph = graph;
+			GraphParameters.graphFileContents = graph;
 		}
 		if(!labelsPath.isEmpty()){
 			String labels = FileUtility.readFile(labelsPath);
-			GraphParameters.pathLabels = labels;
+			GraphParameters.labelsFileContents = labels;
 		}
 		if(!backgroundPath.isEmpty()){
 			String background = FileUtility.readFile(backgroundPath);
-			GraphParameters.pathBgNodes = background;
+			GraphParameters.backgroundFileContents = background;
 		}
 		if(!interestingPath.isEmpty()){
 			String interesting = FileUtility.readFile(interestingPath);
-			GraphParameters.pathInterestFile = interesting;
+			GraphParameters.interestFileContents = interesting;
 		}
 		if(!support.isEmpty()) {
 			if (Integer.valueOf(support) >= 0)
