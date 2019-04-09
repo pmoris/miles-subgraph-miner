@@ -11,16 +11,28 @@ import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 
 public abstract class FileUtility {
 	
+	/**
+	 * 
+	 * @param path	path to an input file
+	 * @return content	the content of the input file in String format
+	 * 
+	 * throws an exception when the file is empty or when the path cannot be resolved
+	 */
 	public static String readFile(String path)
     {
         byte[] encoded;
         try {
 			encoded = Files.readAllBytes(Paths.get(path));
-			return new String(encoded, Charset.defaultCharset());
+			String content = new String(encoded, Charset.defaultCharset());
+			// Throw exception when supplied file is empty
+			if (!AlgorithmUtility.checkNotEmptyFileContent(content))
+				SubGraphMiningException.exceptionEmptyFile(path);
+			return content;
 		} catch (IOException e) {
+			// Throw exception if path cannot be resolved
 			SubGraphMiningException.exceptionFileNotExists(path);
 		}
-		return null;
+		return null;	// should never be reached
     }
 	
 	public static void writeFile(String path, String message){
