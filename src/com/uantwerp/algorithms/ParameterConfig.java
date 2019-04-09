@@ -10,6 +10,13 @@ import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.FileUtility;
 
+/**
+ * Functionality to parse the cmd or gui flags and assign them to GraphParameter attributes.
+ * File contents are stored as Strings. Omitted flags will default to null.
+ * Invalid options will raise exceptions.
+ * Empty files will raise exceptions (see FileUtility class).
+ *
+ */
 public class ParameterConfig {
 
 	public static void transformCommandLine(CommandLine cmd, Options options){
