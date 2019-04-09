@@ -10,21 +10,10 @@ import java.util.Set;
 
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphParameters;
-import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.procedures.base.EdgesLoop;
 import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 
 public abstract class AlgorithmUtility {
-	
-	/**
-	 * Raise an exception when the graph file contents are empty.
-	 * @param graphFileContents
-	 */
-	public static void checkGraphFileNotEmpty(String graphFileContents){
-		if (graphFileContents.equals("")) {
-			SubGraphMiningException.exceptionEmptyFile("containing the input graph");
-		}
-	}
 	
 	/**
 	 *

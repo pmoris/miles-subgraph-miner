@@ -35,8 +35,6 @@ public abstract class HashGeneration {
 		if (fileContents == null){
 			fileContents="";
 		}
-		if (type==1)			// throw exception if graph file is empty
-			AlgorithmUtility.checkGraphFileNotEmpty(fileContents);
 		String[] lines = fileContents.split("\r\n|\r|\n");		// split on new line characters
 		for (String line : lines) {				// generate hash tables by looping over every line
 			generateHashTable(type, line);
