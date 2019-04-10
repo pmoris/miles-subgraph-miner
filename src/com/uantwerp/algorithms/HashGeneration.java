@@ -130,9 +130,9 @@ public abstract class HashGeneration {
 						while (it.hasNext())
 							GraphParameters.graph.bgnodes.add(it.next());
 					}
-				// if no interest file
+				// if no (or empty interest) file is supplied
 				}else
-					// but background file is supplied, raise exception
+					// but the background file is supplied, raise exception
 					if (AlgorithmUtility.checkNotEmptyFileContent(GraphParameters.backgroundFileContents))
 						SubGraphMiningException.exceptionBackgroundWithoutInterest();
 			}

@@ -127,20 +127,20 @@ give visualisation option
 
 The following parameters can be selected on the command line:
 
-* `-h`/`--help` -> Shows these options.
-* `-g`/`--graph` -> Path to the graph file.
-* `-l`/`--labels` -> Path to the labels file (optional).
-* `-i`/`--interest` -> Path to the interesting nodes/vertices file. For frequent subgraph mining, this argument should be omitted (i.e. all nodes will be considered interesting).
+* `-h`/`--help` -> Show these options.
+* `-g`/`--graph` -> Path to a graph or network file.
+* `-l`/`--labels` -> Path to a file containing nodes and labels (optional).
+* `-i`/`--interest` -> Path to a file containing nodes of interest. For frequent subgraph mining, this argument should be omitted (i.e. all nodes will be considered interesting).
 * `-o`/`--output` -> Output file location where significant motifs are stored.
-* `-b`/`--background` -> Path to a background file, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional).
-* `-s`/`--support` -> Support threshold the subgraphs must meet (support is defined as the number of instances of the subgraph in the selected subset or equivalently the number of valid source vertices in the set of interesting nodes). If this option is omitted a threshold will be calculated automatically as described in the [original publication](#publication).
+* `-b`/`--background` -> Path to a file containing background nodes, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional, but using it makes the interest file mandatory).
+* `-s`/`--support` -> Support threshold the subgraphs must meet (support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, a threshold will be calculated automatically as described in the [original publication](#publication).
 * `-p`/`--pvalue` -> Maximum p-value to use (default = `0.05`).
-* `-m`/`maxsize` -> Maximum number of vertices allowed.
+* `-m`/`maxsize` -> Maximum number of vertices allowed in the subgraph patterns (default = 5).
 * `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 * `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
-* `-n`/`--nestedpvalue` -> Run with a nested p-value configuration.
+* `-n`/`--nestedpvalue` -> Run with a nested p-value configuration, where the significance of the child motif is based on the parent matches.
 * `-a`/`--algorithm` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg`.
-* `-v`/`--verbose` -> Verbose option to print more intermediary output.
+* `-v`/`--verbose` -> Print additional output messages during the analysis.
 * `--statistics` -> Display additional memory usage statistics.
 * `--debug` -> Print the full stack trace for debugging purposes.
 

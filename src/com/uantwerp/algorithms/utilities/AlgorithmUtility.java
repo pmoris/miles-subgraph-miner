@@ -51,7 +51,8 @@ public abstract class AlgorithmUtility {
 	 */
 	public static int supportTreshold() {
 		int supportcutoffResult = 0;
-		if (GraphParameters.supportcutoff == 0) {
+		if (GraphParameters.supportcutoff == 0) {	// default value if user did not supply a cutoff value
+
 			//Estimate number of subgraphs to be tested
 			Double maxEdges;
 			if (GraphParameters.undirected == 1) {
@@ -62,6 +63,7 @@ public abstract class AlgorithmUtility {
 			double estimate = (Math.pow(2, maxEdges)
 					* Math.pow(GraphParameters.graph.possibleLabels.size(), GraphParameters.maxsize));
 			double corrpval = (double)GraphParameters.pvalue / estimate;
+
 			//Estimate corresponding support
 			for (int i = 1; i <= GraphParameters.graph.group.size(); i++) {
 				double prob = HypergeomDist.getProbability(
@@ -73,13 +75,15 @@ public abstract class AlgorithmUtility {
 				}
 			}
 			if (supportcutoffResult > 0) {
-				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper bound Pvalue");
+				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper-bound P-value");
 			} else {
 				supportcutoffResult = GraphParameters.graph.group.size();//interestingVertices;
 				System.out.println(
 						"Subgraph support set at " + supportcutoffResult + " for number of interesting vertices\n");
 			}
-		} else {
+		}
+		// if the user supplied a support cutoff, keep it
+		else {
 			return GraphParameters.supportcutoff;
 		}
 		return supportcutoffResult;
