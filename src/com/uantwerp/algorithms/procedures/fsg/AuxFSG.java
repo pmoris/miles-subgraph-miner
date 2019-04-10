@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import com.rits.cloning.Cloner;
+//import com.rits.cloning.Cloner;
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
@@ -20,7 +20,7 @@ import com.uantwerp.algorithms.utilities.HashFuctions;
 
 public abstract class AuxFSG {
 
-	private static final Cloner cloner = new Cloner();
+	//private static final Cloner cloner = new Cloner();
 	
 	public static void generateTwoFirstEdges(){		
 		String canCode = "";
@@ -39,7 +39,8 @@ public abstract class AuxFSG {
 						for (String label: GraphParameters.graph.vertex.get(selfEdge.to)){
 //							DFScode<DFSedge> code = new DFScode<>();
 //							code.addAll(dfsCode);
-							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+							//DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+							DFScode<DFSedge> code = dfsCode.deepClone();
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 										new DFSedge(dfsCode.get(0).getTargetId(), label, dfsCode.get(0).getTargetId(), label):
 											new DFSedge(dfsCode.get(0).getSourceId(), label, dfsCode.get(0).getSourceId(), label), p.get(1));
@@ -54,7 +55,7 @@ public abstract class AuxFSG {
 					List<Edge> edges = EdgeFunctions.getForwardPureEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 					for (Edge e : edges) {						
 						for (String label: GraphParameters.graph.vertex.get(e.to)){
-							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+							DFScode<DFSedge> code = dfsCode.deepClone();
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered()?
 									new DFSedge(dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), 3, label):
 										new DFSedge(dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), 3, label), p.get(1));
@@ -69,7 +70,7 @@ public abstract class AuxFSG {
 						List<Edge> edgesIncoming = EdgeFunctions.getForwardPureIncomingEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 						for (Edge e : edgesIncoming) {													
 							for (String label: GraphParameters.graph.vertex.get(e.from)){
-								DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+								DFScode<DFSedge> code = dfsCode.deepClone();
 								canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 									new DFSedge(3, label, dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), false):
 										new DFSedge(3, label, dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), false), p.get(1));
@@ -84,7 +85,7 @@ public abstract class AuxFSG {
 					List<Edge> edgesF = EdgeFunctions.getForwardRmpathEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 					for (Edge e : edgesF) {
 						for (String label: GraphParameters.graph.vertex.get(e.to)){
-							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+							DFScode<DFSedge> code = dfsCode.deepClone();
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 									new DFSedge(dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), 3, label):
 										new DFSedge(dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), 3, label), p.get(1));
@@ -97,7 +98,7 @@ public abstract class AuxFSG {
 						List<Edge> edgesRMPIncoming = EdgeFunctions.getForwardRmpathIncomingEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 						for (Edge e : edgesRMPIncoming) {							
 							for (String label: GraphParameters.graph.vertex.get(e.from)){
-								DFScode<DFSedge> code = cloner.deepClone(dfsCode);
+								DFScode<DFSedge> code = dfsCode.deepClone();
 								canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered()?
 										new DFSedge(3, label, dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), false):
 											new DFSedge(3, label, dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), false), p.get(1));
@@ -137,7 +138,8 @@ public abstract class AuxFSG {
 		if (!FSG.codeDFSRep.containsKey(codeStr))
 			FSG.codeDFSRep.put(codeStr, code);
 		for (DFSedge edge: code){
-			DFScode<DFSedge> coreCode = cloner.deepClone(code);
+			//DFScode<DFSedge> coreCode = cloner.deepClone(code);
+			DFScode<DFSedge> coreCode = code.deepClone();
 			coreCode.removeEdge(edge);
 			if (coreCode.get(0).getSourceId() == 1 || coreCode.get(0).getTargetId() == 1 ){
 				String codeCodeStr = coreCode.getMinDfsCode().dfsCodeToString();
