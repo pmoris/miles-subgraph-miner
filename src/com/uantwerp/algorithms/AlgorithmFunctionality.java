@@ -6,7 +6,7 @@ import java.util.Timer;
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.procedures.base.BuildMotif;
 import com.uantwerp.algorithms.procedures.fsg.FSG;
@@ -18,41 +18,45 @@ import com.uantwerp.algorithms.utilities.PrintUtility;
 public class AlgorithmFunctionality {
 
 	public void mainProcedure(Timer t1){
+//		Import graphs, labels, set of interest and background files and store as HashMaps and HashSets
 		HashGeneration.graphGeneration();
-		if (GraphPathParameters.verbose == 1) PrintUtility.printSummary();
-		GraphPathParameters.supportcutoff = AlgorithmUtility.supportTreshold();
-		if (GraphPathParameters.typeAlgorithm.equals("base")){
+		if (GraphParameters.verbose == 1) PrintUtility.printSummary();
+		GraphParameters.supportcutoff = AlgorithmUtility.supportTreshold();
+		if (GraphParameters.typeAlgorithm.equals("base")){
 			naiveRepresentationStart(t1);
-		}else if (GraphPathParameters.typeAlgorithm.equals("gspan")) {
+		}else if (GraphParameters.typeAlgorithm.equals("gspan")) {
 			gspanRepresentationStart(t1);
-		}else if (GraphPathParameters.typeAlgorithm.equals("fsg")) {
+		}else if (GraphParameters.typeAlgorithm.equals("fsg")) {
 			aprioriRepresentation(t1);
 		}else {
-			SubGraphMiningException.exceptionWrongAlgorithmChoice(GraphPathParameters.typeAlgorithm);
+			SubGraphMiningException.exceptionWrongAlgorithmChoice(GraphParameters.typeAlgorithm);
 		}
 	}
 			
 	private void naiveRepresentationStart(Timer t1){
-		for (int i = 0; i<GraphPathParameters.graph.possibleLabels.size(); i++){
-			if (GraphPathParameters.undirected == 0){
+		for (int i = 0; i<GraphParameters.graph.possibleLabels.size(); i++){
+			if (GraphParameters.undirected == 0){
+//				For directed graphs, generate potential self-loops i -> i (cannot occur in undirected graph)
 				DFScode<DFSedge> motif = new DFScode<>();
-				motif.add(new DFSedge(1,GraphPathParameters.graph.possibleLabels.get(i),1,GraphPathParameters.graph.possibleLabels.get(i),true));				
-				BuildMotif.build_motif(motif,GraphPathParameters.graph.bgnodes);
+				motif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),1,GraphParameters.graph.possibleLabels.get(i),true));				
+				BuildMotif.build_motif(motif,GraphParameters.graph.bgnodes);
 			}
-			for (int j = 0; j < GraphPathParameters.graph.possibleLabels.size(); j++){
-				if (GraphPathParameters.undirected == 1){
+			for (int j = 0; j < GraphParameters.graph.possibleLabels.size(); j++){
+				if (GraphParameters.undirected == 1){
+//				For undirected graphs, generate motifs i -> j
 					DFScode<DFSedge> forwardmotif = new DFScode<>();
-					forwardmotif.add(new DFSedge(1,GraphPathParameters.graph.possibleLabels.get(i),2,GraphPathParameters.graph.possibleLabels.get(j),true));
-					BuildMotif.build_motif_und(forwardmotif,GraphPathParameters.graph.bgnodes);
+					forwardmotif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),2,GraphParameters.graph.possibleLabels.get(j),true));
+					BuildMotif.build_motif_und(forwardmotif,GraphParameters.graph.bgnodes);
 				}else{
-					//Single edge to start building from
+//				For directed graphs, generate both motifs i -> j and j -> i
+//					Single edge to start building from
 					DFScode<DFSedge> forwardmotif = new DFScode<>();
-					forwardmotif.add(new DFSedge(1,GraphPathParameters.graph.possibleLabels.get(i),2,GraphPathParameters.graph.possibleLabels.get(j),true));
-					BuildMotif.build_motif(forwardmotif,GraphPathParameters.graph.bgnodes);
-					//Single edge to start building from
+					forwardmotif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),2,GraphParameters.graph.possibleLabels.get(j),true));
+					BuildMotif.build_motif(forwardmotif,GraphParameters.graph.bgnodes);
+//					Single edge to start building from
 					DFScode<DFSedge> backwardmotif = new DFScode<>();
-					backwardmotif.add(new DFSedge(2,GraphPathParameters.graph.possibleLabels.get(i),1,GraphPathParameters.graph.possibleLabels.get(j),true));
-					BuildMotif.build_motif(backwardmotif,GraphPathParameters.graph.bgnodes);
+					backwardmotif.add(new DFSedge(2,GraphParameters.graph.possibleLabels.get(i),1,GraphParameters.graph.possibleLabels.get(j),true));
+					BuildMotif.build_motif(backwardmotif,GraphParameters.graph.bgnodes);
 				}
 			}
 		}
@@ -60,7 +64,7 @@ public class AlgorithmFunctionality {
 		recalculateAndPrintResults(t1);
 	}
 	
-	//for a start this representation works only with undirected graphs, if you pic this with directed we gen an exception
+//	for a start this representation works only with undirected graphs, if you pick this with directed we get an exception
 	private void gspanRepresentationStart(Timer t1){
 		GSpan.startAlgorithm();
 		printStatistics();
@@ -76,25 +80,25 @@ public class AlgorithmFunctionality {
 	
 //	public void printGraphVariables(){
 //		System.out.println("print graph");
-//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.edgeHash);
+//		PrintUtility.printHasMapHashSet(GraphParameters.graph.edgeHash);
 //		System.out.println("print reverse graph");
-//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseEdgeHash);
+//		PrintUtility.printHasMapHashSet(GraphParameters.graph.reverseEdgeHash);
 //		System.out.println("print labels");
-//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.vertex);
+//		PrintUtility.printHasMapHashSet(GraphParameters.graph.vertex);
 //		System.out.println("print reverse labels");
-//		PrintUtility.printHasMapHashSet(GraphPathParameters.graph.reverseVertex);
+//		PrintUtility.printHasMapHashSet(GraphParameters.graph.reverseVertex);
 //		System.out.println("print possible labels");
-//		PrintUtility.printListString(GraphPathParameters.graph.possibleLabels);
-//		System.out.println("print group, size: " + GraphPathParameters.graph.group.size());
-//		PrintUtility.printHSetString(GraphPathParameters.graph.group);
+//		PrintUtility.printListString(GraphParameters.graph.possibleLabels);
+//		System.out.println("print group, size: " + GraphParameters.graph.group.size());
+//		PrintUtility.printHSetString(GraphParameters.graph.group);
 //		System.out.println("print bgnodes");
-//		PrintUtility.printHashSet(GraphPathParameters.graph.bgnodes);
+//		PrintUtility.printHashSet(GraphParameters.graph.bgnodes);
 //		System.out.println("Label hash");
-//		PrintUtility.printHasMap2(GraphPathParameters.graph.labelHash);
+//		PrintUtility.printHasMap2(GraphParameters.graph.labelHash);
 //	}
 	
 	public static void printStatistics(){
-//		if (GraphPathParameters.verbose == 1){
+//		if (GraphParameters.verbose == 1){
 			System.out.println("After looking through the graph the following statistics were found");
 			System.out.println(MiningState.checkedmotifs.size() + " checked graph were discovered");
 			System.out.println("Of which " + MiningState.freqmotifs.size() + " are frequent");
@@ -104,10 +108,10 @@ public class AlgorithmFunctionality {
 	
 	private void recalculateAndPrintResults(Timer t1){
 		int i = 0;
-		if (!GraphPathParameters.graph.group.isEmpty()){
-			Double bonferonni = GraphPathParameters.pvalue / MiningState.sigmotifs.size();
-			if (GraphPathParameters.verbose == 1) System.out.println("Checked: " + MiningState.sigmotifs.size() + " subgraphs");
-			if (GraphPathParameters.verbose == 1) System.out.println("Bonferonni-corrected P-value cutoff =  "+bonferonni);
+		if (!GraphParameters.graph.group.isEmpty()){
+			Double bonferonni = GraphParameters.pvalue / MiningState.sigmotifs.size();
+			if (GraphParameters.verbose == 1) System.out.println("Checked: " + MiningState.sigmotifs.size() + " subgraphs");
+			if (GraphParameters.verbose == 1) System.out.println("Bonferonni-corrected P-value cutoff =  "+bonferonni);
 			Iterator<String> it = MiningState.sigmotifs.keySet().iterator();
 			String message ="Motif \t FreqS \t FreqT \t Pvalue \t";
 			while (it.hasNext()){
@@ -117,8 +121,8 @@ public class AlgorithmFunctionality {
 					i++;
 				}
 			}
-			if (!GraphPathParameters.output.equals("none")){
-				FileUtility.writeFile(GraphPathParameters.output, message.replace(" ", ""));
+			if (!GraphParameters.output.equals("none")){
+				FileUtility.writeFile(GraphParameters.output, message.replace(" ", ""));
 			}else{
 				System.out.println(message.replace(" ", ""));
 			}
@@ -129,7 +133,7 @@ public class AlgorithmFunctionality {
 				System.out.println(key + "\t" + MiningState.freqmotifs.get(key));
 			}
 		}
-//		if (GraphPathParameters.verbose == 1) 
+//		if (GraphParameters.verbose == 1) 
 			System.out.println("Significant graphs after Bonferroni: "+ i);
 		VariablesTimer.finishProcess();
 		t1.cancel();

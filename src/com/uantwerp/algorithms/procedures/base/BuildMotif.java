@@ -12,7 +12,7 @@ import java.util.List;
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 
 /**
@@ -39,9 +39,9 @@ public abstract class BuildMotif {
 			nodesources.put(motifs.get(i).getSourceId(), (nodesources.containsKey(motifs.get(i).getSourceId())?nodesources.get(motifs.get(i).getSourceId())+1:1));
 		}
 		int maxId = motiflabels.size();
-		if (GraphPathParameters.verbose==1) System.out.println("Starting on "+motifString);
+		if (GraphParameters.verbose==1) System.out.println("Starting on "+motifString);
 		
-		Iterator<String> it = GraphPathParameters.graph.group.iterator();
+		Iterator<String> it = GraphParameters.graph.group.iterator();
 		checkgroup: while(it.hasNext()){//Check each interesting node if they are a root node
 			String keyValue = it.next();
 			//Check if part of the prevhit set
@@ -50,7 +50,7 @@ public abstract class BuildMotif {
 			checkedgroupnodes++;
 			
 			//Check if first node matches label (otherwise skip)
-			if (!GraphPathParameters.graph.vertex.get(keyValue).contains(motiflabels.get(1))){continue checkgroup;	}
+			if (!GraphParameters.graph.vertex.get(keyValue).contains(motiflabels.get(1))){continue checkgroup;	}
 
 			HashMap<Integer,String> supmatch = new HashMap<>();
 			supmatch.put(1, keyValue);
@@ -65,7 +65,7 @@ public abstract class BuildMotif {
 		MiningState.checkedmotifs.put(motifString, hitSupport);
 		
 		//Stop with this subgraph if it did not pass the required support
-		if (hitSupport < GraphPathParameters.supportcutoff){ 
+		if (hitSupport < GraphParameters.supportcutoff){ 
 			return biggerfim;
 		}
 		
@@ -75,22 +75,22 @@ public abstract class BuildMotif {
 		while (it2.hasNext()){
 			String node = it2.next();
 			//Check if already run with group nodes
-			if (GraphPathParameters.graph.group.contains(node)){
+			if (GraphParameters.graph.group.contains(node)){
 				if (hitNodes.contains(node)){
 					totalsupport++;
 				}
 				continue;
 			}
 			//Check if first node matches label (otherwise skip) and has the required edges
-			if (!GraphPathParameters.graph.vertex.get(node).contains(motiflabels.get(1))){continue;}
+			if (!GraphParameters.graph.vertex.get(node).contains(motiflabels.get(1))){continue;}
 			if (nodesources.containsKey(1)){
-				if (GraphPathParameters.graph.edgeHash.containsKey(node)){
-					if (GraphPathParameters.graph.edgeHash.get(node).size() < nodesources.get(1)) continue;
+				if (GraphParameters.graph.edgeHash.containsKey(node)){
+					if (GraphParameters.graph.edgeHash.get(node).size() < nodesources.get(1)) continue;
 				}else continue;
 			}
 			if (nodetargets.containsKey(1)){
-				if (GraphPathParameters.graph.reverseEdgeHash.containsKey(node)){
-					if (GraphPathParameters.graph.reverseEdgeHash.get(node).size() < nodetargets.get(1)) continue;
+				if (GraphParameters.graph.reverseEdgeHash.containsKey(node)){
+					if (GraphParameters.graph.reverseEdgeHash.get(node).size() < nodetargets.get(1)) continue;
 				}else continue;
 			}
 			
@@ -107,7 +107,7 @@ public abstract class BuildMotif {
 		//Calculate significance
 		double prob = AlgorithmUtility.getProbability(prevhits.size(),checkedgroupnodes, totalsupport, hitSupport);
 		
-		if(GraphPathParameters.verbose==1) System.out.println(motifString+"\t"+hitSupport+"\t"+totalsupport+"\t"+prob);
+		if(GraphParameters.verbose==1) System.out.println(motifString+"\t"+hitSupport+"\t"+totalsupport+"\t"+prob);
 		
 		MiningState.sigmotifs.put(motifString, prob);
 		MiningState.freqmotifs.put(motifString, totalsupport);
@@ -128,10 +128,10 @@ public abstract class BuildMotif {
 			}
 			
 			//Try adding a new edge with every possible label
-			for (int i = 0; i<GraphPathParameters.graph.possibleLabels.size(); i++){
-				DFSedge forwardedge = new DFSedge(sourceId, motiflabels.get(sourceId), maxId+1, GraphPathParameters.graph.possibleLabels.get(i));
+			for (int i = 0; i<GraphParameters.graph.possibleLabels.size(); i++){
+				DFSedge forwardedge = new DFSedge(sourceId, motiflabels.get(sourceId), maxId+1, GraphParameters.graph.possibleLabels.get(i));
 				potentialedges.add(forwardedge);
-				DFSedge backwardedge = new DFSedge(maxId+1, GraphPathParameters.graph.possibleLabels.get(i),sourceId, motiflabels.get(sourceId));
+				DFSedge backwardedge = new DFSedge(maxId+1, GraphParameters.graph.possibleLabels.get(i),sourceId, motiflabels.get(sourceId));
 				potentialedges.add(backwardedge);
 			}
 			
@@ -139,7 +139,7 @@ public abstract class BuildMotif {
 				DFScode<DFSedge> newmotif = new DFScode<>();
 				newmotif.addAll(motifs);
 				newmotif.add(potentialedges.get(i));
-				if (newmotif.maxVertexIndexNaive() > GraphPathParameters.maxsize)
+				if (newmotif.maxVertexIndexNaive() > GraphParameters.maxsize)
 					continue TARGETLOOP;
 				String newmotifString = AlgorithmUtility.getStringMotifs(newmotif);
 				DFScode<DFSedge> optnewmotif = new DFScode<>();
@@ -148,7 +148,7 @@ public abstract class BuildMotif {
 				}else{
 					optnewmotif = OptimizeMotif.optimizeMotif(newmotif);
 					MiningState.motiftransformations.put(newmotifString, AlgorithmUtility.getStringMotifs(optnewmotif));
-					if (GraphPathParameters.verbose==1) System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newmotif)+" into: "+AlgorithmUtility.getStringMotifs(optnewmotif));
+					if (GraphParameters.verbose==1) System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newmotif)+" into: "+AlgorithmUtility.getStringMotifs(optnewmotif));
 					newmotifString = AlgorithmUtility.getStringMotifs(optnewmotif);
 				}
 				if (MiningState.checkedmotifs.containsKey(newmotifString)){
@@ -181,7 +181,7 @@ public abstract class BuildMotif {
 		int maxId = motiflabels.size();
 //		if (GraphPathParameters.verbose==1) System.out.println("Starting on "+ motifString);
 		
-		Iterator<String> it = GraphPathParameters.graph.group.iterator();
+		Iterator<String> it = GraphParameters.graph.group.iterator();
 		checkgroup: while(it.hasNext()){//Check each interesting node if they are a root node
 			String keyValue = it.next();
 			//Check if part of the prevhit set
@@ -190,7 +190,7 @@ public abstract class BuildMotif {
 			checkedgroupnodes++;
 			
 			//Check if first node matches label (otherwise skip)
-			if (!GraphPathParameters.graph.vertex.get(keyValue).contains(motiflabels.get(1))){ continue checkgroup;}
+			if (!GraphParameters.graph.vertex.get(keyValue).contains(motiflabels.get(1))){ continue checkgroup;}
 			
 			HashMap<Integer,String> supmatch = new HashMap<>();
 			supmatch.put(1, keyValue);
@@ -205,7 +205,7 @@ public abstract class BuildMotif {
 		MiningState.checkedmotifs.put(motifString, hitSupport);
 		
 		//Stop with this subgraph if it did not pass the required support
-		if (hitSupport < GraphPathParameters.supportcutoff){ 
+		if (hitSupport < GraphParameters.supportcutoff){ 
 			return biggerfim;
 		}
 		
@@ -214,20 +214,20 @@ public abstract class BuildMotif {
 		while (it2.hasNext()){
 			String node = it2.next();
 			//Check if already run with group nodes
-			if (GraphPathParameters.graph.group.contains(node)){
+			if (GraphParameters.graph.group.contains(node)){
 				if (hitNodes.contains(node)){
 					totalsupport++;
 				}
 				continue;
 			}
 			//Check if first node matches label (otherwise skip) and has the required edges
-			if (!GraphPathParameters.graph.vertex.get(node).contains(motiflabels.get(1))){ continue; }
+			if (!GraphParameters.graph.vertex.get(node).contains(motiflabels.get(1))){ continue; }
 			if (nodesources.containsKey(1)){
 				int c = 0;
-				if (GraphPathParameters.graph.edgeHash.containsKey(node))
-					c += GraphPathParameters.graph.edgeHash.get(node).size();
-				if (GraphPathParameters.graph.reverseEdgeHash.containsKey(node))
-					c += GraphPathParameters.graph.reverseEdgeHash.get(node).size();
+				if (GraphParameters.graph.edgeHash.containsKey(node))
+					c += GraphParameters.graph.edgeHash.get(node).size();
+				if (GraphParameters.graph.reverseEdgeHash.containsKey(node))
+					c += GraphParameters.graph.reverseEdgeHash.get(node).size();
 				if (c < nodesources.get(1)) { continue; }
 			}
 			
@@ -244,7 +244,7 @@ public abstract class BuildMotif {
 		//Calculate significance
 		double prob = AlgorithmUtility.getProbability(prevhits.size(),checkedgroupnodes, totalsupport, hitSupport);
 		
-		if(GraphPathParameters.verbose==1) System.out.println(motifString+"\t"+hitSupport+"\t"+totalsupport+"\t"+prob);
+		if(GraphParameters.verbose==1) System.out.println(motifString+"\t"+hitSupport+"\t"+totalsupport+"\t"+prob);
 		
 		MiningState.sigmotifs.put(motifString, prob);
 		MiningState.freqmotifs.put(motifString, totalsupport);
@@ -269,8 +269,8 @@ public abstract class BuildMotif {
 			}
 			
 			//Try adding a new edge with every possible label
-			for (int i = 0; i<GraphPathParameters.graph.possibleLabels.size(); i++){
-				DFSedge forwardedge = new DFSedge(sourceId, motiflabels.get(sourceId), maxId+1, GraphPathParameters.graph.possibleLabels.get(i));
+			for (int i = 0; i<GraphParameters.graph.possibleLabels.size(); i++){
+				DFSedge forwardedge = new DFSedge(sourceId, motiflabels.get(sourceId), maxId+1, GraphParameters.graph.possibleLabels.get(i));
 				potentialedges.add(forwardedge);
 			}
 			
@@ -278,7 +278,7 @@ public abstract class BuildMotif {
 				DFScode<DFSedge> newmotif = new DFScode<>();
 				newmotif.addAll(motifs);
 				newmotif.add(potentialedges.get(i));
-				if (newmotif.maxVertexIndexNaive() > GraphPathParameters.maxsize)
+				if (newmotif.maxVertexIndexNaive() > GraphParameters.maxsize)
 					continue TARGETLOOP;
 				String newmotifString = AlgorithmUtility.getStringMotifs(newmotif);
 				DFScode<DFSedge> optnewmotif = new DFScode<>();

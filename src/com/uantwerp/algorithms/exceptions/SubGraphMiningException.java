@@ -26,6 +26,10 @@ public abstract class SubGraphMiningException {
 	public static void exceptionDirNotExists(String dirpath){
 		throw new CustomizedUncheckedException(dirpath + " directory could not be found.");
 	}
+
+	public static void exceptionBackgroundWithoutInterest() {
+		throw new CustomizedUncheckedException("When a background file is supplied, the interest file is required as well.");
+	}
 	
 	public static void exceptionNoFileSingleLabel(){
 		throw new CustomizedUncheckedException("Label file is needed when the single-label parameter is selected.");
@@ -36,7 +40,7 @@ public abstract class SubGraphMiningException {
 //			System.exit(1);
 //		} 
 	}
-	
+
 	public static void exceptionWrongAlgorithmChoice(String algorithm){
 //		try {
 //			throw new Exception(algorithm);
@@ -51,9 +55,9 @@ public abstract class SubGraphMiningException {
 		throw new CustomizedUncheckedException("Please provide a valid value for the option " + argument + ".");
 	}
 	
-	public static void exceptionNoVertexInLabels(String node){
+	public static void exceptionVertexNotFound(String node, String type){
 		try {
-			System.out.println(node + " not in graph, excluded from interesting vertices");
+			System.out.println(node + " not in graph, excluded from " + type + " vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,4 +95,5 @@ public abstract class SubGraphMiningException {
 			e.printStackTrace();
 		}
 	}
+
 }

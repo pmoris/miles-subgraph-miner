@@ -59,6 +59,15 @@ public class SubgraphMiningGUI {
 	private JCheckBox checkBoxShowStatistics;
 	private JCheckBox checkBoxVerbose;
 	private JTextArea textAreaProgressReport;
+	private JCheckBox checkBoxDebug;
+
+	public JCheckBox getCheckBoxDebug() {
+		return checkBoxDebug;
+	}
+
+	public void setCheckBoxDebug(JCheckBox checkBoxDebug) {
+		this.checkBoxDebug = checkBoxDebug;
+	}
 
 	public JTextField getTextGraphFile() {
 		return textGraphFile;
@@ -533,9 +542,9 @@ public class SubgraphMiningGUI {
 		JPanel panelAdvanced = new JPanel();
 		tabbedPaneOptions.addTab("Advanced options", null, panelAdvanced, null);
 		GridBagLayout gbl_panelAdvanced = new GridBagLayout();
-		gbl_panelAdvanced.columnWidths = new int[]{10, 10, 200, 10};
+		gbl_panelAdvanced.columnWidths = new int[]{10, 10, 111, 0, 10};
 		gbl_panelAdvanced.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_panelAdvanced.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE, 0.0};
+		gbl_panelAdvanced.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE, 0.0, 0.0};
 		gbl_panelAdvanced.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelAdvanced.setLayout(gbl_panelAdvanced);
 		
@@ -549,12 +558,22 @@ public class SubgraphMiningGUI {
 		
 		textFieldSupport = new JTextField();
 		GridBagConstraints gbc_textFieldSupport = new GridBagConstraints();
-		gbc_textFieldSupport.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldSupport.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldSupport.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldSupport.gridx = 2;
 		gbc_textFieldSupport.gridy = 1;
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
+		
+		checkBoxShowStatistics = new JCheckBox("Show memory statistics");
+		checkBoxShowStatistics.setToolTipText("Log additional information about memory usage.");
+		GridBagConstraints gbc_checkBoxShowStatistics = new GridBagConstraints();
+		gbc_checkBoxShowStatistics.insets = new Insets(0, 0, 5, 0);
+		gbc_checkBoxShowStatistics.anchor = GridBagConstraints.NORTHWEST;
+		gbc_checkBoxShowStatistics.gridx = 4;
+		gbc_checkBoxShowStatistics.gridy = 1;
+		gbc_checkBoxShowStatistics.gridwidth = 2;
+		panelAdvanced.add(checkBoxShowStatistics, gbc_checkBoxShowStatistics);
 		
 		checkBoxNestedPValue = new JCheckBox("Nested p-value", false);
 		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = true).");
@@ -566,24 +585,22 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxPValue.gridy = 2;
 		panelAdvanced.add(checkBoxNestedPValue, gbc_checkBoxPValue);
 		
-		checkBoxShowStatistics = new JCheckBox("Show memory statistics");
-		checkBoxShowStatistics.setToolTipText("Log additional information about memory usage.");
-		GridBagConstraints gbc_checkBoxShowStatistics = new GridBagConstraints();
-		gbc_checkBoxShowStatistics.insets = new Insets(0, 0, 5, 5);
-		gbc_checkBoxShowStatistics.anchor = GridBagConstraints.NORTHWEST;
-		gbc_checkBoxShowStatistics.gridx = 1;
-		gbc_checkBoxShowStatistics.gridy = 3;
-		gbc_checkBoxShowStatistics.gridwidth = 2;
-		panelAdvanced.add(checkBoxShowStatistics, gbc_checkBoxShowStatistics);
+		checkBoxDebug = new JCheckBox("Debug mode");
+		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
+		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxNewCheckBox.gridx = 4;
+		gbc_chckbxNewCheckBox.gridy = 2;
+		panelAdvanced.add(checkBoxDebug, gbc_chckbxNewCheckBox);
 		
 		checkBoxVerbose = new JCheckBox("Verbose");
 		checkBoxVerbose.setToolTipText("Additional logging information.");
 		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
-		gbc_checkBoxVerbose.insets = new Insets(0, 0, 0, 5);
+		gbc_checkBoxVerbose.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxVerbose.gridwidth = 2;
-		gbc_checkBoxVerbose.gridx = 1;
-		gbc_checkBoxVerbose.gridy = 4;
+		gbc_checkBoxVerbose.gridx = 4;
+		gbc_checkBoxVerbose.gridy = 3;
 		panelAdvanced.add(checkBoxVerbose, gbc_checkBoxVerbose);
 		
 //		Output files panel

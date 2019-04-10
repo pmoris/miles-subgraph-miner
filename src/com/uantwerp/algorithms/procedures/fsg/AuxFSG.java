@@ -10,7 +10,7 @@ import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.Edge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.common.History;
 import com.uantwerp.algorithms.common.PairStrValues;
 import com.uantwerp.algorithms.procedures.gspan.AuxiliaryFunctions;
@@ -32,11 +32,11 @@ public abstract class AuxFSG {
 			for (HashMap<Integer, String> p : projected) {
 				History history = new History(dfsCode, p);	
 				/**************************** Self Edge *************************/
-				if (GraphPathParameters.undirected == 0){
+				if (GraphParameters.undirected == 0){
 					Edge selfEdge = new Edge();
-					selfEdge = EdgeFunctions.getSelfEdge(GraphPathParameters.graph, history.edges.get(0), history, dfsCode.get(0).isOrdered());
+					selfEdge = EdgeFunctions.getSelfEdge(GraphParameters.graph, history.edges.get(0), history, dfsCode.get(0).isOrdered());
 					if (selfEdge != null) {
-						for (String label: GraphPathParameters.graph.vertex.get(selfEdge.to)){
+						for (String label: GraphParameters.graph.vertex.get(selfEdge.to)){
 //							DFScode<DFSedge> code = new DFScode<>();
 //							code.addAll(dfsCode);
 							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
@@ -49,11 +49,11 @@ public abstract class AuxFSG {
 						}
 					}
 				}
-				if (GraphPathParameters.maxsize > 2){
+				if (GraphParameters.maxsize > 2){
 					/********************** Pure forward **********************/
-					List<Edge> edges = EdgeFunctions.getForwardPureEdge(GraphPathParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
+					List<Edge> edges = EdgeFunctions.getForwardPureEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 					for (Edge e : edges) {						
-						for (String label: GraphPathParameters.graph.vertex.get(e.to)){
+						for (String label: GraphParameters.graph.vertex.get(e.to)){
 							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered()?
 									new DFSedge(dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), 3, label):
@@ -65,10 +65,10 @@ public abstract class AuxFSG {
 						}
 					}
 					/********************** Pure forward incoming**********************/
-					if (GraphPathParameters.undirected == 0){
-						List<Edge> edgesIncoming = EdgeFunctions.getForwardPureIncomingEdge(GraphPathParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
+					if (GraphParameters.undirected == 0){
+						List<Edge> edgesIncoming = EdgeFunctions.getForwardPureIncomingEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 						for (Edge e : edgesIncoming) {													
-							for (String label: GraphPathParameters.graph.vertex.get(e.from)){
+							for (String label: GraphParameters.graph.vertex.get(e.from)){
 								DFScode<DFSedge> code = cloner.deepClone(dfsCode);
 								canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 									new DFSedge(3, label, dfsCode.get(0).getTargetId(), dfsCode.get(0).getTargetLabel(), false):
@@ -81,9 +81,9 @@ public abstract class AuxFSG {
 						}						
 					}
 					/**********************rmpath forward **********************/
-					List<Edge> edgesF = EdgeFunctions.getForwardRmpathEdge(GraphPathParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
+					List<Edge> edgesF = EdgeFunctions.getForwardRmpathEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 					for (Edge e : edgesF) {
-						for (String label: GraphPathParameters.graph.vertex.get(e.to)){
+						for (String label: GraphParameters.graph.vertex.get(e.to)){
 							DFScode<DFSedge> code = cloner.deepClone(dfsCode);
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 									new DFSedge(dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), 3, label):
@@ -93,10 +93,10 @@ public abstract class AuxFSG {
 						}
 					}	
 					/**********************rmpath forward incoming**********************/
-					if (GraphPathParameters.undirected == 0){
-						List<Edge> edgesRMPIncoming = EdgeFunctions.getForwardRmpathIncomingEdge(GraphPathParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
+					if (GraphParameters.undirected == 0){
+						List<Edge> edgesRMPIncoming = EdgeFunctions.getForwardRmpathIncomingEdge(GraphParameters.graph, history.edges.get(0), history,dfsCode.get(0).isOrdered());
 						for (Edge e : edgesRMPIncoming) {							
-							for (String label: GraphPathParameters.graph.vertex.get(e.from)){
+							for (String label: GraphParameters.graph.vertex.get(e.from)){
 								DFScode<DFSedge> code = cloner.deepClone(dfsCode);
 								canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered()?
 										new DFSedge(3, label, dfsCode.get(0).getSourceId(), dfsCode.get(0).getSourceLabel(), false):
@@ -175,15 +175,15 @@ public abstract class AuxFSG {
 	 */
 	public static void oneEdgeMotifs(){
 		String canCode = "";
-		for (String node: GraphPathParameters.graph.bgnodes){
-			for (String neighbord: GraphPathParameters.graph.getAllEdges(node, GraphPathParameters.graph)){
+		for (String node: GraphParameters.graph.bgnodes){
+			for (String neighbord: GraphParameters.graph.getAllEdges(node, GraphParameters.graph)){
 				//for a directed graph is finding only the outgoing edges, have to add condition for adding the incoming ones				
 				HashMap<Integer, String> match = new HashMap<>();
 				match.put(1, node);
 				match.put(2, neighbord);
-				if (GraphPathParameters.singleLabel==1){					
+				if (GraphParameters.singleLabel==1){					
 					DFScode<DFSedge> dfscode = new DFScode<>();
-					dfscode.add(new DFSedge(1, GraphPathParameters.graph.vertexOneLabel.get(node), 2, GraphPathParameters.graph.vertexOneLabel.get(neighbord)));
+					dfscode.add(new DFSedge(1, GraphParameters.graph.vertexOneLabel.get(node), 2, GraphParameters.graph.vertexOneLabel.get(neighbord)));
 					canCode = getCanCode(dfscode);
 					FSG.canCodeDFSCode.put(canCode, dfscode);
 					FSG.codeDFSRep.put(canCode, dfscode);
@@ -201,14 +201,14 @@ public abstract class AuxFSG {
 					}
 				}
 			}
-			if (GraphPathParameters.undirected == 0){
-				for(String neighbord: GraphPathParameters.graph.getIncomingEdges(node, GraphPathParameters.graph)){
+			if (GraphParameters.undirected == 0){
+				for(String neighbord: GraphParameters.graph.getIncomingEdges(node, GraphParameters.graph)){
 					HashMap<Integer, String> match = new HashMap<>();
 					match.put(1, node);
 					match.put(2, neighbord);
-					if (GraphPathParameters.singleLabel==1){					
+					if (GraphParameters.singleLabel==1){					
 						DFScode<DFSedge> dfscode = new DFScode<>();
-						dfscode.add(new DFSedge(2, GraphPathParameters.graph.vertexOneLabel.get(neighbord),1, GraphPathParameters.graph.vertexOneLabel.get(node), false));
+						dfscode.add(new DFSedge(2, GraphParameters.graph.vertexOneLabel.get(neighbord),1, GraphParameters.graph.vertexOneLabel.get(node), false));
 						canCode = getCanCode(dfscode);
 						FSG.canCodeDFSCode.put(canCode, dfscode);
 						FSG.codeDFSRep.put(canCode, dfscode);
@@ -240,8 +240,8 @@ public abstract class AuxFSG {
 	 */
 	private static HashSet<PairStrValues> getMixedLabels(String node, String neighbord){
 		HashSet<PairStrValues> mixedLbl = new HashSet<>();
-		for(String lbl1 :GraphPathParameters.graph.vertex.get(node)){
-			for(String lbl2 :GraphPathParameters.graph.vertex.get(neighbord)){
+		for(String lbl1 :GraphParameters.graph.vertex.get(node)){
+			for(String lbl2 :GraphParameters.graph.vertex.get(neighbord)){
 				mixedLbl.add(new PairStrValues(lbl1, lbl2));
 			}
 		}
@@ -251,7 +251,7 @@ public abstract class AuxFSG {
 	public static int calculateGroupSupport(HashSet<String> support){
 		HashSet<String> valueSet = new HashSet<>();
 		valueSet.addAll(support);
-		valueSet.retainAll(GraphPathParameters.graph.group);
+		valueSet.retainAll(GraphParameters.graph.group);
 		return valueSet.size();
 	}
 	
@@ -262,15 +262,15 @@ public abstract class AuxFSG {
 		HashSet<String> support = FSG.supportedNodes.get(canonicalCode);			
 		int groupSupport = calculateGroupSupport(support);			
 		MiningState.checkedmotifs.put(canonicalCode, groupSupport);
-		if (groupSupport < GraphPathParameters.supportcutoff){
+		if (groupSupport < GraphParameters.supportcutoff){
 			if (it2 != null)
 				it2.remove();
 			FSG.supportedNodes.remove(canonicalCode);
 		}else{
 			HashFuctions.updateHashHashSet(FSG.frequentGraphs, k, canonicalCode);
 			MiningState.freqmotifs.put(canonicalCode, support.size());
-			double prob = AlgorithmUtility.getProbability(0, GraphPathParameters.graph.group.size(), support.size(), groupSupport);
-			if (GraphPathParameters.verbose == 1)
+			double prob = AlgorithmUtility.getProbability(0, GraphParameters.graph.group.size(), support.size(), groupSupport);
+			if (GraphParameters.verbose == 1)
 				System.out.println(canonicalCode + "\t" + groupSupport + "\t" + support.size() + "\t" + prob);
 			MiningState.sigmotifs.put(canonicalCode, prob);
 		}

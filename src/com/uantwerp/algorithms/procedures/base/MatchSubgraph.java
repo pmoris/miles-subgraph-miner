@@ -11,7 +11,7 @@ import java.util.List;
 import com.rits.cloning.Cloner;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 
@@ -38,8 +38,8 @@ public 	abstract class MatchSubgraph {
 			}
 			if(!match.containsKey(ep.getTargetId())){
 				int matchFound = 0;
-				if (GraphPathParameters.graph.edgeHash.get(match.get(ep.getSourceId()))!=null) {
-					Iterator<String> it = GraphPathParameters.graph.edgeHash.get(match.get(ep.getSourceId())).iterator();
+				if (GraphParameters.graph.edgeHash.get(match.get(ep.getSourceId()))!=null) {
+					Iterator<String> it = GraphParameters.graph.edgeHash.get(match.get(ep.getSourceId())).iterator();
 					GRAPHTARGET: while(it.hasNext()){
 						String graphtarget = it.next();
 						
@@ -51,13 +51,13 @@ public 	abstract class MatchSubgraph {
 						
 						//If it is used later as a source node it needs to have at least some outgoing edges
 						if (edgesLoop.getEdgecountbynode().containsKey(ep.getTargetId())){
-							if (GraphPathParameters.graph.edgeHash.containsKey(graphtarget)){
-								if (GraphPathParameters.graph.edgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbynode().get(ep.getTargetId())){ continue GRAPHTARGET; }
+							if (GraphParameters.graph.edgeHash.containsKey(graphtarget)){
+								if (GraphParameters.graph.edgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbynode().get(ep.getTargetId())){ continue GRAPHTARGET; }
 							}else{ continue GRAPHTARGET; }
 						}
 						
-						if (GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget)){
-							if (GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).size()<edgesLoop.getEdgecountbytarget().get(ep.getTargetId())){ continue GRAPHTARGET; }
+						if (GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget)){
+							if (GraphParameters.graph.reverseEdgeHash.get(graphtarget).size()<edgesLoop.getEdgecountbytarget().get(ep.getTargetId())){ continue GRAPHTARGET; }
 						}else { continue GRAPHTARGET; }
 						
 						HashMap<Integer,String> trymatch = cloner.deepClone(match);
@@ -77,8 +77,8 @@ public 	abstract class MatchSubgraph {
 				}
 			}else if(!match.containsKey(ep.getSourceId())){
 				int matchFound = 0;
-				if (GraphPathParameters.graph.reverseEdgeHash.get(match.get(ep.getTargetId()))!=null) { 
-					Iterator<String> it = GraphPathParameters.graph.reverseEdgeHash.get(match.get(ep.getTargetId())).iterator();
+				if (GraphParameters.graph.reverseEdgeHash.get(match.get(ep.getTargetId()))!=null) { 
+					Iterator<String> it = GraphParameters.graph.reverseEdgeHash.get(match.get(ep.getTargetId())).iterator();
 					GRAPHTARGET: while(it.hasNext()){
 						String graphtarget = it.next();
 						
@@ -89,14 +89,14 @@ public 	abstract class MatchSubgraph {
 						if (AlgorithmUtility.checkLoops(ep.getSourceId(),edgesLoop.getFowloopedge(),edgesLoop.getBackloopedge(),match,graphtarget)){ continue GRAPHTARGET; }
 						
 						//If it is used later as a source node it needs to have at least some outgoing edges					
-						if (GraphPathParameters.graph.edgeHash.containsKey(graphtarget)){
-							if (GraphPathParameters.graph.edgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbynode().get(ep.getSourceId())){ continue GRAPHTARGET; }
+						if (GraphParameters.graph.edgeHash.containsKey(graphtarget)){
+							if (GraphParameters.graph.edgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbynode().get(ep.getSourceId())){ continue GRAPHTARGET; }
 						}else{ continue GRAPHTARGET; }
 						
 						//If it is used later as a target node it needs to have at least some incoming edges
 						if (edgesLoop.getEdgecountbytarget().containsKey(ep.getSourceId())){
-							if (GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget)){
-								if (GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbytarget().get(ep.getSourceId())){ continue GRAPHTARGET; }
+							if (GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget)){
+								if (GraphParameters.graph.reverseEdgeHash.get(graphtarget).size() < edgesLoop.getEdgecountbytarget().get(ep.getSourceId())){ continue GRAPHTARGET; }
 							}else { continue GRAPHTARGET; }
 						}
 						
@@ -115,8 +115,8 @@ public 	abstract class MatchSubgraph {
 					return null;
 				}
 			}else{
-				if (GraphPathParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
-					if (!GraphPathParameters.graph.edgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
+				if (GraphParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
+					if (!GraphParameters.graph.edgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
 						return null;
 					}
 				}else{
@@ -143,12 +143,12 @@ public 	abstract class MatchSubgraph {
 			if(!match.containsKey(ep.getTargetId())){
 				int matchFound = 0;
 				Iterator<String> it = Collections.emptyIterator();
-				if (GraphPathParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
-					it = GraphPathParameters.graph.edgeHash.get(match.get(ep.getSourceId())).iterator();
+				if (GraphParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
+					it = GraphParameters.graph.edgeHash.get(match.get(ep.getSourceId())).iterator();
 				}
 				Iterator<String> it2 = Collections.emptyIterator();
-				if (GraphPathParameters.graph.reverseEdgeHash.containsKey(match.get(ep.getSourceId()))){
-					it2 = GraphPathParameters.graph.reverseEdgeHash.get(match.get(ep.getSourceId())).iterator();
+				if (GraphParameters.graph.reverseEdgeHash.containsKey(match.get(ep.getSourceId()))){
+					it2 = GraphParameters.graph.reverseEdgeHash.get(match.get(ep.getSourceId())).iterator();
 				}
 				GRAPHTARGET: while(it.hasNext() || it2.hasNext()){
 					String graphtarget = "";
@@ -168,10 +168,10 @@ public 	abstract class MatchSubgraph {
 					//If it is used later as a source node it needs to have at least some outgoing edges
 					if (edgesLoop.getEdgecountbynode().containsKey(ep.getTargetId())){
 						int c = 0;
-						if (GraphPathParameters.graph.edgeHash.containsKey(graphtarget))
-							c += GraphPathParameters.graph.edgeHash.get(graphtarget).size();
-						if (GraphPathParameters.graph.reverseEdgeHash.containsKey(graphtarget))
-							c += GraphPathParameters.graph.reverseEdgeHash.get(graphtarget).size();
+						if (GraphParameters.graph.edgeHash.containsKey(graphtarget))
+							c += GraphParameters.graph.edgeHash.get(graphtarget).size();
+						if (GraphParameters.graph.reverseEdgeHash.containsKey(graphtarget))
+							c += GraphParameters.graph.reverseEdgeHash.get(graphtarget).size();
 						if (c < edgesLoop.getEdgecountbynode().get(ep.getTargetId()))
 							continue GRAPHTARGET;
 					}
@@ -192,13 +192,13 @@ public 	abstract class MatchSubgraph {
 				}
 			}else{
 				int check = 0; 
-				if (GraphPathParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
-					if (GraphPathParameters.graph.edgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
+				if (GraphParameters.graph.edgeHash.containsKey(match.get(ep.getSourceId()))){
+					if (GraphParameters.graph.edgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
 						check = 1;
 					}
 				}
-				if (GraphPathParameters.graph.reverseEdgeHash.containsKey(match.get(ep.getSourceId()))){
-					if (GraphPathParameters.graph.reverseEdgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
+				if (GraphParameters.graph.reverseEdgeHash.containsKey(match.get(ep.getSourceId()))){
+					if (GraphParameters.graph.reverseEdgeHash.get(match.get(ep.getSourceId())).contains(match.get(ep.getTargetId()))){
 						check = 1;
 					}
 				}

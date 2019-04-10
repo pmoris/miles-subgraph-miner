@@ -6,14 +6,23 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.FileUtility;
 
+/**
+ * Functionality to parse the cmd or gui flags and assign them to GraphParameter attributes.
+ * File contents are stored as Strings. Omitted flags will default to null.
+ * Invalid options will raise exceptions.
+ * Empty files will raise exceptions (see FileUtility class).
+ *
+ */
 public class ParameterConfig {
 
 	public static void transformCommandLine(CommandLine cmd, Options options){
 
+		if(cmd.hasOption("debug"))
+			SubgraphMining.DEBUG = true;
 		if(cmd.hasOption("h")){
 			printHelp(options);
 			System.exit(0);
@@ -23,75 +32,76 @@ public class ParameterConfig {
 				printHelp(options);
 			}else{
 				String graph = FileUtility.readFile(cmd.getOptionValue('g'));
-				GraphPathParameters.pathGraph = graph;
+				GraphParameters.graphFileContents = graph;
 			}
 			if(cmd.hasOption('l')){
 				String labels = FileUtility.readFile(cmd.getOptionValue('l'));
-				GraphPathParameters.pathLabels = labels;
+				GraphParameters.labelsFileContents = labels;
 			}
 			if(cmd.hasOption('b')){
 				String file = FileUtility.readFile(cmd.getOptionValue('b'));
-				GraphPathParameters.pathBgNodes = file;
+				GraphParameters.backgroundFileContents = file;
 			}
 			if(cmd.hasOption('i')){
 				String file = FileUtility.readFile(cmd.getOptionValue('i'));
-				GraphPathParameters.pathInterestFile = file;
+				GraphParameters.interestFileContents = file;
 			}
 			if(cmd.hasOption('s')) {
 				if (Integer.valueOf(cmd.getOptionValue('s')) >= 0)
-					GraphPathParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
+					GraphParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
 				else
 					SubGraphMiningException.exceptionInvalidValue("support");
 			}
 			else
-				GraphPathParameters.setDefaultSupport();
+				GraphParameters.setDefaultSupport();
 			if(cmd.hasOption('m'))
-				GraphPathParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
+				GraphParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
 			else
-				GraphPathParameters.setDefaultMaxSize();
+				GraphParameters.setDefaultMaxSize();
 			if(cmd.hasOption("singlelabel"))
-				GraphPathParameters.singleLabel = 1;
+				GraphParameters.singleLabel = 1;
 			else
-				GraphPathParameters.singleLabel = 0;
+				GraphParameters.singleLabel = 0;
 			if(cmd.hasOption('u'))
-				GraphPathParameters.undirected = 1;
+				GraphParameters.undirected = 1;
 			else
-				GraphPathParameters.undirected = 0;
+				GraphParameters.undirected = 0;
 			if(cmd.hasOption('v'))
-				GraphPathParameters.verbose = 1;
+				GraphParameters.verbose = 1;
 			else
-				GraphPathParameters.verbose = 0;
+				GraphParameters.verbose = 0;
 			if(cmd.hasOption('n'))
-				GraphPathParameters.nestedpval = 1;
+				GraphParameters.nestedpval = 1;
 			else
-				GraphPathParameters.nestedpval = 0;
+				GraphParameters.nestedpval = 0;
 			if(cmd.hasOption('p')) {
 				if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
-					GraphPathParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
+					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
 				else
 					SubGraphMiningException.exceptionInvalidValue("p-value");
 			}
 			else
-				GraphPathParameters.setDefaultPValue();
+				GraphParameters.setDefaultPValue();
 			if(cmd.hasOption('o')) {
-				if(new File(cmd.getOptionValue('o')).getParentFile().exists())
-					GraphPathParameters.output = cmd.getOptionValue('o');
+				File outDir = new File(cmd.getOptionValue('o')).getAbsoluteFile();
+				if (outDir.getParentFile().exists())
+					GraphParameters.output = outDir.getPath();
 				else
-					SubGraphMiningException.exceptionDirNotExists(new File(cmd.getOptionValue('o')).getParentFile().getAbsolutePath());
+					SubGraphMiningException.exceptionDirNotExists(outDir.getParent());
 			}
 			else
-				GraphPathParameters.output = "none";
+				GraphParameters.output = "none";
 			if (cmd.hasOption('a'))
-				GraphPathParameters.typeAlgorithm = cmd.getOptionValue('a');
+				GraphParameters.typeAlgorithm = cmd.getOptionValue('a');
 			else
-				GraphPathParameters.typeAlgorithm = "base";
+				GraphParameters.typeAlgorithm = "base";
 			/****************************************************************************/
 			//Find a way to make this part dynamical in case of no parameter
 			/****************************************************************************/			
 			if(cmd.hasOption("statistics"))
-				GraphPathParameters.statistics = cmd.getOptionValue("statistics");
+				GraphParameters.statistics = cmd.getOptionValue("statistics");
 			else
-				GraphPathParameters.statistics = "";
+				GraphParameters.statistics = "";
 
 		}
 	}
@@ -102,8 +112,8 @@ public class ParameterConfig {
 	}
 	
 	public static void resetVariables(){
-		GraphPathParameters.reset();
-		GraphPathParameters.graph.resetGraph();
+		GraphParameters.reset();
+		GraphParameters.graph.resetGraph();
 		MiningState.resetMiningState();
 	}
 
@@ -122,71 +132,75 @@ public class ParameterConfig {
 			Boolean nestedPValue,
 			Boolean showStatistics,
 			Boolean verbose,
-			String areaProgressReport) {
+			String areaProgressReport,
+			Boolean debugCheckBox) {
 
+		if (debugCheckBox)
+			SubgraphMining.DEBUG = true;
 		if(graphPath.isEmpty()){
-			SubGraphMiningException.exceptionNoFileProvided("network");
+			SubGraphMiningException.exceptionNoFileProvided("graph");
 		}else{
 			String graph = FileUtility.readFile(graphPath);
-			GraphPathParameters.pathGraph = graph;
+			GraphParameters.graphFileContents = graph;
 		}
 		if(!labelsPath.isEmpty()){
 			String labels = FileUtility.readFile(labelsPath);
-			GraphPathParameters.pathLabels = labels;
+			GraphParameters.labelsFileContents = labels;
 		}
 		if(!backgroundPath.isEmpty()){
 			String background = FileUtility.readFile(backgroundPath);
-			GraphPathParameters.pathBgNodes = background;
+			GraphParameters.backgroundFileContents = background;
 		}
 		if(!interestingPath.isEmpty()){
 			String interesting = FileUtility.readFile(interestingPath);
-			GraphPathParameters.pathInterestFile = interesting;
+			GraphParameters.interestFileContents = interesting;
 		}
 		if(!support.isEmpty()) {
 			if (Integer.valueOf(support) >= 0)
-				GraphPathParameters.supportcutoff = Integer.valueOf(support);
+				GraphParameters.supportcutoff = Integer.valueOf(support);
 			else
 				SubGraphMiningException.exceptionInvalidValue("support");
 		}
 		else
-			GraphPathParameters.setDefaultSupport();
+			GraphParameters.setDefaultSupport();
 		if(!verticesSize.isEmpty())
-			GraphPathParameters.maxsize = Integer.valueOf(verticesSize);
+			GraphParameters.maxsize = Integer.valueOf(verticesSize);
 		else
-			GraphPathParameters.setDefaultMaxSize();
+			GraphParameters.setDefaultMaxSize();
 		if(singleLabel)
-			GraphPathParameters.singleLabel = 1;
+			GraphParameters.singleLabel = 1;
 		else
-			GraphPathParameters.singleLabel = 0;
+			GraphParameters.singleLabel = 0;
 		if(undirected)
-			GraphPathParameters.undirected = 1;
+			GraphParameters.undirected = 1;
 		else
-			GraphPathParameters.undirected = 0;
+			GraphParameters.undirected = 0;
 		if(verbose)
-			GraphPathParameters.verbose = 1;
+			GraphParameters.verbose = 1;
 		else
-			GraphPathParameters.verbose = 0;
+			GraphParameters.verbose = 0;
 		if(nestedPValue)
-			GraphPathParameters.nestedpval = 1;
+			GraphParameters.nestedpval = 1;
 		else
-			GraphPathParameters.nestedpval = 0;
+			GraphParameters.nestedpval = 0;
 		if(!pValue.isEmpty()) {
 			if (Double.valueOf(pValue) <= 1 && Double.valueOf(pValue) >= 0)
-				GraphPathParameters.pvalue = Double.valueOf(pValue);
+				GraphParameters.pvalue = Double.valueOf(pValue);
 			else
 				SubGraphMiningException.exceptionInvalidValue("p-value");
 		}
 		else
-			GraphPathParameters.setDefaultPValue();
+			GraphParameters.setDefaultPValue();
 		if(!savePath.isEmpty()) {
-			if(new File(savePath).getParentFile().exists())			
-				GraphPathParameters.output = savePath;
+			File outDir = new File(savePath).getAbsoluteFile();
+			if (outDir.getParentFile().exists())
+				GraphParameters.output = outDir.getPath();
 			else
-				SubGraphMiningException.exceptionDirNotExists(new File(savePath).getParentFile().getAbsolutePath());
-		}
+				SubGraphMiningException.exceptionDirNotExists(outDir.getParent());
+			}
 		else
-			GraphPathParameters.output = "none";
-		GraphPathParameters.typeAlgorithm = algorithm;
+			GraphParameters.output = "none";
+		GraphParameters.typeAlgorithm = algorithm;
 //		if(showStatistics)
 //			GraphPathParameters.statistics = ;
 //		else

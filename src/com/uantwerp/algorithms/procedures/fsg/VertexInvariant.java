@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.uantwerp.algorithms.common.Graph;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.utilities.HashFuctions;
 import com.uantwerp.algorithms.utilities.MapUtil;
 
@@ -78,7 +78,7 @@ public class VertexInvariant {
 			for (String node : neighbords) {
 				int index = getIndexElement(node);
 				matrix[i][index] = 1;
-				if (GraphPathParameters.undirected == 1) {
+				if (GraphParameters.undirected == 1) {
 					matrix[index][i] = 1;
 				}
 			}				
@@ -139,7 +139,7 @@ public class VertexInvariant {
 	
 	private Integer getPosFirstElementLabel(int i){
 		int pos = 0;
-		if (GraphPathParameters.undirected == 1){
+		if (GraphParameters.undirected == 1){
 			for (int j=i; j<identifier.length; j++){
 				if (matrix[i][j] == 1){
 					return j;
@@ -170,7 +170,7 @@ public class VertexInvariant {
 	public String getRepresentation() {
 		if (identifier == null)
 			return "";
-		if (GraphPathParameters.undirected == 1)
+		if (GraphParameters.undirected == 1)
 			return getUndirectedRepresentation();
 		else
 			return getDirectedRepresentation();

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 
 public class MapUtil {
@@ -28,11 +28,11 @@ public class MapUtil {
 				if (op1.getLenghtToOne() == op2.getLenghtToOne())
 					if (op1.getOutgoingEdges() == op2.getOutgoingEdges())
 						if (op1.getIncomingEdges() == op2.getIncomingEdges()) {
-							if (GraphPathParameters.graph.labelHash
-									.get(op1.getLabel()) == GraphPathParameters.graph.labelHash.get(op2.getLabel()))
+							if (GraphParameters.graph.labelHash
+									.get(op1.getLabel()) == GraphParameters.graph.labelHash.get(op2.getLabel()))
 								return o1.getKey().compareTo(o2.getKey());
-							else if (GraphPathParameters.graph.labelHash
-									.get(op1.getLabel()) > GraphPathParameters.graph.labelHash.get(op2.getLabel()))
+							else if (GraphParameters.graph.labelHash
+									.get(op1.getLabel()) > GraphParameters.graph.labelHash.get(op2.getLabel()))
 								return 1;
 							else
 								return -1;
@@ -65,11 +65,11 @@ public class MapUtil {
 
 				if (op1.getLenghtToOne() == op2.getLenghtToOne())
 					if (op1.getOutgoingEdges() == op2.getOutgoingEdges()) {
-						if (GraphPathParameters.graph.labelHash
-								.get(op1.getLabel()) == GraphPathParameters.graph.labelHash.get(op2.getLabel()))
+						if (GraphParameters.graph.labelHash
+								.get(op1.getLabel()) == GraphParameters.graph.labelHash.get(op2.getLabel()))
 							return o1.getKey().compareTo(o2.getKey());
-						else if (GraphPathParameters.graph.labelHash
-								.get(op1.getLabel()) > GraphPathParameters.graph.labelHash.get(op2.getLabel()))
+						else if (GraphParameters.graph.labelHash
+								.get(op1.getLabel()) > GraphParameters.graph.labelHash.get(op2.getLabel()))
 							return 1;
 						else
 							return -1;

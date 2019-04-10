@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
-import com.uantwerp.algorithms.common.GraphPathParameters;
+import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.procedures.fsg.VertexInvariant;
 
 public class VertexInvariantTest {
 
 	@Test
 	public void TestUndirectedRepresentation(){
-		GraphPathParameters.undirected = 1;
+		GraphParameters.undirected = 1;
 		DFScode<DFSedge> code = new DFScode<>();
 		code.add(new DFSedge(1, "S", 2, "S"));
 		code.add(new DFSedge(1, "S", 3, "C"));
@@ -53,7 +53,7 @@ public class VertexInvariantTest {
 	
 	@Test
 	public void TestDirectedRepresentation(){
-		GraphPathParameters.undirected = 0;
+		GraphParameters.undirected = 0;
 		DFScode<DFSedge> code3 = new DFScode<>();
 		code3.add(new DFSedge(1, "C", 2, "S"));
 		code3.add(new DFSedge(1, "C", 3, "S"));
