@@ -33,7 +33,8 @@ public class StartButton implements ActionListener {
 				gui.getCheckBoxNestedPValue().isSelected(),
 				gui.getCheckBoxShowStatistics().isSelected(),
 				gui.getCheckBoxVerbose().isSelected(),
-				gui.getTextAreaProgressReport().getText()
+				gui.getTextAreaProgressReport().getText(),
+				gui.getCheckBoxDebug().isSelected()
 				);
 		SubgraphMining.runProcesses();
 	}

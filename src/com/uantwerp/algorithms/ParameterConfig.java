@@ -21,6 +21,8 @@ public class ParameterConfig {
 
 	public static void transformCommandLine(CommandLine cmd, Options options){
 
+		if(cmd.hasOption("debug"))
+			SubgraphMining.DEBUG = true;
 		if(cmd.hasOption("h")){
 			printHelp(options);
 			System.exit(0);
@@ -130,10 +132,13 @@ public class ParameterConfig {
 			Boolean nestedPValue,
 			Boolean showStatistics,
 			Boolean verbose,
-			String areaProgressReport) {
+			String areaProgressReport,
+			Boolean debugCheckBox) {
 
+		if (debugCheckBox)
+			SubgraphMining.DEBUG = true;
 		if(graphPath.isEmpty()){
-			SubGraphMiningException.exceptionNoFileProvided("network");
+			SubGraphMiningException.exceptionNoFileProvided("graph");
 		}else{
 			String graph = FileUtility.readFile(graphPath);
 			GraphParameters.graphFileContents = graph;

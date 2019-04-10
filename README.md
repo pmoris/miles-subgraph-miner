@@ -142,6 +142,7 @@ The following parameters can be selected on the command line:
 * `-a`/`--algorithm` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg`.
 * `-v`/`--verbose` -> Verbose option to print more intermediary output.
 * `--statistics` -> Display additional memory usage statistics.
+* `--debug` -> Print the full stack trace for debugging purposes.
 
 ## Example datasets
 

@@ -19,6 +19,8 @@ import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 */
 public class SubgraphMining {
 	
+	public static Boolean DEBUG = false;
+
 	public static void main(String[] args) {
 		ParameterConfig.resetVariables();
 
@@ -38,6 +40,7 @@ public class SubgraphMining {
 		options.addOption("o", "output", true, "Output file to store the significant motifs");
 		options.addOption("a", "algorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"base\", \"gspan\" and \"apriori\"");
 		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");
+		options.addOption(null, "debug", false, "Print the full stack trace for debugging purposes");
 
 		try{			
 //			Launch GUI if no options are passed
@@ -91,9 +94,10 @@ public class SubgraphMining {
 	}
 
 	public static void exceptionBehaviour(Exception e) {
-//		e.printStackTrace();
+		if (DEBUG)
+			e.printStackTrace();
 		System.err.println(e.getMessage());
 		System.out.println("\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
-		System.exit(1);
+		System.exit(1);	// exit with error code 1
 	}
 }
