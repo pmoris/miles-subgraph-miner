@@ -15,10 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Dimension;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -232,8 +232,6 @@ public class SubgraphMiningGUI {
 	private void initialize() {
 //		Define window size
 		frame = new JFrame();
-		frame.setBounds(100, 100, 400, 800);
-		frame.setMinimumSize(new Dimension(600, 400));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		Define menu bar and panes		
@@ -270,7 +268,7 @@ public class SubgraphMiningGUI {
 				
 				try {
 					JOptionPane.showMessageDialog(frame, 
-							"SigMap v1.0- Adrem Data Lab - 2019");
+							"M(U)LES v1.0- Adrem Data Lab - 2019");
 				} catch (Exception ex) {
 		    		ex.printStackTrace();
 		    	}		
@@ -281,22 +279,19 @@ public class SubgraphMiningGUI {
 //		Define separate tool bar for start button
 		JToolBar toolBar = new JToolBar();
 		menuBar.add(toolBar);
-
-		Component horizontalGlue = Box.createHorizontalGlue();
-		toolBar.add(horizontalGlue);
 		
 //		Define run button
 		JButton btnRun = new JButton("Run analysis");
 		btnRun.addActionListener(new StartButton(SubgraphMiningGUI.this));
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		toolBar.add(horizontalGlue);
 		toolBar.add(btnRun);
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {30, 10, 123, 100, 250, 10, 20};
-		gridBagLayout.rowHeights = new int[] {10, 200, 10, 200, 10, 75, 0, 100, 0, 20, 20};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
+		gridBagLayout.columnWidths = new int[] {10, 100, 100, 200, 10};
+		gridBagLayout.rowHeights = new int[] {10, 200, 10, 200, 10, 75, 10, 100, 10, 30, 10};
 		
 //		Main content panel and scroll bar
 		JPanel pnlMain = new JPanel();
@@ -316,14 +311,10 @@ public class SubgraphMiningGUI {
 		gbc_pnlInput.gridwidth = 3;
 		gbc_pnlInput.fill = GridBagConstraints.HORIZONTAL;
 		gbc_pnlInput.insets = new Insets(0, 0, 5, 5);
-		gbc_pnlInput.gridx = 2;
+		gbc_pnlInput.gridx = 1;
 		gbc_pnlInput.gridy = 1;
 		pnlMain.add(pnlInput, gbc_pnlInput);
 		GridBagLayout gbl_pnlInput = new GridBagLayout();
-		gbl_pnlInput.columnWidths = new int[]{80, 400, 0, 0};
-		gbl_pnlInput.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_pnlInput.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlInput.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlInput.setLayout(gbl_pnlInput);
 		
 //		Network file
@@ -449,7 +440,7 @@ public class SubgraphMiningGUI {
 		gbc_tabbedPane.gridwidth = 3;
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPane.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tabbedPane.gridx = 2;
+		gbc_tabbedPane.gridx = 1;
 		gbc_tabbedPane.gridy = 3;
 		pnlMain.add(tabbedPaneOptions, gbc_tabbedPane);
 		
@@ -458,19 +449,9 @@ public class SubgraphMiningGUI {
 		tabbedPaneOptions.addTab("Options", null, panelOptions, null);
 		panelOptions.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gbl_panelOptions = new GridBagLayout();
-		gbl_panelOptions.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_panelOptions.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panelOptions.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panelOptions.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelOptions.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
+		gbl_panelOptions.rowWeights = new double[]{0.0, 0.0, 0.0};
 		panelOptions.setLayout(gbl_panelOptions);
-		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
-		gbc_horizontalStrut.gridheight = 4;
-		gbc_horizontalStrut.insets = new Insets(0, 0, 0, 5);
-		gbc_horizontalStrut.gridx = 2;
-		gbc_horizontalStrut.gridy = 0;
-		panelOptions.add(horizontalStrut, gbc_horizontalStrut);
 		
 //		P-value
 		JLabel labelPValue = new JLabel("P-value:");
@@ -479,7 +460,7 @@ public class SubgraphMiningGUI {
 		gbc_labelPValue.anchor = GridBagConstraints.EAST;
 		gbc_labelPValue.insets = new Insets(0, 0, 5, 5);
 		gbc_labelPValue.gridx = 0;
-		gbc_labelPValue.gridy = 1;
+		gbc_labelPValue.gridy = 0;
 		panelOptions.add(labelPValue, gbc_labelPValue);
 		
 		textFieldPValue = new JTextField("0.05");
@@ -488,7 +469,7 @@ public class SubgraphMiningGUI {
 		gbc_textFieldPValue.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldPValue.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldPValue.gridx = 1;
-		gbc_textFieldPValue.gridy = 1;
+		gbc_textFieldPValue.gridy = 0;
 		panelOptions.add(textFieldPValue, gbc_textFieldPValue);
 		
 //		Single-label option
@@ -498,7 +479,7 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxSingleLabel.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxSingleLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxSingleLabel.gridx = 3;
-		gbc_checkBoxSingleLabel.gridy = 1;
+		gbc_checkBoxSingleLabel.gridy = 0;
 		panelOptions.add(checkBoxSingleLabel, gbc_checkBoxSingleLabel);
 		
 //		Vertices
@@ -508,7 +489,7 @@ public class SubgraphMiningGUI {
 		gbc_labelVerticesSize.anchor = GridBagConstraints.EAST;
 		gbc_labelVerticesSize.insets = new Insets(0, 0, 5, 5);
 		gbc_labelVerticesSize.gridx = 0;
-		gbc_labelVerticesSize.gridy = 2;
+		gbc_labelVerticesSize.gridy = 1;
 		panelOptions.add(labelVerticesSize, gbc_labelVerticesSize);
 		
 		textFieldVerticesSize = new JTextField();
@@ -517,7 +498,7 @@ public class SubgraphMiningGUI {
 		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 2;
+		gbc_textField_3.gridy = 1;
 		panelOptions.add(textFieldVerticesSize, gbc_textField_3);
 		
 		checkBoxUndirected = new JCheckBox("Undirected network");
@@ -526,7 +507,7 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxUndirected.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxUndirected.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxUndirected.gridx = 3;
-		gbc_checkBoxUndirected.gridy = 2;
+		gbc_checkBoxUndirected.gridy = 1;
 		panelOptions.add(checkBoxUndirected, gbc_checkBoxUndirected);
 		
 //		Algorithm
@@ -536,7 +517,7 @@ public class SubgraphMiningGUI {
 		gbc_labelAlgorithm.anchor = GridBagConstraints.EAST;
 		gbc_labelAlgorithm.insets = new Insets(0, 0, 0, 5);
 		gbc_labelAlgorithm.gridx = 0;
-		gbc_labelAlgorithm.gridy = 3;
+		gbc_labelAlgorithm.gridy = 2;
 		panelOptions.add(labelAlgorithm, gbc_labelAlgorithm);
 		
 		comboBoxAlgorithm = new JComboBox<>();
@@ -544,7 +525,7 @@ public class SubgraphMiningGUI {
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 3;
+		gbc_comboBox.gridy = 2;
 		panelOptions.add(comboBoxAlgorithm, gbc_comboBox);
 		comboBoxAlgorithm.addItem("Base");
 		comboBoxAlgorithm.addItem("gSpan");
@@ -554,26 +535,24 @@ public class SubgraphMiningGUI {
 		JPanel panelAdvanced = new JPanel();
 		tabbedPaneOptions.addTab("Advanced options", null, panelAdvanced, null);
 		GridBagLayout gbl_panelAdvanced = new GridBagLayout();
-		gbl_panelAdvanced.columnWidths = new int[]{10, 10, 111, 0, 10};
-		gbl_panelAdvanced.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_panelAdvanced.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE, 0.0, 0.0};
-		gbl_panelAdvanced.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelAdvanced.columnWeights = new double[]{0.0, Double.MIN_VALUE, 0.0, 0.0};
+		gbl_panelAdvanced.rowWeights = new double[]{0.0, 0.0, 0.0};
 		panelAdvanced.setLayout(gbl_panelAdvanced);
 		
 		JLabel labelSupport = new JLabel("Minimum support:");
 		labelSupport.setToolTipText("Support value threshold to use (default = automatic calculation).");
 		GridBagConstraints gbc_labelSupport = new GridBagConstraints();
 		gbc_labelSupport.insets = new Insets(0, 0, 5, 5);
-		gbc_labelSupport.gridx = 1;
-		gbc_labelSupport.gridy = 1;
+		gbc_labelSupport.gridx = 0;
+		gbc_labelSupport.gridy = 0;
 		panelAdvanced.add(labelSupport, gbc_labelSupport);
 		
 		textFieldSupport = new JTextField();
 		GridBagConstraints gbc_textFieldSupport = new GridBagConstraints();
 		gbc_textFieldSupport.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldSupport.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldSupport.gridx = 2;
-		gbc_textFieldSupport.gridy = 1;
+		gbc_textFieldSupport.gridx = 1;
+		gbc_textFieldSupport.gridy = 0;
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
 		
@@ -582,8 +561,8 @@ public class SubgraphMiningGUI {
 		GridBagConstraints gbc_checkBoxShowStatistics = new GridBagConstraints();
 		gbc_checkBoxShowStatistics.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxShowStatistics.anchor = GridBagConstraints.NORTHWEST;
-		gbc_checkBoxShowStatistics.gridx = 4;
-		gbc_checkBoxShowStatistics.gridy = 1;
+		gbc_checkBoxShowStatistics.gridx = 3;
+		gbc_checkBoxShowStatistics.gridy = 0;
 		gbc_checkBoxShowStatistics.gridwidth = 2;
 		panelAdvanced.add(checkBoxShowStatistics, gbc_checkBoxShowStatistics);
 		
@@ -593,26 +572,25 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxPValue.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxPValue.gridwidth = 2;
 		gbc_checkBoxPValue.insets = new Insets(0, 0, 5, 5);
-		gbc_checkBoxPValue.gridx = 1;
-		gbc_checkBoxPValue.gridy = 2;
+		gbc_checkBoxPValue.gridx = 0;
+		gbc_checkBoxPValue.gridy = 1;
 		panelAdvanced.add(checkBoxNestedPValue, gbc_checkBoxPValue);
 		
 		checkBoxDebug = new JCheckBox("Debug mode");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 0);
-		gbc_chckbxNewCheckBox.gridx = 4;
-		gbc_chckbxNewCheckBox.gridy = 2;
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxNewCheckBox.gridx = 3;
+		gbc_chckbxNewCheckBox.gridy = 1;
 		panelAdvanced.add(checkBoxDebug, gbc_chckbxNewCheckBox);
 		
 		checkBoxVerbose = new JCheckBox("Verbose");
 		checkBoxVerbose.setToolTipText("Additional logging information.");
 		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
-		gbc_checkBoxVerbose.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxVerbose.gridwidth = 2;
-		gbc_checkBoxVerbose.gridx = 4;
-		gbc_checkBoxVerbose.gridy = 3;
+		gbc_checkBoxVerbose.gridx = 3;
+		gbc_checkBoxVerbose.gridy = 2;
 		panelAdvanced.add(checkBoxVerbose, gbc_checkBoxVerbose);
 		
 //		Output files panel
@@ -622,14 +600,12 @@ public class SubgraphMiningGUI {
 		gbc_outputPanel.gridwidth = 3;
 		gbc_outputPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_outputPanel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_outputPanel.gridx = 2;
+		gbc_outputPanel.gridx = 1;
 		gbc_outputPanel.gridy = 5;
 		pnlMain.add(outputPanel, gbc_outputPanel);
 		GridBagLayout gbl_outputPanel = new GridBagLayout();
-		gbl_outputPanel.columnWidths = new int[]{80, 400, 0, 0};
-		gbl_outputPanel.rowHeights = new int[]{0, 0};
-		gbl_outputPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_outputPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_outputPanel.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gbl_outputPanel.rowWeights = new double[]{0.0};
 		outputPanel.setLayout(gbl_outputPanel);
 		
 		JLabel labelSavePath = new JLabel("Savepath:");
@@ -665,7 +641,7 @@ public class SubgraphMiningGUI {
 		gbc_panelReport.gridwidth = 3;
 		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
-		gbc_panelReport.gridx = 2;
+		gbc_panelReport.gridx = 1;
 		gbc_panelReport.gridy = 7;
 		pnlMain.add(panelReport, gbc_panelReport);
 		panelReport.setLayout(new BorderLayout(0, 0));
@@ -677,18 +653,16 @@ public class SubgraphMiningGUI {
 //		Define progress and status panel
 		JPanel panelProgress = new JPanel();
 		GridBagConstraints gbc_panelProgress = new GridBagConstraints();
-		gbc_panelProgress.insets = new Insets(0, 0, 0, 5);
+		gbc_panelProgress.insets = new Insets(0, 0, 5, 5);
 		gbc_panelProgress.gridwidth = 3;
 		gbc_panelProgress.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelProgress.gridx = 2;
+		gbc_panelProgress.gridx = 1;
 		gbc_panelProgress.gridy = 9;
 		pnlMain.add(panelProgress, gbc_panelProgress);
 		GridBagLayout gbl_panelProgress = new GridBagLayout();
-		gbl_panelProgress.columnWidths = new int[] {75, 351, 0};
-		gbl_panelProgress.rowHeights = new int[]{100, 0};
 //		Double weight for progress bar so it takes up two columns
-		gbl_panelProgress.columnWeights = new double[]{0.0, 1, Double.MIN_VALUE};
-		gbl_panelProgress.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panelProgress.columnWeights = new double[]{0, 1};
+		gbl_panelProgress.rowWeights = new double[]{0};
 		panelProgress.setLayout(gbl_panelProgress);
 				
 //		Progress bar
@@ -701,10 +675,13 @@ public class SubgraphMiningGUI {
 		panelProgress.add(progressBar, gbc_progressBar);
 				
 //		Status panel
-		JLabel lblStatus = new JLabel("status");
+		JLabel lblStatus = new JLabel("Status");
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.gridx = 0;
 		gbc_lblStatus.gridy = 0;
 		panelProgress.add(lblStatus, gbc_lblStatus);
+
+//		Set size of frame based on its underlying components
+		frame.pack();
 	}
 }
