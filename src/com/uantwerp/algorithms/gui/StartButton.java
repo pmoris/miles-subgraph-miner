@@ -18,24 +18,31 @@ public class StartButton implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		ParameterConfig.transformGUI(
-				gui.getTextGraphFile().getText(),
-				gui.getTextLabels().getText(), 
-				gui.getTextInterestingVertices().getText(), 
-				gui.getTextBackground().getText(),
-				gui.getTextFieldSupport().getText(), 
-				gui.getTextFieldPValue().getText(),
-				gui.getTextFieldVerticesSize().getText(),
-				gui.getTextFieldSavePath().getText(),
-				gui.getComboBoxAlgorithm().getSelectedItem().toString(),
-				gui.getCheckBoxSingleLabel().isSelected(),
-				gui.getCheckBoxUndirected().isSelected(),
-				gui.getCheckBoxNestedPValue().isSelected(),
-				gui.getCheckBoxShowStatistics().isSelected(),
-				gui.getCheckBoxVerbose().isSelected(),
-				gui.getTextAreaProgressReport().getText(),
-				gui.getCheckBoxDebug().isSelected()
-				);
-		SubgraphMining.runProcesses();
+		try {
+			ParameterConfig.transformGUI(
+					gui.getTextGraphFile().getText(),
+					gui.getTextLabels().getText(),
+					gui.getTextInterestingVertices().getText(),
+					gui.getTextBackground().getText(),
+					gui.getTextFieldSupport().getText(),
+					gui.getTextFieldPValue().getText(),
+					gui.getTextFieldVerticesSize().getText(),
+					gui.getTextFieldSavePath().getText(),
+					gui.getComboBoxAlgorithm().getSelectedItem().toString(),
+					gui.getCheckBoxSingleLabel().isSelected(),
+					gui.getCheckBoxUndirected().isSelected(),
+					gui.getCheckBoxNestedPValue().isSelected(),
+					gui.getCheckBoxShowStatistics().isSelected(),
+					gui.getCheckBoxVerbose().isSelected(),
+					gui.getTextAreaProgressReport().getText(),
+					gui.getCheckBoxDebug().isSelected()
+					);
+			SubgraphMining.runProcesses();
+		} catch(Exception error){
+			if (SubgraphMining.DEBUG)
+				error.printStackTrace();
+			System.err.println(error.getMessage());
+		}
+		
 	}
 };
