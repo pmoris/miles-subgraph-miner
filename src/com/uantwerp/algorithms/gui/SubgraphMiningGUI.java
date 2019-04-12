@@ -233,6 +233,7 @@ public class SubgraphMiningGUI {
 	private void initialize() {
 //		Define window size
 		frame = new JFrame();
+		frame.setTitle("M(U)LES - enriched subgraph miner");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		Define menu bar and panes		
