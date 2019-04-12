@@ -6,7 +6,6 @@ package com.uantwerp.algorithms.gui;
 * @version 1.0 Feb 2019
 */
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -42,6 +41,8 @@ import javax.swing.JToolBar;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTabbedPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 public class SubgraphMiningGUI {
 	
@@ -208,7 +209,9 @@ public class SubgraphMiningGUI {
 	 * Launch the application.
 	 */
 	public static void launchGUI(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+//		EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {	
+			@Override
 			public void run() {
 				try {
 					SubgraphMiningGUI window = new SubgraphMiningGUI();
