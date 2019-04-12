@@ -295,8 +295,9 @@ public class SubgraphMiningGUI {
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 		gridBagLayout.columnWidths = new int[] {10, 100, 100, 200, 10};
-		gridBagLayout.rowHeights = new int[] {10, 200, 10, 200, 10, 75, 10, 100, 10, 30, 10};
+		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200, 30};
 		
 //		Main content panel and scroll bar
 		JPanel pnlMain = new JPanel();
@@ -317,9 +318,10 @@ public class SubgraphMiningGUI {
 		gbc_pnlInput.fill = GridBagConstraints.HORIZONTAL;
 		gbc_pnlInput.insets = new Insets(0, 0, 5, 5);
 		gbc_pnlInput.gridx = 1;
-		gbc_pnlInput.gridy = 1;
+		gbc_pnlInput.gridy = 0;
 		pnlMain.add(pnlInput, gbc_pnlInput);
 		GridBagLayout gbl_pnlInput = new GridBagLayout();
+		gbl_pnlInput.columnWeights = new double[]{0.0, 1.0, 0.0};
 		pnlInput.setLayout(gbl_pnlInput);
 		
 //		Network file
@@ -446,7 +448,7 @@ public class SubgraphMiningGUI {
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tabbedPane.gridx = 1;
-		gbc_tabbedPane.gridy = 3;
+		gbc_tabbedPane.gridy = 1;
 		pnlMain.add(tabbedPaneOptions, gbc_tabbedPane);
 		
 //		Options panel 1
@@ -606,7 +608,7 @@ public class SubgraphMiningGUI {
 		gbc_outputPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_outputPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_outputPanel.gridx = 1;
-		gbc_outputPanel.gridy = 5;
+		gbc_outputPanel.gridy = 2;
 		pnlMain.add(outputPanel, gbc_outputPanel);
 		GridBagLayout gbl_outputPanel = new GridBagLayout();
 		gbl_outputPanel.columnWeights = new double[]{0.0, 1.0, 0.0};
@@ -647,15 +649,14 @@ public class SubgraphMiningGUI {
 		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
 		gbc_panelReport.gridx = 1;
-		gbc_panelReport.gridy = 7;
+		gbc_panelReport.gridy = 3;
 		pnlMain.add(panelReport, gbc_panelReport);
 		panelReport.setLayout(new BorderLayout(0, 0));
 		
 		textAreaLog = new JTextArea();
 		textAreaLog.setEditable(false);
 		JScrollPane scrollPaneTextAreaLog = new JScrollPane(textAreaLog);
-		scrollPaneTextAreaLog.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		panelReport.add(scrollPaneTextAreaLog);
+		panelReport.add(scrollPaneTextAreaLog, BorderLayout.CENTER);
 
 //		Redirect console output
 		PrintStream logStream = new PrintStream(new CustomOutputStream(textAreaLog));
@@ -665,11 +666,11 @@ public class SubgraphMiningGUI {
 //		Define progress and status panel
 		JPanel panelProgress = new JPanel();
 		GridBagConstraints gbc_panelProgress = new GridBagConstraints();
-		gbc_panelProgress.insets = new Insets(0, 0, 5, 5);
+		gbc_panelProgress.insets = new Insets(0, 0, 0, 5);
 		gbc_panelProgress.gridwidth = 3;
 		gbc_panelProgress.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelProgress.gridx = 1;
-		gbc_panelProgress.gridy = 9;
+		gbc_panelProgress.gridy = 4;
 		pnlMain.add(panelProgress, gbc_panelProgress);
 		GridBagLayout gbl_panelProgress = new GridBagLayout();
 //		Double weight for progress bar so it takes up two columns
