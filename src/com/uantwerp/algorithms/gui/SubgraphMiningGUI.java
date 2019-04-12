@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import java.awt.event.ActionEvent;
+import java.io.PrintStream;
 import java.net.URI;
 
 import javax.swing.JComboBox;
@@ -648,7 +649,14 @@ public class SubgraphMiningGUI {
 		
 		textAreaLog = new JTextArea();
 		textAreaLog.setEditable(false);
-		panelReport.add(new JScrollPane(textAreaLog));
+		JScrollPane scrollPaneTextAreaLog = new JScrollPane(textAreaLog);
+		scrollPaneTextAreaLog.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelReport.add(scrollPaneTextAreaLog);
+
+//		Redirect console output
+		PrintStream logStream = new PrintStream(new CustomOutputStream(textAreaLog));
+		System.setOut(logStream);
+		System.setErr(logStream);
 		
 //		Define progress and status panel
 		JPanel panelProgress = new JPanel();
