@@ -8,7 +8,6 @@ import java.util.List;
 import org.javatuples.Quintet;
 import org.apache.commons.lang3.SerializationUtils;
 
-//import com.rits.cloning.Cloner;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.Edge;
@@ -19,7 +18,6 @@ import com.uantwerp.algorithms.utilities.HashFuctions;
 
 
 public class FSG {
-	//private final Cloner cloner = new Cloner();
 	static HashMap<String, List<HashMap<Integer, String>>> root = new HashMap<>();	
 	static HashMap<String, String> codeCanonical = new HashMap<>();
 	static HashMap<String, DFScode<DFSedge>> canCodeDFSCode = new HashMap<>();
@@ -126,7 +124,6 @@ public class FSG {
 				}				
 			}
 			HashSet<String> supportingCores = codeCores.get(code1); //cores of the first graph			
-			//LOOP2: for (String code2: cloner.deepClone(codeCores).keySet()){
 			LOOP2: for (String code2: SerializationUtils.clone(codeCores).keySet()){
 				if (checkedValues.contains(code1))
 					continue LOOP2;
@@ -212,7 +209,6 @@ public class FSG {
 						break DIRECTIONS;
 				}
 			}else{
-				//Graph core2 = cloner.deepClone(core);
 				Graph core2 = core.deepClone();
 				for (EdgeFSG edgeTo: core2.getAllEdges()){
 					if (e.getSourceId().equals(e.getTargetId()) && GraphParameters.undirected == 0){ //the algorithm detects a self edge on a directed configuration
@@ -276,7 +272,6 @@ public class FSG {
 						if (edgeSource.getTo().equals(edgeSource2.getTo())){ //check if the candidates start from different vertices , then add one independent edge and one edge connecting the the source with the new vertex
 							if ((coreNroVertices + 1) > GraphParameters.maxsize)
 								continue LOOP2;
-							//Graph candidateComplete1 = cloner.deepClone(candidate1.getValue0());
 							Graph candidateComplete1 = candidate1.getValue0().deepClone();
 							addEdgeJoinedUnion(candidateComplete1, sourceVertex2, candidateComplete1.getMaxIdVertex());		
 							candidateChecker(candidateComplete1, candidate1.getValue0(), candidate2.getValue0(), candidates);
@@ -294,7 +289,6 @@ public class FSG {
 						if ((coreNroVertices + 1) > GraphParameters.maxsize)
 							continue LOOP2;
 						if (candidate2.getValue2().from.equals(candidate2.getValue2().to)){
-							//Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
 							Graph candidateComplete = candidate1.getValue0().deepClone();
 							addEdgeJoinedUnion(candidateComplete, edgeSource2.from, edgeSource2.to);
 							candidateChecker(candidateComplete, candidate1.getValue0(), candidate2.getValue0(), candidates);
@@ -311,7 +305,6 @@ public class FSG {
 						if ((coreNroVertices + 1) > GraphParameters.maxsize)
 							continue LOOP2;
 						if (candidate2.getValue2().from.equals(candidate2.getValue2().to)){
-							//Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
 							Graph candidateComplete = candidate1.getValue0().deepClone();
 							addEdgeJoinedUnion(candidateComplete, edgeSource2.from, edgeSource2.to);
 							candidateChecker(candidateComplete, candidate1.getValue0(), candidate2.getValue0(), candidates);
@@ -328,7 +321,6 @@ public class FSG {
 							!(edgeSource.to.equals(edgeSource2.from) && (edgeSource.from.equals(edgeSource2.to)))){
 						if ((coreNroVertices + 2) > GraphParameters.maxsize)
 							continue LOOP2;
-						//Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
 						Graph candidateComplete = candidate1.getValue0().deepClone();
 						addEdgeJoinedUnion(candidateComplete, edgeSource2.from, edgeSource2.to);
 						candidateChecker(candidateComplete, candidate1.getValue0(), candidate2.getValue0(), candidates);
@@ -340,7 +332,6 @@ public class FSG {
 	}
 	
 	private void joinHelper(Quintet<Graph, String, Edge, Boolean, String> candidate1, Quintet<Graph, String, Edge, Boolean, String> candidate2, String sourceVertex, Edge edgeSource2, List<Graph> candidates){
-		//Graph candidateComplete = cloner.deepClone(candidate1.getValue0());
 		Graph candidateComplete = candidate1.getValue0().deepClone();
 		addEdgeSingleUnion(candidateComplete, sourceVertex, edgeSource2.to, candidate2.getValue4());
 		candidateChecker(candidateComplete, candidate1.getValue0(), candidate2.getValue0(), candidates);
@@ -355,7 +346,6 @@ public class FSG {
 	}
 	
 	private Quintet<Graph, String, Edge, Boolean, String> addEdge(Graph core, String sourceId, String sourceLabel, EdgeFSG e, String g1Str, HashSet<String> candidatesCan,Boolean doubleEdge, String direction){
-		//Graph c = cloner.deepClone(core);
 		Graph c = core.deepClone();
 		Edge edge = new Edge();
 		if (sourceLabel.equals(e.getSourceLabel())){//if from label of the core edge is equal to from label of the new edge	
@@ -376,7 +366,6 @@ public class FSG {
 	}
 	
 	private Quintet<Graph, String, Edge, Boolean, String> addEdge(Graph core, String fromId, String toId, String sourceLabel, String targetLabel,  EdgeFSG e, String g1Str, HashSet<String> candidatesCan, Boolean doubleEdge){		
-		//Graph c = cloner.deepClone(core);
 		Graph c = core.deepClone();
 		boolean foundEdge = false;
 		if (e.getSourceId().equals(e.getTargetId()) && GraphParameters.undirected == 1)
@@ -413,7 +402,6 @@ public class FSG {
 	}
 	
 	private EdgeFSG checkLackingEdge(Graph g, String canCore){
-		//Graph gTest = cloner.deepClone(g);
 		Graph gTest = g.deepClone();
 		HashSet<EdgeFSG> edges = g.getAllEdges();
 		for (EdgeFSG edge: edges){
@@ -424,7 +412,6 @@ public class FSG {
 					return edge;
 				}
 			}
-			//gTest = cloner.deepClone(g);
 			gTest = g.deepClone();
 		}
 		return null;
@@ -499,7 +486,6 @@ public class FSG {
 	private List<Graph> generateLinearSelfEdges(String code){
 		List<Graph> candidates = new ArrayList<>();
 		Graph core = canonicalToGraphs.get(code);
-		//Graph c = cloner.deepClone(core);
 		Graph c = core.deepClone();
 		String lastNode = c.getLinearLastNode("1", new HashSet<>());
 		c.addSelfEdge(lastNode);		

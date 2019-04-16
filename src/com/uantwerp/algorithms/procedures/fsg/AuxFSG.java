@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-//import com.rits.cloning.Cloner;
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
@@ -19,8 +18,6 @@ import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.HashFuctions;
 
 public abstract class AuxFSG {
-
-	//private static final Cloner cloner = new Cloner();
 	
 	public static void generateTwoFirstEdges(){		
 		String canCode = "";
@@ -39,7 +36,6 @@ public abstract class AuxFSG {
 						for (String label: GraphParameters.graph.vertex.get(selfEdge.to)){
 //							DFScode<DFSedge> code = new DFScode<>();
 //							code.addAll(dfsCode);
-							//DFScode<DFSedge> code = cloner.deepClone(dfsCode);
 							DFScode<DFSedge> code = dfsCode.deepClone();
 							canCode = summaryFunctionsTwoEdges(code, dfsCode.get(0).isOrdered() ?
 										new DFSedge(dfsCode.get(0).getTargetId(), label, dfsCode.get(0).getTargetId(), label):
@@ -138,7 +134,6 @@ public abstract class AuxFSG {
 		if (!FSG.codeDFSRep.containsKey(codeStr))
 			FSG.codeDFSRep.put(codeStr, code);
 		for (DFSedge edge: code){
-			//DFScode<DFSedge> coreCode = cloner.deepClone(code);
 			DFScode<DFSedge> coreCode = code.deepClone();
 			coreCode.removeEdge(edge);
 			if (coreCode.get(0).getSourceId() == 1 || coreCode.get(0).getTargetId() == 1 ){
