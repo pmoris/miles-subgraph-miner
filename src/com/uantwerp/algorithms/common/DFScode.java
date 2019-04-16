@@ -20,7 +20,19 @@ public class DFScode<E> extends ArrayList<E> {
 
 	private static final long serialVersionUID = -3276835482198069067L;
 
-	public List<Integer> rmpath;
+	public List<Integer> rmpath = new ArrayList<>();
+	
+	public DFScode() {
+		super();
+	}
+
+	public DFScode(Collection<? extends E> c) {
+		super(c);
+	}
+
+	public DFScode(int initialCapacity) {
+		super(initialCapacity);
+	}
 	
 	public DFScode<DFSedge> getMinDfsCode() {
 		if (GraphParameters.verbose == 1 && GraphParameters.undirected == 1) System.out.println(this.dfsCodeToString() + " checking by normal root");
@@ -340,18 +352,6 @@ public class DFScode<E> extends ArrayList<E> {
 		root = AuxiliaryFunctions.addRoot(root, dfsEdge, pdfs);
 		return root;
 	}
-	
-	public DFScode() {
-		super();
-	}
-
-	public DFScode(Collection<? extends E> c) {
-		super(c);
-	}
-
-	public DFScode(int initialCapacity) {
-		super(initialCapacity);
-	}
 
 	private PairStrValues minEdge(Set<PairStrValues> values) {
 		return Collections.min(values);
@@ -505,10 +505,11 @@ public class DFScode<E> extends ArrayList<E> {
 			clonecode.add(new DFSedge(e));
 		}
 		
-		clonecode.rmpath = new ArrayList<Integer>();
-		for (Integer i: this.rmpath)
-			clonecode.rmpath.add(i);
-		
+		if (this.rmpath != null) {
+			clonecode.rmpath = new ArrayList<Integer>();
+			for (Integer i: this.rmpath)
+				clonecode.rmpath.add(i);
+		}
 		return clonecode;
 	}
 
