@@ -21,28 +21,35 @@ import com.uantwerp.algorithms.utilities.AlgorithmUtility;
  */
 public abstract class BuildMotif {
 	
-	public static int build_motif(DFScode<DFSedge> motifs, HashSet<String> prevhits){
+	/**
+	 * 
+	 * @param motif		a DFSCode (Array) of DFSedges e.g. [1 -1 ,1 -2 ]
+	 * @param prevhits	previously visited nodes, initially consists of the background set
+	 * 					(defaults to the entire graph)
+	 * @return
+	 */
+	public static int build_motif(DFScode<DFSedge> motif, HashSet<String> prevhits){
 		int hitSupport = 0;
 		int checkedgroupnodes = 0;
 		int biggerfim = 0;
-		int totalsupport = 0; //Support with all nodes
+		int totalsupport = 0;	// Support with all nodes
 		HashSet<String> hitNodes = new HashSet<>();
 		HashMap<Integer,String> motiflabels = new HashMap<>();
 		HashMap<Integer,Integer> nodetargets = new HashMap<>();
 		HashMap<Integer,Integer> nodesources = new HashMap<>();
-		String motifString = AlgorithmUtility.getStringMotifs(motifs);
+		String motifString = AlgorithmUtility.getStringMotifs(motif);	// store a string representation of the motif
 
-		for (int i = 0; i < motifs.size(); i++){
-			motiflabels.put(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel());
-			motiflabels.put(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel());
-			nodetargets.put(motifs.get(i).getTargetId(), (nodetargets.containsKey(motifs.get(i).getTargetId())?nodetargets.get(motifs.get(i).getTargetId())+1:1));
-			nodesources.put(motifs.get(i).getSourceId(), (nodesources.containsKey(motifs.get(i).getSourceId())?nodesources.get(motifs.get(i).getSourceId())+1:1));
+		for (int i = 0; i < motif.size(); i++){
+			motiflabels.put(motif.get(i).getSourceId(), motif.get(i).getSourceLabel());
+			motiflabels.put(motif.get(i).getTargetId(), motif.get(i).getTargetLabel());
+			nodetargets.put(motif.get(i).getTargetId(), (nodetargets.containsKey(motif.get(i).getTargetId())?nodetargets.get(motif.get(i).getTargetId())+1:1));
+			nodesources.put(motif.get(i).getSourceId(), (nodesources.containsKey(motif.get(i).getSourceId())?nodesources.get(motif.get(i).getSourceId())+1:1));
 		}
 		int maxId = motiflabels.size();
 		if (GraphParameters.verbose==1) System.out.println("Starting on "+motifString);
 		
 		Iterator<String> it = GraphParameters.graph.group.iterator();
-		checkgroup: while(it.hasNext()){//Check each interesting node if they are a root node
+		checkgroup: while(it.hasNext()){	//Check each interesting node if they are a root node
 			String keyValue = it.next();
 			//Check if part of the prevhit set
 			if(!prevhits.contains(keyValue)){ continue checkgroup; }	
@@ -55,7 +62,7 @@ public abstract class BuildMotif {
 			HashMap<Integer,String> supmatch = new HashMap<>();
 			supmatch.put(1, keyValue);
 			HashMap<Integer, String> supmatchref = new HashMap<>();			
-			supmatchref = MatchSubgraph.matchSubgraph(motifs,supmatch);
+			supmatchref = MatchSubgraph.matchSubgraph(motif,supmatch);
 			if (supmatchref!=null){
 				hitSupport++;
 				hitNodes.add(keyValue);
@@ -97,7 +104,7 @@ public abstract class BuildMotif {
 			HashMap<Integer,String> supmatch = new HashMap<>();
 			supmatch.put(1, node);
 			HashMap<Integer, String> supmatchref = new HashMap<>();
-			supmatchref = MatchSubgraph.matchSubgraph(motifs,supmatch);
+			supmatchref = MatchSubgraph.matchSubgraph(motif,supmatch);
 			if (supmatchref!=null){
 				totalsupport++;
 				hitNodes.add(node);
@@ -121,7 +128,7 @@ public abstract class BuildMotif {
 			LABEL2: while (it4.hasNext()){
 				Integer targetId = it4.next();
 				DFSedge edge = new DFSedge(sourceId, motiflabels.get(sourceId), targetId, motiflabels.get(targetId));
-				if (AlgorithmUtility.checkContainsEdge(motifs, edge)) 
+				if (AlgorithmUtility.checkContainsEdge(motif, edge)) 
 					continue LABEL2;
 				else 
 					potentialedges.add(edge);
@@ -137,7 +144,7 @@ public abstract class BuildMotif {
 			
 			TARGETLOOP: for(int i=0; i<potentialedges.size(); i++){
 				DFScode<DFSedge> newmotif = new DFScode<>();
-				newmotif.addAll(motifs);
+				newmotif.addAll(motif);
 				newmotif.add(potentialedges.get(i));
 				if (newmotif.maxVertexIndexNaive() > GraphParameters.maxsize)
 					continue TARGETLOOP;
