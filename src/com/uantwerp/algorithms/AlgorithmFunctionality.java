@@ -32,7 +32,15 @@ public class AlgorithmFunctionality {
 			SubGraphMiningException.exceptionWrongAlgorithmChoice(GraphParameters.typeAlgorithm);
 		}
 	}
-			
+
+	/**
+	 * Loop through all possible starting motifs (i.e. 1 edge sized) by iterating over
+	 * all possible label pair combinations, e.g. 1VAL-1VAL, 1VAL-2VAL, etc.
+	 * Each proposed edge is sent to the build_motif(_und) function which checks and
+	 * extends these proposed edges recursively.
+	 * For directed graphs, self-loops and both directions of an edge are proposed.
+	 * motif/forwardmotif/backwardmotif is a DFSCode object, an ArrayList of DFSEdges.
+	 */
 	private void naiveRepresentationStart(Timer t1){
 		for (int i = 0; i<GraphParameters.graph.possibleLabels.size(); i++){
 			if (GraphParameters.undirected == 0){

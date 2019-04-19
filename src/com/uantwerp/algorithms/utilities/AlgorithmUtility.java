@@ -89,6 +89,11 @@ public abstract class AlgorithmUtility {
 		return supportcutoffResult;
 	}
 	
+	/**
+	 * 
+	 * @param hash	A HashMap of node ids mapping to node names e.g. {1=2V3Z0}
+	 * @return		A list of all the node names.
+	 */
 	public static List<String> getValuesFromHash(HashMap<Integer,String> hash){
 		List<String> list = new ArrayList<>();
 		Iterator<Integer> it = hash.keySet().iterator();
@@ -124,25 +129,37 @@ public abstract class AlgorithmUtility {
 		return check;
 	}
 	
-	public static double getProbability(int prevhits, int checkedgroupnodes, int totalsupport, int hitSupport){
+	/**
+	 * Perform a hypergeometric test where the proportion of motif source vertices in the nodes of interest
+	 * is compared to the proportion in the background set.
+	 * For the nested p-value configuration, the background and interest set are reduced to the current
+	 * number of visited nodes (of interest).
+	 * 
+	 * @param prevHits
+	 * @param checkedGroupNodes
+	 * @param totalSupport
+	 * @param interestSupport
+	 * @return
+	 */
+	public static double getProbability(int prevHits, int checkedGroupNodes, int totalSupport, int interestSupport){
 		double prob = 0.0;
 		if (GraphParameters.nestedpval==1){
-			//Nested P-value behaviour: Enrichment P-value is calculated against parent subgraph matches
-			prob = HypergeomDist.getProbability(prevhits-checkedgroupnodes,checkedgroupnodes, totalsupport, hitSupport);
+			// Nested P-value behaviour: Enrichment P-value is calculated against parent subgraph matches
+			prob = HypergeomDist.getProbability(prevHits-checkedGroupNodes,checkedGroupNodes, totalSupport, interestSupport);
 
 		}else{
-			//Normal behaviour: Enrichment p-value is calculated against the entire GraphPathParameters.graph
-			prob = HypergeomDist.getProbability(GraphParameters.graph.bgnodes.size()-GraphParameters.graph.group.size(),GraphParameters.graph.group.size(), totalsupport, hitSupport);
+			// Normal behaviour: Enrichment p-value is calculated against the entire GraphPathParameters.graph
+			prob = HypergeomDist.getProbability(GraphParameters.graph.bgnodes.size()-GraphParameters.graph.group.size(),GraphParameters.graph.group.size(), totalSupport, interestSupport);
 		}
 		return prob;
 	}
 	
-	public static EdgesLoop generateEdges(List<DFSedge> motifref){
+	public static EdgesLoop generateEdges(List<DFSedge> motifRef){
 		HashSet<Integer> seen = new HashSet<>();
 		EdgesLoop edges = new EdgesLoop();
 		/*for created to check if there is a loop in the graph*/
-		for (int i=0; i < motifref.size(); i++){
-			DFSedge ep = motifref.get(i);
+		for (int i=0; i < motifRef.size(); i++){
+			DFSedge ep = motifRef.get(i);
 			if ((seen.contains(ep.getSourceId())) && (seen.contains(ep.getTargetId()))){
 				if (ep.getSourceId() > ep.getTargetId()){
 					edges.setFowloopedge(HashFuctions.updateHashHashSet(edges.getFowloopedge(), ep.getSourceId(), ep.getTargetId()));
@@ -161,7 +178,13 @@ public abstract class AlgorithmUtility {
 		return edges;
 	}
 	
-	public static boolean checkTargetLabel(String graphtarget, String targetLabel){
+	/**
+	 * 
+	 * @param graphtarget	name of a node
+	 * @param targetLabel	label to be checked
+	 * @return	true when the node does not contain the target label, false otherwise
+	 */
+	public static boolean checkTargetLabelAbsent(String graphtarget, String targetLabel){
 		if (GraphParameters.singleLabel == 1){
 			if (!GraphParameters.graph.vertex.containsKey(graphtarget)){
 				return true;

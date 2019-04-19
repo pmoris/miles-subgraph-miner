@@ -1,5 +1,19 @@
 package com.uantwerp.algorithms.utilities;
 
+/**
+ * Calculates the probability of observing i or more successes in N draws without replacement from
+ * a population of m potential successes and n potential failures.
+ * I.e. a one-sided upper tailed hypergeometric test P(X >= i)
+ * 
+ * i is the number of nodes that are the source vertex of a motif within the set of interesting node (white marbles drawn)
+ * N is the number of nodes that are the source vertex of a motif in the entire graph (includes i) (total drawn)
+ * n is the number of interesting nodes (white marbles in pop)
+ * m is the number of nodes in the background set (excluding n) (black marbles in pop)
+ * 
+ * Compared to the notation used by the phyper function in R, n and m are swapped, i = x and N = k and
+ * phyper uses P(X > x) instead of P(X >= x) in the upper tail scenario.
+ * 
+ */
 public abstract class HypergeomDist {
 
 	public static double getProbability(int m, int n, int N, int i){
