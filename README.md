@@ -134,7 +134,7 @@ The following parameters can be selected on the command line:
 * `-o`/`--output` -> Output file location where significant motifs are stored.
 * `-b`/`--background` -> Path to a file containing background nodes, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional, but using it makes the interest file mandatory).
 * `-s`/`--support` -> Support threshold the subgraphs must meet (support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, a threshold will be calculated automatically as described in the [original publication](#publication).
-* `-p`/`--pvalue` -> Maximum p-value to use (default = `0.05`).
+* `-a`/`--alpha` -> Sets the significance level alpha of the hypergeometric tests (default = `0.05`).
 * `-m`/`maxsize` -> Maximum number of vertices allowed in the subgraph patterns (default = 5).
 * `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 * `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.

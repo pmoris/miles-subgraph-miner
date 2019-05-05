@@ -74,11 +74,11 @@ public class ParameterConfig {
 				GraphParameters.nestedpval = 1;
 			else
 				GraphParameters.nestedpval = 0;
-			if(cmd.hasOption('p')) {
-				if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
-					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
+			if(cmd.hasOption('a')) {
+				if (Double.valueOf(cmd.getOptionValue('a')) <= 1 && Double.valueOf(cmd.getOptionValue('a')) >= 0)
+					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('a'));
 				else
-					SubGraphMiningException.exceptionInvalidValue("p-value");
+					SubGraphMiningException.exceptionInvalidValue("alpha");
 			}
 			else
 				GraphParameters.setDefaultPValue();
@@ -123,7 +123,7 @@ public class ParameterConfig {
 			String interestingPath,
 			String backgroundPath,
 			String support,
-			String pValue,
+			String alpha,
 			String verticesSize,
 			String savePath,
 			String algorithm,
@@ -183,11 +183,11 @@ public class ParameterConfig {
 			GraphParameters.nestedpval = 1;
 		else
 			GraphParameters.nestedpval = 0;
-		if(!pValue.isEmpty()) {
-			if (Double.valueOf(pValue) <= 1 && Double.valueOf(pValue) >= 0)
-				GraphParameters.pvalue = Double.valueOf(pValue);
+		if(!alpha.isEmpty()) {
+			if (Double.valueOf(alpha) <= 1 && Double.valueOf(alpha) >= 0)
+				GraphParameters.pvalue = Double.valueOf(alpha);
 			else
-				SubGraphMiningException.exceptionInvalidValue("p-value");
+				SubGraphMiningException.exceptionInvalidValue("alpha");
 		}
 		else
 			GraphParameters.setDefaultPValue();

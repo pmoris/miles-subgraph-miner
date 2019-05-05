@@ -32,7 +32,7 @@ public class SubgraphMining {
 		options.addOption("b", "background", true, "Path to a file containing background nodes that are used (optional)");
 		options.addOption("o", "output", true, "Output file to store the significant motifs");
 		options.addOption("s", "support", true, "Support threshold (default = automatic calculation)");
-		options.addOption("p", "pvalue", true, "Maximum p-value allowed (default = 0.05)");
+		options.addOption("a", "alpha", true, "Significance level for the hypergeometric tests (default = 0.05)");
 		options.addOption("m", "maxsize", true, "Maximum number of vertices allowed in the subgraph patterns (default = 5)");
 		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");	

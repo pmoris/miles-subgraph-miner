@@ -49,7 +49,7 @@ public class SubgraphMiningGUI {
 	private JTextField textInterestingVertices;
 	private JTextField textBackground;
 	private JTextField textFieldSupport;
-	private JTextField textFieldPValue;
+	private JTextField textFieldAlpha;
 	private JTextField textFieldVerticesSize;
 	private JTextField textFieldSavePath;
 	private JComboBox<String> comboBoxAlgorithm;
@@ -114,12 +114,12 @@ public class SubgraphMiningGUI {
 		this.textFieldSupport = textFieldSupport;
 	}
 
-	public JTextField getTextFieldPValue() {
-		return textFieldPValue;
+	public JTextField getTextFieldAlpha() {
+		return textFieldAlpha;
 	}
 
-	public void setTextFieldPValue(JTextField textFieldPValue) {
-		this.textFieldPValue = textFieldPValue;
+	public void setTextFieldAlpha(JTextField textFieldAlpha) {
+		this.textFieldAlpha = textFieldAlpha;
 	}
 
 	public JTextField getTextFieldVerticesSize() {
@@ -460,24 +460,24 @@ public class SubgraphMiningGUI {
 		gbc_horizontalStrut.gridy = 0;
 		panelOptions.add(horizontalStrut, gbc_horizontalStrut);
 		
-//		P-value
-		JLabel labelPValue = new JLabel("P-value:");
-		labelPValue.setToolTipText("P-value threshold to use (default = 0.05).");
-		GridBagConstraints gbc_labelPValue = new GridBagConstraints();
-		gbc_labelPValue.anchor = GridBagConstraints.EAST;
-		gbc_labelPValue.insets = new Insets(0, 0, 5, 5);
-		gbc_labelPValue.gridx = 0;
-		gbc_labelPValue.gridy = 1;
-		panelOptions.add(labelPValue, gbc_labelPValue);
+//		Significance level
+		JLabel labelAlpha = new JLabel("Significance level alpha:");
+		labelAlpha.setToolTipText("Significance level to use for p-values (default = 0.05).");
+		GridBagConstraints gbc_labelAlpha = new GridBagConstraints();
+		gbc_labelAlpha.anchor = GridBagConstraints.EAST;
+		gbc_labelAlpha.insets = new Insets(0, 0, 5, 5);
+		gbc_labelAlpha.gridx = 0;
+		gbc_labelAlpha.gridy = 1;
+		panelOptions.add(labelAlpha, gbc_labelAlpha);
 		
-		textFieldPValue = new JTextField("0.05");
-		textFieldPValue.setColumns(10);
-		GridBagConstraints gbc_textFieldPValue = new GridBagConstraints();
-		gbc_textFieldPValue.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldPValue.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldPValue.gridx = 1;
-		gbc_textFieldPValue.gridy = 1;
-		panelOptions.add(textFieldPValue, gbc_textFieldPValue);
+		textFieldAlpha = new JTextField("0.05");
+		textFieldAlpha.setColumns(10);
+		GridBagConstraints gbc_textFieldAlpha = new GridBagConstraints();
+		gbc_textFieldAlpha.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldAlpha.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldAlpha.gridx = 1;
+		gbc_textFieldAlpha.gridy = 1;
+		panelOptions.add(textFieldAlpha, gbc_textFieldAlpha);
 		
 //		Single-label option
 		checkBoxSingleLabel = new JCheckBox("Single-label mode");
