@@ -60,6 +60,7 @@ public class SubgraphMiningGUI {
 	private JCheckBox checkBoxVerbose;
 	private JTextArea textAreaProgressReport;
 	private JCheckBox checkBoxDebug;
+	private JCheckBox checkBoxAllPvalues;
 
 	public JCheckBox getCheckBoxDebug() {
 		return checkBoxDebug;
@@ -152,6 +153,14 @@ public class SubgraphMiningGUI {
 
 	public void setCheckBoxSingleLabel(JCheckBox checkBoxSingleLabel) {
 		this.checkBoxSingleLabel = checkBoxSingleLabel;
+	}
+
+	public JCheckBox getCheckBoxAllPvalues() {
+		return checkBoxAllPvalues;
+	}
+
+	public void setCheckBoxAllPvalues(JCheckBox checkBoxAllPvalues) {
+		this.checkBoxAllPvalues = checkBoxAllPvalues;
 	}
 
 	public JFrame getFrame() {
@@ -588,10 +597,22 @@ public class SubgraphMiningGUI {
 		checkBoxDebug = new JCheckBox("Debug mode");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxNewCheckBox.gridx = 4;
 		gbc_chckbxNewCheckBox.gridy = 2;
 		panelAdvanced.add(checkBoxDebug, gbc_chckbxNewCheckBox);
+		
+		checkBoxAllPvalues = new JCheckBox("Return all p-values", false);
+		checkBoxAllPvalues.setToolTipText("Return all motifs and their raw p-values alongside the "
+				+ "bonferroni-corrected values, instead of only those passing the Bonferroni-adjusted "
+				+ "significance threshold (default = no)");
+		GridBagConstraints gbc_chckbxAllPvalues = new GridBagConstraints();
+		gbc_chckbxAllPvalues.anchor = GridBagConstraints.WEST;
+		gbc_chckbxAllPvalues.gridwidth = 2;
+		gbc_chckbxAllPvalues.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxAllPvalues.gridx = 1;
+		gbc_chckbxAllPvalues.gridy = 3;
+		panelAdvanced.add(checkBoxAllPvalues, gbc_chckbxAllPvalues);
 		
 		checkBoxVerbose = new JCheckBox("Verbose");
 		checkBoxVerbose.setToolTipText("Additional logging information.");

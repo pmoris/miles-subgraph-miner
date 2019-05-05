@@ -16,6 +16,7 @@ public abstract class GraphParameters {
 	public static int verbose;
 	public static int maxsize;
 	public static double pvalue;
+	public static int allPValues;
 	public static int nestedpval;
 	public static String output;
 	public static String typeAlgorithm;

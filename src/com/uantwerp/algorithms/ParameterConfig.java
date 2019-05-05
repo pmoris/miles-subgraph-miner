@@ -82,6 +82,10 @@ public class ParameterConfig {
 			}
 			else
 				GraphParameters.setDefaultPValue();
+			if(cmd.hasOption("all-pvalues"))
+				GraphParameters.allPValues = 1;
+			else
+				GraphParameters.allPValues = 0;
 			if(cmd.hasOption('o')) {
 				File outDir = new File(cmd.getOptionValue('o')).getAbsoluteFile();
 				if (outDir.getParentFile().exists())
@@ -124,6 +128,7 @@ public class ParameterConfig {
 			String backgroundPath,
 			String support,
 			String alpha,
+			Boolean allPValues,
 			String verticesSize,
 			String savePath,
 			String algorithm,
@@ -191,6 +196,10 @@ public class ParameterConfig {
 		}
 		else
 			GraphParameters.setDefaultPValue();
+		if(allPValues)
+			GraphParameters.allPValues = 1;
+		else
+			GraphParameters.allPValues = 0;
 		if(!savePath.isEmpty()) {
 			File outDir = new File(savePath).getAbsoluteFile();
 			if (outDir.getParentFile().exists())
