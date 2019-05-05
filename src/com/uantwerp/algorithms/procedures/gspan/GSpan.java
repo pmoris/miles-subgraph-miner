@@ -108,7 +108,7 @@ public abstract class GSpan {
 		while (itBackward.hasNext()) {
 			DFSedge key = itBackward.next();
 			dfsCode.add(key);
-			subGraphMiningUndirected(MiningState.checkedmotifs.get(minStr), backwardRoot.get(key));
+			subGraphMiningUndirected(MiningState.checkedMotifsGroupSupport.get(minStr), backwardRoot.get(key));
 			itBackward.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -117,7 +117,7 @@ public abstract class GSpan {
 		while (itForward.hasNext()) {
 			DFSedge key = itForward.next();
 			dfsCode.add(key);
-			subGraphMiningUndirected(MiningState.checkedmotifs.get(minStr), forwardRoot.get(key));
+			subGraphMiningUndirected(MiningState.checkedMotifsGroupSupport.get(minStr), forwardRoot.get(key));
 			itForward.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -247,7 +247,7 @@ public abstract class GSpan {
 			while (itSelf.hasNext()) {
 				DFSedge key = itSelf.next();
 				dfsCode.add(key);
-				subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), selfRoot.get(key));
+				subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), selfRoot.get(key));
 				itSelf.remove();
 				dfsCode.remove(dfsCode.size() - 1);
 			}
@@ -257,7 +257,7 @@ public abstract class GSpan {
 		while (itBackward.hasNext()) {
 			DFSedge key = itBackward.next();
 			dfsCode.add(key);
-			subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), backwardRoot.get(key));
+			subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), backwardRoot.get(key));
 			itBackward.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -266,7 +266,7 @@ public abstract class GSpan {
 		while (itForward.hasNext()) {			
 			DFSedge key = itForward.next();
 			dfsCode.add(key);
-			subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), forwardRoot.get(key));
+			subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), forwardRoot.get(key));
 			itForward.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -275,7 +275,7 @@ public abstract class GSpan {
 		while (itForwardIncoming.hasNext()) {
 			DFSedge key = itForwardIncoming.next();			
 			dfsCode.add(key);
-			subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), forwardRootIncoming.get(key));
+			subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), forwardRootIncoming.get(key));
 			itForwardIncoming.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -284,7 +284,7 @@ public abstract class GSpan {
 		while (itForwardRmpth.hasNext()) {
 			DFSedge key = itForwardRmpth.next();
 			dfsCode.add(key);
-			subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), forwardRootRmpth.get(key));
+			subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), forwardRootRmpth.get(key));
 			itForwardRmpth.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -293,7 +293,7 @@ public abstract class GSpan {
 		while (itForwardIncomingRmpth.hasNext()) {
 			DFSedge key = itForwardIncomingRmpth.next();			
 			dfsCode.add(key);
-			subGraphMiningDirected(MiningState.checkedmotifs.get(minStr), forwardRmpthRootIncoming.get(key));
+			subGraphMiningDirected(MiningState.checkedMotifsGroupSupport.get(minStr), forwardRmpthRootIncoming.get(key));
 			itForwardIncomingRmpth.remove();
 			dfsCode.remove(dfsCode.size() - 1);
 		}
@@ -365,15 +365,15 @@ public abstract class GSpan {
 		HashSet<String> support = AuxiliaryFunctions.getTotalSupport(projected);
 		int totalSupport = support.size();
 		int groupSupport = calculateGroupSupport(support);			
-		MiningState.checkedmotifs.put(minDfScode, groupSupport);
+		MiningState.checkedMotifsGroupSupport.put(minDfScode, groupSupport);
 		if (groupSupport < GraphParameters.supportcutoff)
 			return false;
 		else{
-			MiningState.freqmotifs.put(minDfScode, totalSupport);
+			MiningState.supportedMotifsGraphSupport.put(minDfScode, totalSupport);
 			double prob = AlgorithmUtility.getProbability(prevHits, GraphParameters.graph.group.size(), totalSupport, groupSupport);
 			if (GraphParameters.verbose == 1)
 				System.out.println(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
-			MiningState.sigmotifs.put(minDfScode, prob);
+			MiningState.supportedMotifsPValues.put(minDfScode, prob);
 			return true;
 		}
 		/****************************************************************************************/

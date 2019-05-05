@@ -108,19 +108,19 @@ public class AlgorithmFunctionality {
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
 			System.out.println("After looking through the graph the following statistics were found");
-			System.out.println(MiningState.checkedmotifs.size() + " checked graph were discovered");
-			System.out.println("Of which " + MiningState.freqmotifs.size() + " are frequent");
-			System.out.println("Of which " + MiningState.sigmotifs.size() + " are significant before Bonferroni-correction");
+			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " checked graph were discovered");
+			System.out.println("Of which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent");
+			System.out.println("Of which " + MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction");
 //		}
 	}
 	
 	private void recalculateAndPrintResults(Timer t1){
 		int i = 0;
 		if (!GraphParameters.graph.group.isEmpty()){
-			Double bonferroni = GraphParameters.pvalue / MiningState.sigmotifs.size();
+			Double bonferroni = GraphParameters.pvalue / MiningState.supportedMotifsPValues.size();
 
 			if (GraphParameters.verbose == 1) {
-				System.out.println("Checked: " + MiningState.sigmotifs.size() + " subgraphs");
+				System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
 				System.out.println("Bonferonni-corrected P-value cutoff =  " + bonferroni);
 				if (GraphParameters.allPValues == 1) System.out.println(
 						"Retrieving all frequent motifs regardless of whether they pass the Bonferroni-adjusted significance threshold...");
@@ -134,19 +134,19 @@ public class AlgorithmFunctionality {
 			else
 				message = "Motif\tFreq Interest\tFreq Total\tP-value";
 
-			Iterator<String> it = MiningState.sigmotifs.keySet().iterator();
+			Iterator<String> it = MiningState.supportedMotifsPValues.keySet().iterator();
 			while (it.hasNext()) {
 				String key = it.next();
 				if (GraphParameters.allPValues == 1)
-					message = message + "\n" + key + "\t" + MiningState.checkedmotifs.get(key) + "\t" + 
-							MiningState.freqmotifs.get(key) + "\t" + MiningState.sigmotifs.get(key) +
-							"\t" + MiningState.sigmotifs.get(key) * MiningState.sigmotifs.size();
-					if (MiningState.sigmotifs.get(key) <= bonferroni)
+					message = message + "\n" + key + "\t" + MiningState.checkedMotifsGroupSupport.get(key) + "\t" + 
+							MiningState.supportedMotifsGraphSupport.get(key) + "\t" + MiningState.supportedMotifsPValues.get(key) +
+							"\t" + MiningState.supportedMotifsPValues.get(key) * MiningState.supportedMotifsPValues.size();
+					if (MiningState.supportedMotifsPValues.get(key) <= bonferroni)
 						i++;
 				else
-					if (MiningState.sigmotifs.get(key) <= bonferroni) {
-						message = message + "\n" + key + "\t" + MiningState.checkedmotifs.get(key) + "\t" + 
-								MiningState.freqmotifs.get(key) + "\t" + MiningState.sigmotifs.get(key);
+					if (MiningState.supportedMotifsPValues.get(key) <= bonferroni) {
+						message = message + "\n" + key + "\t" + MiningState.checkedMotifsGroupSupport.get(key) + "\t" + 
+								MiningState.supportedMotifsGraphSupport.get(key) + "\t" + MiningState.supportedMotifsPValues.get(key);
 						i++;
 				}
 			}
@@ -163,10 +163,10 @@ public class AlgorithmFunctionality {
 			if (GraphParameters.verbose == 1) {
 				System.out.println("Retrieving frequencies for all motifs...");
 			}
-			Iterator<String> it = MiningState.freqmotifs.keySet().iterator();
+			Iterator<String> it = MiningState.supportedMotifsGraphSupport.keySet().iterator();
 			while (it.hasNext()){
 				String key = it.next();
-				System.out.println(key + "\t" + MiningState.freqmotifs.get(key));
+				System.out.println(key + "\t" + MiningState.supportedMotifsGraphSupport.get(key));
 			}
 		}
 		System.out.println("Significant motifs after Bonferroni-correction: " + i);

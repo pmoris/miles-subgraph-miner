@@ -258,18 +258,18 @@ public abstract class AuxFSG {
 	public static void calculateSupport(String canonicalCode, Iterator<String> it2, int k){
 		HashSet<String> support = FSG.supportedNodes.get(canonicalCode);			
 		int groupSupport = calculateGroupSupport(support);			
-		MiningState.checkedmotifs.put(canonicalCode, groupSupport);
+		MiningState.checkedMotifsGroupSupport.put(canonicalCode, groupSupport);
 		if (groupSupport < GraphParameters.supportcutoff){
 			if (it2 != null)
 				it2.remove();
 			FSG.supportedNodes.remove(canonicalCode);
 		}else{
 			HashFuctions.updateHashHashSet(FSG.frequentGraphs, k, canonicalCode);
-			MiningState.freqmotifs.put(canonicalCode, support.size());
+			MiningState.supportedMotifsGraphSupport.put(canonicalCode, support.size());
 			double prob = AlgorithmUtility.getProbability(0, GraphParameters.graph.group.size(), support.size(), groupSupport);
 			if (GraphParameters.verbose == 1)
 				System.out.println(canonicalCode + "\t" + groupSupport + "\t" + support.size() + "\t" + prob);
-			MiningState.sigmotifs.put(canonicalCode, prob);
+			MiningState.supportedMotifsPValues.put(canonicalCode, prob);
 		}
 	}
 

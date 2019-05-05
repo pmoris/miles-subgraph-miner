@@ -23,7 +23,8 @@ public abstract class BuildMotif {
 	
 	/**
 	 * Iteratively builds motifs, starting from 1 edge (e.g. 1VAL-2VAL) and recursively extending it.
-	 * Throughout the process motifs that occur in the graph are tracked and stored.
+	 * Throughout the process motifs that occur in the graph are tracked and stored alongside their
+	 * frequency and hypergeometric test p-value.
 	 * 
 	 * @param 	motif		a DFSCode (Array) of DFSedges e.g. [1 -1 ,1 -2 ]
 	 * @param 	prevHits	nodes set, initially consists of the background set
@@ -80,7 +81,7 @@ public abstract class BuildMotif {
 		}
 		
 		// Add motif to list of checked motifs
-		MiningState.checkedmotifs.put(motifString, interestSupport);
+		MiningState.checkedMotifsGroupSupport.put(motifString, interestSupport);
 		
 		// Stop with this subgraph motif if it did not pass the required support
 		if (interestSupport < GraphParameters.supportcutoff){ 
@@ -132,8 +133,10 @@ public abstract class BuildMotif {
 		if(GraphParameters.verbose==1)
 			System.out.println(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
 		
-		MiningState.sigmotifs.put(motifString, pvalue);
-		MiningState.freqmotifs.put(motifString, totalSupport);
+		MiningState.supportedMotifsPValues.put(motifString, pvalue);
+		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
+		MiningState.supportedMotifsDFScode.put(motifString, motif);
+
 
 		// Extend the motif
 		Iterator<Integer> it3 = motifLabels.keySet().iterator();
@@ -168,16 +171,16 @@ public abstract class BuildMotif {
 					continue TARGETLOOP;
 				String newMotifString = AlgorithmUtility.getStringMotifs(newMotif);
 				DFScode<DFSedge> optNewMotif = new DFScode<>();
-				if(MiningState.motiftransformations.containsKey(newMotifString)){
+				if(MiningState.motifTransformations.containsKey(newMotifString)){
 					optNewMotif = newMotif;
 				}else{
 					optNewMotif = OptimizeMotif.optimizeMotif(newMotif);
-					MiningState.motiftransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
+					MiningState.motifTransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
 					if (GraphParameters.verbose==1)
 						System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
 					newMotifString = AlgorithmUtility.getStringMotifs(optNewMotif); // only used to check presence, can be changed by storing list of dfsCode motifs in mining state instead of string, then call tostring inside printing function
 				}
-				if (MiningState.checkedmotifs.containsKey(newMotifString)){
+				if (MiningState.checkedMotifsGroupSupport.containsKey(newMotifString)){
 					continue TARGETLOOP;
 				}else{
 					build_motif(optNewMotif, hitNodes);
@@ -229,7 +232,7 @@ public abstract class BuildMotif {
 			}
 		}
 		
-		MiningState.checkedmotifs.put(motifString, interestSupport);
+		MiningState.checkedMotifsGroupSupport.put(motifString, interestSupport);
 		
 		//Stop with this subgraph if it did not pass the required support
 		if (interestSupport < GraphParameters.supportcutoff){ 
@@ -274,8 +277,8 @@ public abstract class BuildMotif {
 		if(GraphParameters.verbose==1)
 			System.out.println(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
 		
-		MiningState.sigmotifs.put(motifString, pvalue);
-		MiningState.freqmotifs.put(motifString, totalSupport);
+		MiningState.supportedMotifsPValues.put(motifString, pvalue);
+		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
 		
 		Iterator<Integer> it3 = motifLabels.keySet().iterator();
 		while (it3.hasNext()){
@@ -310,16 +313,16 @@ public abstract class BuildMotif {
 					continue TARGETLOOP;
 				String newMotifString = AlgorithmUtility.getStringMotifs(newMotif);
 				DFScode<DFSedge> optNewMotif = new DFScode<>();
-				if(MiningState.motiftransformations.containsKey(newMotifString)){
+				if(MiningState.motifTransformations.containsKey(newMotifString)){
 					optNewMotif = newMotif;
 				}else{
 					optNewMotif = OptimizeMotif.optimizeMotif_und(newMotif);
-					MiningState.motiftransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
+					MiningState.motifTransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
 					if (GraphParameters.verbose==1)
 						System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
 					newMotifString = AlgorithmUtility.getStringMotifs(optNewMotif);
 				}
-				if (MiningState.checkedmotifs.containsKey(newMotifString)){
+				if (MiningState.checkedMotifsGroupSupport.containsKey(newMotifString)){
 					continue TARGETLOOP;
 				}else{
 					build_motif_und(optNewMotif, hitNodes);
