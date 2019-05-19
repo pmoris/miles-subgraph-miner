@@ -9,13 +9,13 @@ public class JsonDataEdge {
 	@SuppressWarnings("unused")
 	private String target;
 	@SuppressWarnings("unused")
-	private Double pValue;
+	private Double pvalue;
 	
-	public JsonDataEdge(String id, String idSource, String idTarget, Double pValue) {
+	public JsonDataEdge(String id, String idSource, String idTarget, Double pvalue) {
 		this.id = id;
 		this.source = idSource;
 		this.target = idTarget;
-		this.pValue = pValue;		
+		this.pvalue = pvalue;		
 	}
 
 }

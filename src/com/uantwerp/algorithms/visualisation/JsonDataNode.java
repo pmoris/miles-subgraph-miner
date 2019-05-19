@@ -7,12 +7,12 @@ public class JsonDataNode {
 	@SuppressWarnings("unused")
 	private String name;
 	@SuppressWarnings("unused")
-	private Double pValue;
+	private Double pvalue;
 	
-	public JsonDataNode(String id, String name, Double pValue) {
+	public JsonDataNode(String id, String name, Double pvalue) {
 		this.id = id;
 		this.name = name;
-		this.pValue = pValue;		
+		this.pvalue = pvalue;		
 	}
 
 }
