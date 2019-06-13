@@ -7,7 +7,12 @@
 
     <title>Significantly enriched subgraphs</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <style>
+        $INCLUDE-NORMALIZE.CSS
+        $INCLUDE-SKELETON.CSS
         $INCLUDE-STYLE.CSS
     </style>
 
@@ -18,10 +23,56 @@
     <script type="text/javascript">
         $INCLUDE-CODE.JS
     </script>
+
+    <script type="text/javascript">
+        $INCLUDE-FILESAVER.JS
+    </script>
   </head>
 
   <body>
     <h1>Significantly enriched subgraphs</h1>
-    <div id='cy'></div>
+
+    <div id="cy" class="main"></div>
+
+    <div class="sidebar">
+
+      <h2>Layout</h2>
+
+      <p>The <a target="_blank" href="http://js.cytoscape.org/#layouts">layout</a> is used to specify how the nodes are positioned.</p>
+
+      <div class="u-cf"></div>
+      <select id="layout">
+        <option value="grid" selected>Grid</option>
+        <option value="concentric" selected>Concentric</option>
+        <option value="circle" selected>Circle</option>
+        <option value="cose" selected>COSE</option>
+        <option value="random" selected>Random</option>
+        </select>
+      <i id="redo-layout" class="fas fa-sync-alt action-icon tooltip" title="Redo layout"></i>
+
+      <h2>Export</h2>
+
+      <p>Export the subgraphs to a <code>png</code> or <code>JSON</code> file. The latter can be imported into Cytoscape for further processing.</p>
+
+      <div class="u-cf"></div>
+      <button type="button" id="save_button" style="float: left;">Save as</button>
+      <p style="float:right;">
+        Output type:
+        <select style="height:40px;" id="export">
+          <option value="png" selected>png</option>
+          <option value="JSON" selected>JSON</option>
+        </select>
+        <form style="float:right;">
+          Scale image: <input id="scale" type="number" value="1">
+        </form>
+      </p>
+
+      <h2>Retrieved motifs</h2>
+      $INCLUDE-SIDEBAR
+
+      <button id="save_table_button">Export table to CSV file</button>
+      <p><table>$INCLUDE-TABLE</table></p>
+
+    </div>
   </body>
 </html>
