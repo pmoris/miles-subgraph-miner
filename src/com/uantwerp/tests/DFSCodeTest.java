@@ -34,7 +34,7 @@ public class DFSCodeTest {
 		code2.add(new DFSedge(2, "C", 3, "C"));
 		code2.add(new DFSedge(3, "C", 4, "C"));
 		
-		assertEquals("1C-2C,2C-3C,1C-4C",code2.getMinDfsCode().dfsCodeToString());
+		assertEquals("1C-2C,2C-3C,3C-4C",code2.getMinDfsCode().dfsCodeToString());
 	}
 	
 	@Test

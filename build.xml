@@ -6,11 +6,14 @@
 	<property name="build.resources.dir" location="${build.dir}/resources"/>
 	<property name="build.jar.dir" location="${build.dir}/jar"/>
 	<property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/>
-	
+	<property name="test.dir" location="src/com/uantwerp/tests" />
+	<property name="test.report.dir"  value="${build.dir}/junitreport"/>
+
 	<path id="classpath">
 		<fileset dir="lib" includes="*.jar"/>
 	</path>
-	
+	<path id="application" location="${build.jar.dir}/subgraphMining.jar"/>
+
 	<target name="compile">
 		<mkdir dir="${build.classes.dir}"/>
 		<javac includeantruntime="false" srcdir="${source.dir}"
@@ -39,7 +42,28 @@
 		<delete dir="${build.dir}"/>
 		<delete dir="data"/>
 	</target>
-	
-	<target name="all" depends="clean,jar">
+
+	<target name="junit" depends="jar">
+		<mkdir dir="${test.report.dir}"/>
+		<junit printsummary="yes">
+			<classpath>
+				<path refid="classpath"/>
+				<path refid="application"/>
+			</classpath>
+			<formatter type="xml"/>
+			<batchtest fork="yes" todir="${test.report.dir}">
+				<fileset dir="${test.dir}" includes="*Test.java"/>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="junitreport">
+		<junitreport todir="${test.report.dir}">
+				<fileset dir="${test.report.dir}" includes="TEST-*.xml"/>
+				<report todir="${test.report.dir}"/>
+		</junitreport>
+	</target>
+
+	<target name="all" depends="clean,junit,jar">
 	</target>
 </project>
