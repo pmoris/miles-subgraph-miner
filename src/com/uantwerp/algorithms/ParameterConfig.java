@@ -74,9 +74,9 @@ public class ParameterConfig {
 				GraphParameters.nestedpval = 1;
 			else
 				GraphParameters.nestedpval = 0;
-			if(cmd.hasOption('a')) {
-				if (Double.valueOf(cmd.getOptionValue('a')) <= 1 && Double.valueOf(cmd.getOptionValue('a')) >= 0)
-					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('a'));
+			if(cmd.hasOption('p')) {
+				if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
+					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
 				else
 					SubGraphMiningException.exceptionInvalidValue("alpha");
 			}
