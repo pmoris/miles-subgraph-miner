@@ -109,17 +109,19 @@ public class AlgorithmFunctionality {
 //	}
 	
 	public static void printStatistics(){
-//		if (GraphParameters.verbose == 1){
+		if (GraphParameters.verbose == 1){
 			System.out.println("After looking through the graph the following statistics were found");
 			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " checked graph were discovered");
 			System.out.println("Of which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent");
 			System.out.println("Of which " + MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction");
-//		}
+		}
 	}
 	
 	private void recalculateAndPrintResults(Timer t1){
 		int i = 0;
-		if (!GraphParameters.graph.group.isEmpty()){
+		// if a file with interesting vertices was provided
+		if (AlgorithmUtility.checkNotEmptyFileContent(GraphParameters.interestFileContents)) {
+
 			Double bonferroni = GraphParameters.pvalue / MiningState.supportedMotifsPValues.size();
 
 			if (GraphParameters.verbose == 1) {
@@ -179,15 +181,43 @@ public class AlgorithmFunctionality {
 			
 			System.out.println("Significant motifs after Bonferroni-correction: " + i);			
 		}
+		// if no interesting vertices were provided
 		else{
 			if (GraphParameters.verbose == 1) {
 				System.out.println("Retrieving frequencies for all motifs...");
 			}
+
+			String message = "Motif\tSupport";
+
 			Iterator<String> it = MiningState.supportedMotifsGraphSupport.keySet().iterator();
 			while (it.hasNext()){
 				String key = it.next();
-				System.out.println(key + "\t" + MiningState.supportedMotifsGraphSupport.get(key));
+				message = message + "\n" + key + "\t" + MiningState.supportedMotifsGraphSupport.get(key);
 			}
+			
+			// write output file or print to stdout
+			if (!GraphParameters.output.equals("none")){
+				FileUtility.writeFile(GraphParameters.output, message.replace(" ", ""));
+			}else{
+				System.out.println(message.replace(" ", "_"));
+			}
+
+			// convert motifs to JSON format for cytoscape.js
+			Double bonferroni = Double.NaN; // set bonferroni to NaN to instruct JSON converter to add all motifs
+			String JSON = MotifToJsonConversion.convertAllMotifs(bonferroni);			
+
+			// write html visualisation file
+			if (!GraphParameters.output.equals("none")){
+				try {
+					String htmlVisualisation = HTMLCreator.createHTML(JSON, message, bonferroni, i);
+					FileUtility.writeFile(GraphParameters.output + ".html", htmlVisualisation);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			System.out.println("Computed frequencies (support) for " + MiningState.supportedMotifsGraphSupport.size() + " subgraphs.");
+
 		}
 		
 		VariablesTimer.finishProcess();
