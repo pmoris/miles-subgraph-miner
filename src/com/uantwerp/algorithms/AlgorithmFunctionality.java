@@ -1,5 +1,6 @@
 package com.uantwerp.algorithms;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Timer;
 
@@ -14,6 +15,8 @@ import com.uantwerp.algorithms.procedures.gspan.GSpan;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.FileUtility;
 import com.uantwerp.algorithms.utilities.PrintUtility;
+import com.uantwerp.algorithms.visualisation.HTMLCreator;
+import com.uantwerp.algorithms.visualisation.MotifToJsonConversion;
 
 public class AlgorithmFunctionality {
 
@@ -128,6 +131,7 @@ public class AlgorithmFunctionality {
 						"Retrieving all frequent motifs that pass the Bonferroni-adjusted significance threshold...");
 			}
 
+			// generate table with motifs, freqs and p-values
 			String message;
 			if (GraphParameters.allPValues == 1)
 				message = "Motif\tFreq Interest\tFreq Total\tP-value\tBonferroni-adjusted P-value";
@@ -137,28 +141,44 @@ public class AlgorithmFunctionality {
 			Iterator<String> it = MiningState.supportedMotifsPValues.keySet().iterator();
 			while (it.hasNext()) {
 				String key = it.next();
-				if (GraphParameters.allPValues == 1)
+				if (GraphParameters.allPValues == 1) {
 					message = message + "\n" + key + "\t" + MiningState.checkedMotifsGroupSupport.get(key) + "\t" + 
 							MiningState.supportedMotifsGraphSupport.get(key) + "\t" + MiningState.supportedMotifsPValues.get(key) +
 							"\t" + MiningState.supportedMotifsPValues.get(key) * MiningState.supportedMotifsPValues.size();
-					if (MiningState.supportedMotifsPValues.get(key) <= bonferroni)
-						i++;
-				else
+					if (MiningState.supportedMotifsPValues.get(key) <= bonferroni) i++;
+				}
+
+				else {
 					if (MiningState.supportedMotifsPValues.get(key) <= bonferroni) {
 						message = message + "\n" + key + "\t" + MiningState.checkedMotifsGroupSupport.get(key) + "\t" + 
 								MiningState.supportedMotifsGraphSupport.get(key) + "\t" + MiningState.supportedMotifsPValues.get(key);
 						i++;
+					}
 				}
 			}
-			
+
+			// write output file or print to stdout
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, message.replace(" ", ""));
 			}else{
 				System.out.println(message.replace(" ", "_"));
 			}
+
+			// convert motifs to JSON format for cytoscape.js
+			String JSON = MotifToJsonConversion.convertAllMotifs(bonferroni);			
+
+			// write html visualisation file
+			if (!GraphParameters.output.equals("none")){
+				try {
+					String htmlVisualisation = HTMLCreator.createHTML(JSON, message, bonferroni, i);
+					FileUtility.writeFile(GraphParameters.output + ".html", htmlVisualisation);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			
+			System.out.println("Significant motifs after Bonferroni-correction: " + i);			
 		}
-		
 		else{
 			if (GraphParameters.verbose == 1) {
 				System.out.println("Retrieving frequencies for all motifs...");
@@ -169,11 +189,9 @@ public class AlgorithmFunctionality {
 				System.out.println(key + "\t" + MiningState.supportedMotifsGraphSupport.get(key));
 			}
 		}
-		System.out.println("Significant motifs after Bonferroni-correction: " + i);
+		
 		VariablesTimer.finishProcess();
 		t1.cancel();
 	}
-	
-
 	
 }
