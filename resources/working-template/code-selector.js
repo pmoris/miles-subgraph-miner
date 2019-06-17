@@ -67,7 +67,9 @@
       },
       animate: true,
       animationDuration: maxLayoutDuration,
-      padding: layoutPadding
+      padding: layoutPadding,
+      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+      avoidOverlapPadding: 20 // extra spacing around nodes when avoidOverlap: true
     },
     circle: {
         name: 'circle',
