@@ -36,6 +36,10 @@ public class HTMLCreator {
 		is = HTMLCreator.class.getResourceAsStream("/code.js");
 		String codeJsString = IOUtils.toString(is, StandardCharsets.UTF_8);
 		htmlString = htmlString.replace("$INCLUDE-CODE.JS", codeJsString);
+		
+		is = HTMLCreator.class.getResourceAsStream("/FileSaver.min.js");
+		String codeJsFileSaver = IOUtils.toString(is, StandardCharsets.UTF_8);
+		htmlString = htmlString.replace("$INCLUDE-FILESAVER.JS", codeJsFileSaver);
 
 		// insert JSON data	
 		htmlString = htmlString.replace("$INCLUDE-ELEMENTS", elementsJSON);
