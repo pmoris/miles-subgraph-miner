@@ -175,7 +175,7 @@ public class SubgraphMiningGUI {
 		return checkBoxUndirected;
 	}
 
-	public void setCheckBoxUndirected(JCheckBox CheckBoxUndirected) {
+	public void setCheckBoxUndirected(JCheckBox checkBoxUndirected) {
 		this.checkBoxUndirected = checkBoxUndirected;
 	}
 
