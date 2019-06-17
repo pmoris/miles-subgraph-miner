@@ -258,6 +258,7 @@ public class SubgraphMiningGUI {
 		menuBar.add(mnHelp);
 		
 //		Add link to online readme
+		@SuppressWarnings("serial")
 		JMenuItem mntmHelpContents = new JMenuItem(new AbstractAction("Visit help page") {
 			public void actionPerformed(ActionEvent e) {
 		        // Button pressed logic goes here
@@ -272,6 +273,7 @@ public class SubgraphMiningGUI {
 		mnHelp.add(mntmHelpContents);
 		
 //		Add about pop-up
+		@SuppressWarnings("serial")
 		JMenuItem mntmAbout = new JMenuItem(new AbstractAction("About") {
 			public void actionPerformed(ActionEvent e) {
 		        // Button pressed logic goes here

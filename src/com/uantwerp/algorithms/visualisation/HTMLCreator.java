@@ -11,24 +11,9 @@ import com.uantwerp.algorithms.common.GraphParameters;
 
 public class HTMLCreator {
 	
-	public static String createHTML(String outputPath, String elementsJSON, String message, double bonferroni, int sig) throws IOException {
-//		File htmlTemplate = new File("resources/template.html");
-		
-		
-//		System.out.println(this.getClass());
-		System.out.println(("classpath is: " + System.getProperty("java.class.path")));
-//		System.out.println(getClass().getResource("/template.html"));
-//		System.out.println(this.getClass().getResource("/template.html"));
-		System.out.println(HTMLCreator.class.getResource("/template.html"));
-
-		// static version     URL songPath = MyClass.class.getResource("background.midi");
-		//https://stackoverflow.com/questions/8275499/how-to-call-getclass-from-a-static-method-in-java
-//		ClassLoader.getResource("template.html");
-
+	public static String createHTML(String elementsJSON, String message, double bonferroni, int sig) throws IOException {
 		InputStream is = HTMLCreator.class.getResourceAsStream("/template.html");
-//		InputStream is = getClass().getResourceAsStream("/template.html"); 
 		String htmlString = IOUtils.toString(is, StandardCharsets.UTF_8);
-//		String htmlString = FileUtils.readFileToString(htmlTemplate);
 
 		// insert css
 		is = HTMLCreator.class.getResourceAsStream("/style.css");
