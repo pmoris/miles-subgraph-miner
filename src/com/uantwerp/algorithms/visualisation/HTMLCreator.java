@@ -59,8 +59,8 @@ public class HTMLCreator {
 		StringBuilder sidebar = new StringBuilder();
 		
 		sidebar.append("<p>" + MiningState.checkedMotifsGroupSupport.size() + " subgraphs were checked."
-				+ "\nOf which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent"
-				+ "and " + MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction.");
+				+ "\nOf which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent and "
+				+ MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction.");
 		sidebar.append("<p>" + "Significantly enriched subgraphs after Bonferroni-correction: " + sig + " (using a Bonferonni-corrected P-value cutoff = " + bonferroni + ").</p>");
 		if (GraphParameters.allPValues == 1) sidebar.append(
 				"<p>" + "Showing all frequent subgraphs regardless of whether they pass the Bonferroni-adjusted significance threshold.</p>");
