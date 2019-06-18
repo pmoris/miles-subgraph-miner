@@ -461,8 +461,8 @@ public class SubgraphMiningGUI {
 		panelOptions.setLayout(gbl_panelOptions);
 		
 //		P-value
-		JLabel labelPValue = new JLabel("P-value:");
-		labelPValue.setToolTipText("P-value threshold to use (default = 0.05).");
+		JLabel labelPValue = new JLabel("Significance level alpha:");
+		labelPValue.setToolTipText("Significance level to use for p-values (default = 0.05).");
 		GridBagConstraints gbc_labelPValue = new GridBagConstraints();
 		gbc_labelPValue.anchor = GridBagConstraints.EAST;
 		gbc_labelPValue.insets = new Insets(0, 0, 5, 5);
@@ -490,8 +490,8 @@ public class SubgraphMiningGUI {
 		panelOptions.add(checkBoxSingleLabel, gbc_checkBoxSingleLabel);
 		
 //		Vertices
-		JLabel labelVerticesSize = new JLabel("Maximum motif size:");
-		labelVerticesSize.setToolTipText("Maximum number of nodes in a motif.");
+		JLabel labelVerticesSize = new JLabel("Maximum subgraph size:");
+		labelVerticesSize.setToolTipText("Maximum number of nodes in a subgraph or motif.");
 		GridBagConstraints gbc_labelVerticesSize = new GridBagConstraints();
 		gbc_labelVerticesSize.anchor = GridBagConstraints.EAST;
 		gbc_labelVerticesSize.insets = new Insets(0, 0, 5, 5);
