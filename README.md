@@ -33,7 +33,7 @@
 
 ## Purpose of the tool
 
-MULES is a Java tool to retrieve **subgraphs** (or patterns/motifs) from a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes). In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
+MULES is a Java tool to discover **subgraphs** (or patterns/motifs) from a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
 
 Graph data is becoming more and more prevalent in various fields, including biology and bio-medicine, and subgraph discovery methods can provide valuable insight into these, often large and complex, data structures.
 
@@ -41,7 +41,7 @@ MULES should work on most regular-sized biological networks with any number of s
 
 The included [example datasets](#examples) are for illustrative and testing purposes.
 
-This implementation is provided for free for research purposes. Some bugs may be present within the software and no guarantees are given!
+This implementation is provided for free and is intended for research purposes. Some bugs may be present within the software and no guarantees are given!
 
 We would appreciate any comments, bug descriptions, suggestions or success stories regarding the tool.
 
