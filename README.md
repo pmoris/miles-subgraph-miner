@@ -55,7 +55,7 @@ The standard JAR version of MULES requires Java version 8 or higher. Installatio
 
 The latest version of the runnable JAR file is available from our [release page]().
 
-MULES requires no true installation. The JAR file can be launched directly to open the GUI version of the tool. Alternatively, it can be invoked via the [command line](#command-line-options). The required input files and analysis options are described [below](#usage).
+MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#usage).
 
 ### Compiling from source
 
@@ -120,9 +120,19 @@ For further information on these options, please consult the [command line secti
 
 ### Output
 
-describe example output and how to read it
+The output of the significant subgraph mining analysis consists of a list of subgraphs or motifs alongside their support/frequency and associated p-value of the enrichment test (see section on [statistics](#what-is-an-associated-subgraph-and-what-are-the-statistics-behind-it)).
 
-give visualisation option
+The syntax used for the motifs is a sequential list of edges, where each edge starts with the source vertex name, immediately followed by its label (without spaces), a dash, and finally the target vertex name, immediately followed by its label, and edges are separated by commas. E.g. `vertexOneLabelX-vertexTwoLabelY,vertexOneLabelX-vertexOneLabelX` would represent a two-vertex motif where the first one points to the second one and contains a self-loop.
+
+The output is provided in both a tab-separated text file and an interactive `cytoscape.js` visualisation in the form of a HTML file (see ).
+
+| Motif               | Freq Interest | Freq Total | P-value                |
+|---------------------|---------------|------------|------------------------|
+| 2ILE-1GLU           | 32            | 320        | 1.1121874550841103E-24 |
+| 1ASP-2ILE           | 41            | 242        | 4.3311993599366595E-41 |
+| 2GLY-1GLU           | 30            | 301        | 3.9013929550490746E-23 |
+| 2THR-1ASP           | 28            | 154        | 4.4049029924853627E-29 |
+| 1ASP-2ILE,3THR-2ILE | 33            | 78         | 4.532207930640488E-48  |
 
 ### Command line options
 
