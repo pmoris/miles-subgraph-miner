@@ -53,7 +53,7 @@ The standard JAR version of MULES requires Java version 8 or higher. Installatio
 
 ### Setup
 
-The latest version of the runnable JAR file is available from our [release page]().
+The latest version of the runnable JAR file is available from our [releases page](https://github.com/pmoris/subgraph-miner/releases).
 
 MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#usage).
 
