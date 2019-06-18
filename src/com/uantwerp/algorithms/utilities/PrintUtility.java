@@ -69,9 +69,9 @@ public class PrintUtility {
 	}
 	
 	public static void printSummary(){
-		System.out.println("Found: " + GraphParameters.graph.vertex.size() + " nodes in graph");
+		System.out.println("Found " + GraphParameters.graph.vertex.size() + " nodes in graph");
 		System.out.println("Of which " + GraphParameters.graph.bgnodes.size()+" are part of the background");
-		System.out.println("Of which " + GraphParameters.graph.group.size()+" were selected");
+		System.out.println("Of which " + GraphParameters.graph.group.size()+" were selected as interesting");
 		System.out.println("Of which " + GraphParameters.graph.edgeHash.size()+" have targets");
 		System.out.println("Of which " + GraphParameters.graph.reverseEdgeHash.size()+" are targets");
 		System.out.println("With " + GraphParameters.graph.labelHash.size() + " possible labels");
