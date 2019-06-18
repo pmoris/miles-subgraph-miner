@@ -28,7 +28,8 @@
 
 <!-- /code_chunk_output -->
 
-INSERT IMAGE HERE
+![](./img/visualisation_example.png)
+
 
 ## Purpose of the tool
 
