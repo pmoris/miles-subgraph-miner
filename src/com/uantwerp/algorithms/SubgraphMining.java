@@ -47,8 +47,8 @@ public class SubgraphMining {
 		try{			
 //			Launch GUI if no options are passed
 			if (args.length == 0) {
-//				start GUI
 				SubgraphMiningGUI.launchGUI(args);
+//				ultimately, the SubgraphMiningGUI.StartButton class will invoke runProcesses()
 			} else {
 //				Parse command line
 				CommandLineParser parser = new DefaultParser();

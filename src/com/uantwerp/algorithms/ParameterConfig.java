@@ -47,15 +47,27 @@ public class ParameterConfig {
 				GraphParameters.interestFileContents = file;
 			}
 			if(cmd.hasOption('s')) {
-				if (Integer.valueOf(cmd.getOptionValue('s')) >= 0)
-					GraphParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
-				else
+				try {
+					if (Integer.valueOf(cmd.getOptionValue('s')) >= 0)
+						GraphParameters.supportcutoff = Integer.valueOf(cmd.getOptionValue('s'));
+					else
+						SubGraphMiningException.exceptionInvalidValue("support");
+				} catch (NumberFormatException e) {
 					SubGraphMiningException.exceptionInvalidValue("support");
+				}
 			}
 			else
 				GraphParameters.setDefaultSupport();
-			if(cmd.hasOption('m'))
-				GraphParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
+			if(cmd.hasOption('m')) {
+				try {
+					if (Integer.valueOf(cmd.getOptionValue('m')) >= 1)
+						GraphParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
+					else
+						SubGraphMiningException.exceptionInvalidValue("maxsize");
+				} catch (NumberFormatException e) {
+					SubGraphMiningException.exceptionInvalidValue("maxsize");
+				}
+			}
 			else
 				GraphParameters.setDefaultMaxSize();
 			if(cmd.hasOption("singlelabel"))
@@ -75,10 +87,15 @@ public class ParameterConfig {
 			else
 				GraphParameters.nestedpval = 0;
 			if(cmd.hasOption('p')) {
-				if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
-					GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
-				else
-					SubGraphMiningException.exceptionInvalidValue("alpha");
+				try {
+
+					if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
+						GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
+					else
+						SubGraphMiningException.exceptionInvalidValue("alpha");
+				} catch (NumberFormatException e) {
+				SubGraphMiningException.exceptionInvalidValue("alpha");
+				}
 			}
 			else
 				GraphParameters.setDefaultPValue();
@@ -161,15 +178,27 @@ public class ParameterConfig {
 			GraphParameters.interestFileContents = interesting;
 		}
 		if(!support.isEmpty()) {
-			if (Integer.valueOf(support) >= 0)
-				GraphParameters.supportcutoff = Integer.valueOf(support);
-			else
+			try {
+				if (Integer.valueOf(support) >= 0)
+					GraphParameters.supportcutoff = Integer.valueOf(support);
+				else
+					SubGraphMiningException.exceptionInvalidValue("support");
+			} catch (NumberFormatException e) {
 				SubGraphMiningException.exceptionInvalidValue("support");
+			}
 		}
 		else
 			GraphParameters.setDefaultSupport();
-		if(!verticesSize.isEmpty())
-			GraphParameters.maxsize = Integer.valueOf(verticesSize);
+		if(!verticesSize.isEmpty()) {
+			try {
+				if (Integer.valueOf(verticesSize) >= 1)
+					GraphParameters.maxsize = Integer.valueOf(verticesSize);
+				else
+					SubGraphMiningException.exceptionInvalidValue("maximum subgraph size");
+			} catch (NumberFormatException e) {
+				SubGraphMiningException.exceptionInvalidValue("maximum subgraph size");
+			}
+		}
 		else
 			GraphParameters.setDefaultMaxSize();
 		if(singleLabel)
@@ -189,10 +218,14 @@ public class ParameterConfig {
 		else
 			GraphParameters.nestedpval = 0;
 		if(!alpha.isEmpty()) {
-			if (Double.valueOf(alpha) <= 1 && Double.valueOf(alpha) >= 0)
-				GraphParameters.pvalue = Double.valueOf(alpha);
-			else
-				SubGraphMiningException.exceptionInvalidValue("alpha");
+			try {
+				if (Double.valueOf(alpha) <= 1 && Double.valueOf(alpha) >= 0)
+					GraphParameters.pvalue = Double.valueOf(alpha);
+				else
+					SubGraphMiningException.exceptionInvalidValue("significance level");
+			} catch (NumberFormatException e) {
+				SubGraphMiningException.exceptionInvalidValue("significance level");
+			}
 		}
 		else
 			GraphParameters.setDefaultPValue();
