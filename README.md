@@ -10,7 +10,7 @@
 		* [Prerequisites](#prerequisites)
 		* [Setup](#setup)
 		* [Compiling from source](#compiling-from-source)
-	* [How to use MULES](#how-to-use-MULES)
+	* [How to use MULES](#how-to-use-mules)
 		* [Input files](#input-files)
 		* [Options](#options)
 		* [Output](#output)
@@ -198,7 +198,7 @@ The algorithms were adapted to run in the current problem domain and as well to 
 
 ### Interestingness measure
 
-The aim of the significant subgraph mining algorithm is to **retrieve those subgraphs in a graph that are significantly associated with a specific set of nodes or vertices**. More specifically, given a set of nodes of interest $n$, are there subgraph patterns $S$ that contain vertices in $n$ more often than expected compared to the un-selected vertices in the rest of the graph, or in other words, are the nodes of interest $n$ enriched for a specific subgraph pattern $S$? Note that the concept of _"subgraph patterns that contain a vertex"_ is more strictly defined as _"a vertex being the source vertex of an instance of a specific subgraph pattern"_. An example is given below:
+The aim of the significant subgraph mining algorithm is to **retrieve those subgraphs in a graph that are significantly associated with a specific set of nodes or vertices**. More specifically, given a set of nodes of interest _n_, are there subgraph patterns _S_ that contain vertices in _n_ more often than expected compared to the un-selected vertices in the rest of the graph, or in other words, are the nodes of interest _n_ enriched for a specific subgraph pattern _S_? Note that the concept of _"subgraph patterns that contain a vertex"_ is more strictly defined as _"a vertex being the source vertex of an instance of a specific subgraph pattern"_. An example is given below:
 
 ![](./img/enriched_subgraph_example.svg)
 
@@ -213,29 +213,29 @@ The hypergeometric distribution arises in various situations where we are intere
 A well known biological example is the GO enrichment test for a set of differentially expressed genes. The urn with marbles now represents all measured genes and the colours represent a gene either being differentially expressed (white) or not (black). The drawing of marbles is now analogous to specific genes being annotated with a specific GO term. We are interested in the proportion of annotated genes in the set of differentially expressed genes, compared to the rest of the genes.
 <!-- Here we are interested in the proportion of genes that are annotated with a specific GO term (drawing marbles), in the set of differentially expressed genes (white marbles), compared to the background set, i.e. the remaining measured genes (black marbles). -->
 
-Similarly, this distribution also describes our enriched subgraph situation. In this case, source vertices for instances of the subgraph pattern $S$ are discovered (_the process of drawing marbles_) in a graph containing both vertices of interest (_white marbles_) and background vertices (_black marbles_).
-<!-- drawing vertices (i.e. discovering instances of the subgraph patterns $S$) from a graph containing both vertices of interest (_white marbles_) and unselected/background vertices (_black marbles_). -->
+Similarly, this distribution also describes our enriched subgraph situation. In this case, source vertices for instances of the subgraph pattern _S_ are discovered (_the process of drawing marbles_) in a graph containing both vertices of interest (_white marbles_) and background vertices (_black marbles_).
+<!-- drawing vertices (i.e. discovering instances of the subgraph patterns _S_) from a graph containing both vertices of interest (_white marbles_) and unselected/background vertices (_black marbles_). -->
 
 The probability of such a sample is given by the probability mass function of the hypergeometric distribution:
 
 <!-- $$pmf: \Pr(X = k) = \frac{\binom{K}{k} \binom{N - K}{n-k}}{\binom{N}{n}}$$ -->
 <img src="https://latex.codecogs.com/svg.latex?pmf:&space;\Pr(X&space;=&space;k)&space;=&space;\frac{\binom{K}{k}&space;\binom{N&space;-&space;K}{n-k}}{\binom{N}{n}}" title="pmf: \Pr(X = k) = \frac{\binom{K}{k} \binom{N - K}{n-k}}{\binom{N}{n}}" />
 
-It describes the probability of observing $k$ successes (_i.e. a selected/interesting vertex being the source vertex for a given subgraph pattern $S$_) in $n$ random draws (_i.e. the number of instances of a subgraph $S$_), _without replacement_, from a population of size $N$ (_i.e. the size of the entire graph_) that contains $K$ successes in total (_i.e. the number of selected vertices_).
+It describes the probability of observing _k_ successes (_i.e. a selected/interesting vertex being the source vertex for a given subgraph pattern _S__) in _n_ random draws (_i.e. the number of instances of a subgraph _S__), _without replacement_, from a population of size _N_ (_i.e. the size of the entire graph_) that contains _K_ successes in total (_i.e. the number of selected vertices_).
 
 ### Hypergeometric test
 
 The **hypergeometric test** can then be used to calculate the statistical significance of a specific configuration of observations. Going back to the marble example, we can expect that drawing five or more white marbles out of ten draws is rather unlikely if the urn only contained ten white marbles and fifty black ones to begin with. White marbles are over-represented in the final sample.
 
-In the subgraph setting, are the instances of the subgraph pattern $S$ over-represented in the selected vertices of interest (or are the selected vertices enriched with subgraph instances)?
+In the subgraph setting, are the instances of the subgraph pattern _S_ over-represented in the selected vertices of interest (or are the selected vertices enriched with subgraph instances)?
 
-The test answers the question: **are the instances of the subgraph pattern $S$ over-represented in the selected vertices of interest _or_ are the selected vertices enriched with subgraph instances?**
+The test answers the question: **are the instances of the subgraph pattern _S_ over-represented in the selected vertices of interest _or_ are the selected vertices enriched with subgraph instances?**
 
-> **DISCLAIMER**: technically this is also equivalent to the following question: are the selected vertices of interest over-represented in the discovered source vertex instances of the subgraph pattern $S$? This way of looking at things is more in line with the way the probability mass function was defined earlier and is analogous to checking whether a specific colour of marble is over-represented in a draw (high proportion of $K$).
+> **DISCLAIMER**: technically this is also equivalent to the following question: are the selected vertices of interest over-represented in the discovered source vertex instances of the subgraph pattern _S_? This way of looking at things is more in line with the way the probability mass function was defined earlier and is analogous to checking whether a specific colour of marble is over-represented in a draw (high proportion of _K_).
 >
 > The test does not discern between the direction (or causality) of the two aspects of the data we are considering (selection and occurrence of subgraph instances).
 
-The p-value ($X >= k$) thus gives the probability that we discover $k$ or more selected vertices as source vertices of $S$, under the null hypothesis that all vertices in the graph have the same probability of being a source vertex (_~ the source vertices are uniformly distributed_). If the p-value falls below our chosen significance level, we can reject the null hypothesis and can conclude that the selected vertices are enriched for the subgraph pattern $S$.
+The p-value (X &ge; k) thus gives the probability that we discover _k_ or more selected vertices as source vertices of _S_, under the null hypothesis that all vertices in the graph have the same probability of being a source vertex (_~ the source vertices are uniformly distributed_). If the p-value falls below our chosen significance level, we can reject the null hypothesis and can conclude that the selected vertices are enriched for the subgraph pattern _S_.
 
 ### Equivalence to Fisher's exact test
 
@@ -243,17 +243,17 @@ The hypergeometric test is equivalent to a **one-tailed Fisher's exact test** fo
 
 |   |**Vertices of interest**|**Background set**||
 |---|---|---|---|
-|**Source vertices for the subgraph $S$**|$k$|$n-k$|$n$|
-|**Non-source vertices**|$K-k$|$N-K-n+k$|$N-n$|
-||$K$|$N-K$|$N$|
+|**Source vertices for the subgraph _S_**|_k_|_n-k_|_n_|
+|**Non-source vertices**|_K-k_|_N-K-n+k_|_N-n_|
+||_K_|_N-K_|_N_|
 
-The null hypothesis is then defined as there being no association between a vertex belonging to the selected set of interest (_i.e. the marble colour_) and a vertex being a source vertex for an instance of the subgraph pattern $S$ (_i.e. being drawn from the urn_). A low p-value indicates that it is unlikely to obtain $k$ or more source vertices in the selected vertices $K$ if the occurrence of the subgraph pattern is independent from the selected vertices.
+The null hypothesis is then defined as there being no association between a vertex belonging to the selected set of interest (_i.e. the marble colour_) and a vertex being a source vertex for an instance of the subgraph pattern _S_ (_i.e. being drawn from the urn_). A low p-value indicates that it is unlikely to obtain _k_ or more source vertices in the selected vertices _K_ if the occurrence of the subgraph pattern is independent from the selected vertices.
 
-<!-- the probability of $k$ successes (i.e. a selected vertex of interest being the source vertex for a given subgraph pattern $S$) in $n$ random draws (i.e. the number of selected vertices), _without replacement_, from a population of size $N$ (i.e. the size of the entire graph) that contains $K$ successes (i.e. the number of source vertices/discovered subgraphs $S$). -->
+<!-- the probability of _k_ successes (i.e. a selected vertex of interest being the source vertex for a given subgraph pattern _S_) in _n_ random draws (i.e. the number of selected vertices), _without replacement_, from a population of size _N_ (i.e. the size of the entire graph) that contains _K_ successes (i.e. the number of source vertices/discovered subgraphs _S_). -->
 
 #### Multiple testing correction
 
-Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ $S$ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed, which retains the desired family-wise error rate by testing each individual hypothesis at a significance level of $\frac{\alpha}{m}$. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested.
+Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ _S_ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed, which retains the desired family-wise error rate by testing each individual hypothesis at a significance level of &alpha;/_m_. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested.
 
 ## History of the algorithm
 
