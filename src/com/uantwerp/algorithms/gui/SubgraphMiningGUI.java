@@ -534,9 +534,9 @@ public class SubgraphMiningGUI {
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 2;
 		panelOptions.add(comboBoxAlgorithm, gbc_comboBox);
-		comboBoxAlgorithm.addItem("Base");
-		comboBoxAlgorithm.addItem("gSpan");
-		comboBoxAlgorithm.addItem("FSG");
+		comboBoxAlgorithm.addItem("base");
+		comboBoxAlgorithm.addItem("gspan");
+		comboBoxAlgorithm.addItem("fsg");
 
 //		Advanced options
 		JPanel panelAdvanced = new JPanel();
