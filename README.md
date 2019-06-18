@@ -218,7 +218,8 @@ Similarly, this distribution also describes our enriched subgraph situation. In 
 
 The probability of such a sample is given by the probability mass function of the hypergeometric distribution:
 
-$$pmf: \Pr(X = k) = \frac{\binom{K}{k} \binom{N - K}{n-k}}{\binom{N}{n}}$$
+<!-- $$pmf: \Pr(X = k) = \frac{\binom{K}{k} \binom{N - K}{n-k}}{\binom{N}{n}}$$ -->
+<img src="https://latex.codecogs.com/svg.latex?pmf:&space;\Pr(X&space;=&space;k)&space;=&space;\frac{\binom{K}{k}&space;\binom{N&space;-&space;K}{n-k}}{\binom{N}{n}}" title="pmf: \Pr(X = k) = \frac{\binom{K}{k} \binom{N - K}{n-k}}{\binom{N}{n}}" />
 
 It describes the probability of observing $k$ successes (_i.e. a selected/interesting vertex being the source vertex for a given subgraph pattern $S$_) in $n$ random draws (_i.e. the number of instances of a subgraph $S$_), _without replacement_, from a population of size $N$ (_i.e. the size of the entire graph_) that contains $K$ successes in total (_i.e. the number of selected vertices_).
 
