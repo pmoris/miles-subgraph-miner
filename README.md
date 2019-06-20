@@ -28,12 +28,12 @@
 
 <!-- /code_chunk_output -->
 
-![](./img/visualisation_example.png)
+<a name="visualisation"></a> ![](./img/visualisation_example.png)
 
 
 ## Purpose of the tool
 
-MULES is a Java tool to discover **subgraphs** (or patterns/motifs) from a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
+MULES is a Java tool to discover **subgraphs** (or patterns/motifs) in a single graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. A subgraph can either consist of a topological structure (e.g. a feed-forward/back loop in a regulatory network) or it can include relevant biological labels (e.g. a self-regulating transcription factor). For more information on associated subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
 
 Graph data is becoming more and more prevalent in various fields, including biology and bio-medicine, and subgraph discovery methods can provide valuable insight into these, often large and complex, data structures.
 
@@ -108,7 +108,7 @@ These instructions will give you a copy of the project on your local machine for
 
 Several analysis options can be selected:
 
-- The type of subgraph discovery algorithm: `base`, `fsg` and `gSpan`. The `base` algorithm (described in the [original publication](#publication)) is recommended for most scenarios.
+- The type of subgraph discovery algorithm: `base`, `gSpan` and `fsg` (experimental). The `base` algorithm (described in the [original publication](#publication)) is recommended for most scenarios as it provides a good balance of speed and memory efficiency in our tests.
 - The support threshold can be manually set or left blank, in which case an appropriate threshold will be selected automatically.
 - The p-value cut-off (before multiple testing correction).
 - The maximum size of subgraphs.
@@ -124,7 +124,7 @@ The output of the significant subgraph mining analysis consists of a list of sub
 
 The syntax used for the motifs is a sequential list of edges, where each edge starts with the source vertex name, immediately followed by its label (without spaces), a dash, and finally the target vertex name, immediately followed by its label, and edges are separated by commas. E.g. `vertexOneLabelX-vertexTwoLabelY,vertexOneLabelX-vertexOneLabelX` would represent a two-vertex motif where the first one points to the second one and contains a self-loop.
 
-The output is provided in both a tab-separated text file and an interactive `cytoscape.js` visualisation in the form of a HTML file (see ).
+The output is provided in both a tab-separated text file and an interactive `cytoscape.js` visualisation in the form of a HTML file ([see top of README](#visualisation)).
 
 | Motif               | Freq Interest | Freq Total | P-value                |
 |---------------------|---------------|------------|------------------------|
@@ -158,27 +158,27 @@ The following parameters can be selected on the command line:
 
 ## Example datasets
 
-Three examples are provided along with this project in the folder dataset
+Four example datasets are provided along with this project in the folder dataset. See the [original publication](#publication) for a more thorough description of the datasets and the enriched motifs that are present within them.
 
-* Example dataset
+* Toy dataset
 
 ```
-java -jar ./build/jar/subgraphmining.jar --graph datasets/example/example_graph.txt --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt --support 2 -maxsize 4 --algorithm fsg --verbose
+java -jar ./build/jar/subgraphmining.jar --graph datasets/example/example_graph.txt --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt --support 2 -maxsize 4 --algorithm baase --verbose
 ```
 
-* PDB dataset
+* Manganese binding motifs in 72 PDB peptidase protein structures (run with the single label option because every vertex corresponds to exactly one amino acid)
 
 ```
 java -Xms64m -Xmx4096m -jar ./build/jar/subgraphmining.jar --graph ./datasets/pdb/SSM_GR.txt --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt --support 25 --maxsize 2 --algorithm gspan --singlelabel
 ```
 
-* Yeast dataset
+* Duplicated genes in the yeast transcription regulatory network
 
 ```
 time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar --graph ./datasets/yeast/yeastract_edges.txt --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt --support 10 --maxsize 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
 ```
 
-* Bacteria dataset
+* Orthologous genes in prokaryotic transcription regulation networks
 
 ```
 time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar --graph ./datasets/bact/full_net.txt --interest ./datasets/bact/phor.txt --background ./datasets/bact/tfs.txt --maxsize 5 --support 10 --algorithm base --output ./bactS5M5.txt --statistics ./bactS5M5Stats.txt
@@ -190,9 +190,9 @@ Three different algorithm implementations are provided in this tool:
 
 1) the Significant Subgraph Miner (SSM) (or base) algorithm.
 2) an adaptation of gSpan.
-3) an adaptation of FSG.
+3) an adaptation of FSG (experimental).
 
-The algorithms were adapted to run in the current problem domain and as well to run in both directed and undirected graphs, and single and multiple-label graphs too.
+The algorithms were adapted to run in the current problem domain and as well to run in both directed and undirected graphs, and single and multiple-label graphs too. The `base` algorithm (described in the [original publication](#publication)) is recommended for most scenarios as it provides a good balance of speed and memory efficiency in our tests.
 
 ## What is an associated subgraph and what are the statistics behind it?
 
@@ -227,7 +227,7 @@ It describes the probability of observing _k_ successes (_i.e. a selected/intere
 
 The **hypergeometric test** can then be used to calculate the statistical significance of a specific configuration of observations. Going back to the marble example, we can expect that drawing five or more white marbles out of ten draws is rather unlikely if the urn only contained ten white marbles and fifty black ones to begin with. White marbles are over-represented in the final sample.
 
-In the subgraph setting, are the instances of the subgraph pattern _S_ over-represented in the selected vertices of interest (or are the selected vertices enriched with subgraph instances)?
+<!-- In the subgraph setting, are the instances of the subgraph pattern _S_ over-represented in the selected vertices of interest (or are the selected vertices enriched with subgraph instances)? -->
 
 The test answers the question: **are the instances of the subgraph pattern _S_ over-represented in the selected vertices of interest _or_ are the selected vertices enriched with subgraph instances?**
 
