@@ -23,7 +23,8 @@ public class AlgorithmFunctionality {
 	public void mainProcedure(Timer t1){
 //		Import graphs, labels, set of interest and background files and store as HashMaps and HashSets
 		HashGeneration.graphGeneration();
-		if (GraphParameters.verbose == 1) PrintUtility.printSummary();
+//		if (GraphParameters.verbose == 1) 
+		PrintUtility.printSummary();
 		GraphParameters.supportcutoff = AlgorithmUtility.supportTreshold();
 		if (GraphParameters.typeAlgorithm.equals("base")){
 			naiveRepresentationStart(t1);
@@ -109,12 +110,12 @@ public class AlgorithmFunctionality {
 //	}
 	
 	public static void printStatistics(){
-		if (GraphParameters.verbose == 1){
+//		if (GraphParameters.verbose == 1){
 			System.out.println("After looking through the graph the following statistics were found:");
 			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " subgraphs in the group of interest met the support threshold " + GraphParameters.supportcutoff);
 			System.out.println("Of which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent");
 			System.out.println("Of which " + MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction");
-		}
+//		}
 	}
 	
 	private void recalculateAndPrintResults(Timer t1){
@@ -124,14 +125,14 @@ public class AlgorithmFunctionality {
 
 			Double bonferroni = GraphParameters.pvalue / MiningState.supportedMotifsPValues.size();
 
-			if (GraphParameters.verbose == 1) {
+//			if (GraphParameters.verbose == 1) {
 				System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
 				System.out.println("Bonferonni-corrected P-value cutoff =  " + bonferroni);
 				if (GraphParameters.allPValues == 1) System.out.println(
 						"Retrieving all frequent motifs regardless of whether they pass the Bonferroni-adjusted significance threshold...");
 				else System.out.println(
 						"Retrieving all frequent motifs that pass the Bonferroni-adjusted significance threshold...");
-			}
+//			}
 
 			// generate table with motifs, freqs and p-values
 			String message;
@@ -183,9 +184,9 @@ public class AlgorithmFunctionality {
 		}
 		// if no interesting vertices were provided
 		else{
-			if (GraphParameters.verbose == 1) {
+//			if (GraphParameters.verbose == 1) {
 				System.out.println("Retrieving frequencies for all motifs...");
-			}
+//			}
 
 			String message = "Motif\tSupport";
 
