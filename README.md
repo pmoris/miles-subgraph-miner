@@ -163,7 +163,7 @@ Four example datasets are provided along with this project in the folder dataset
 * Toy dataset
 
 ```
-java -jar ./build/jar/subgraphmining.jar --graph datasets/example/example_graph.txt --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt --support 2 -maxsize 4 --algorithm baase --verbose
+java -jar ./build/jar/subgraphmining.jar --graph datasets/example/example_graph.txt --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt --support 2 -maxsize 4 --algorithm base --verbose
 ```
 
 * Manganese binding motifs in 72 PDB peptidase protein structures (run with the single label option because every vertex corresponds to exactly one amino acid)
