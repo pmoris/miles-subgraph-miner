@@ -314,6 +314,7 @@ public class Graph{
 		return true;
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public boolean isConnected(){
 		int totalEdges = 0;
 		HashSet<EdgeFSG> edges = getAllEdges();
