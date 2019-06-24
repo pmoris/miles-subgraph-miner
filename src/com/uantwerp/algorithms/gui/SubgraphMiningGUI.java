@@ -41,7 +41,6 @@ import javax.swing.JToolBar;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTabbedPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 public class SubgraphMiningGUI {
