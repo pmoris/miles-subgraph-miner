@@ -16,19 +16,6 @@ import com.uantwerp.algorithms.procedures.base.OptimizeParameter;
 public abstract class AlgorithmUtility {
 	
 	/**
-	 *
-	 * @param fileContent	A String representation of an input file's contents
-	 * @return	False when the file content is empty or the file is not supplied (null), true otherwise
-	 */
-	public static boolean checkNotEmptyFileContent(String fileContent){
-		if (fileContent == null)	// in case no file was supplied
-			return false;
-		if (fileContent.equals(""))	// in case an empty file was supplied
-			return false;
-		return true;
-	}
-	
-	/**
 	 * 
 	 * @return	all possible labels, including an empty label for graph structure (unless single label mode is used) 
 	 */

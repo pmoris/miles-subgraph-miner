@@ -1,15 +1,17 @@
 package com.uantwerp.algorithms.common;
 
+import java.io.File;
+
 public abstract class GraphParameters {
 	
 	private static int DEFAULTSUPPORT = 0;
 	private static int DEFAULTMAXSIZE = 5;
 	private static double DEFAULTPVALUE = 0.05;
 	
-	public static String graphFileContents;
-	public static String labelsFileContents;
-	public static String backgroundFileContents;
-	public static String interestFileContents;
+	public static File graphFile;
+	public static File labelsFile;
+	public static File backgroundFile;
+	public static File interestFile;
 	public static int supportcutoff; 
 	public static int singleLabel; 
 	public static int undirected;
@@ -37,10 +39,10 @@ public abstract class GraphParameters {
 	}
 	
 	public static void reset(){
-		graphFileContents = null;
-		labelsFileContents = null;
-		backgroundFileContents= null;
-		interestFileContents = null;
+		graphFile = null;
+		labelsFile = null;
+		backgroundFile = null;
+		interestFile = null;
 		setDefaultSupport();
 		singleLabel = 0;
 		undirected = 0;

@@ -31,20 +31,20 @@ public class ParameterConfig {
 				SubGraphMiningException.exceptionNoFileProvided("network");
 				printHelp(options);
 			}else{
-				String graph = FileUtility.readFile(cmd.getOptionValue('g'));
-				GraphParameters.graphFileContents = graph;
+				File graph = FileUtility.readFile(cmd.getOptionValue('g'));
+				GraphParameters.graphFile = graph;
 			}
 			if(cmd.hasOption('l')){
-				String labels = FileUtility.readFile(cmd.getOptionValue('l'));
-				GraphParameters.labelsFileContents = labels;
+				File labels = FileUtility.readFile(cmd.getOptionValue('l'));
+				GraphParameters.labelsFile = labels;
 			}
 			if(cmd.hasOption('b')){
-				String file = FileUtility.readFile(cmd.getOptionValue('b'));
-				GraphParameters.backgroundFileContents = file;
+				File file = FileUtility.readFile(cmd.getOptionValue('b'));
+				GraphParameters.backgroundFile = file;
 			}
 			if(cmd.hasOption('i')){
-				String file = FileUtility.readFile(cmd.getOptionValue('i'));
-				GraphParameters.interestFileContents = file;
+				File file = FileUtility.readFile(cmd.getOptionValue('i'));
+				GraphParameters.interestFile = file;
 			}
 			if(cmd.hasOption('s')) {
 				try {
@@ -104,11 +104,11 @@ public class ParameterConfig {
 			else
 				GraphParameters.allPValues = 0;
 			if(cmd.hasOption('o')) {
-				File outDir = new File(cmd.getOptionValue('o')).getAbsoluteFile();
-				if (outDir.getParentFile().exists())
-					GraphParameters.output = outDir.getPath();
+				File outFile = new File(cmd.getOptionValue('o')).getAbsoluteFile();
+				if (outFile.getParentFile().exists())
+					GraphParameters.output = outFile.getPath();
 				else
-					SubGraphMiningException.exceptionDirNotExists(outDir.getParent());
+					SubGraphMiningException.exceptionDirNotExists(outFile.getParent());
 			}
 			else
 				GraphParameters.output = "none";
@@ -162,20 +162,20 @@ public class ParameterConfig {
 		if(graphPath.isEmpty()){
 			SubGraphMiningException.exceptionNoFileProvided("graph");
 		}else{
-			String graph = FileUtility.readFile(graphPath);
-			GraphParameters.graphFileContents = graph;
+			File graph = FileUtility.readFile(graphPath);
+			GraphParameters.graphFile = graph;
 		}
 		if(!labelsPath.isEmpty()){
-			String labels = FileUtility.readFile(labelsPath);
-			GraphParameters.labelsFileContents = labels;
+			File labels = FileUtility.readFile(labelsPath);
+			GraphParameters.labelsFile = labels;
 		}
 		if(!backgroundPath.isEmpty()){
-			String background = FileUtility.readFile(backgroundPath);
-			GraphParameters.backgroundFileContents = background;
+			File background = FileUtility.readFile(backgroundPath);
+			GraphParameters.backgroundFile = background;
 		}
 		if(!interestingPath.isEmpty()){
-			String interesting = FileUtility.readFile(interestingPath);
-			GraphParameters.interestFileContents = interesting;
+			File interesting = FileUtility.readFile(interestingPath);
+			GraphParameters.interestFile = interesting;
 		}
 		if(!support.isEmpty()) {
 			try {
@@ -234,11 +234,11 @@ public class ParameterConfig {
 		else
 			GraphParameters.allPValues = 0;
 		if(!savePath.isEmpty()) {
-			File outDir = new File(savePath).getAbsoluteFile();
-			if (outDir.getParentFile().exists())
-				GraphParameters.output = outDir.getPath();
+			File outFile = new File(savePath).getAbsoluteFile();
+			if (outFile.getParentFile().exists())
+				GraphParameters.output = outFile.getPath();
 			else
-				SubGraphMiningException.exceptionDirNotExists(outDir.getParent());
+				SubGraphMiningException.exceptionDirNotExists(outFile.getParent());
 			}
 		else
 			GraphParameters.output = "none";
