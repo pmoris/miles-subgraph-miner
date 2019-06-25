@@ -33,9 +33,10 @@ public class MotifToJsonConversion {
 					continue;
 				}
 			}
-
+			
 			// Retrieve JSON data for current motif in list format
-			HashMap<String, ArrayList<JsonGraphElement>> nodesEdgesMap = convertMotif(stringKey, Math.log(pValue) / Math.log(10));
+			HashMap<String, ArrayList<JsonGraphElement>> nodesEdgesMap = convertMotif(stringKey, Math.log(pValue) 
+					/ Math.log(10));
 			
 			// append data to motifsList
 			motifsData.addAll(nodesEdgesMap.get("nodes"));

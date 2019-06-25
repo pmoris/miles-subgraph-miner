@@ -137,7 +137,6 @@ public abstract class BuildMotif {
 		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
 		MiningState.supportedMotifsDFScode.put(motifString, motif);
 
-
 		// Extend the motif
 		Iterator<Integer> it3 = motifLabels.keySet().iterator();
 		while (it3.hasNext()){

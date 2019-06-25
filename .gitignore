@@ -5,6 +5,8 @@
 # wip files
 /tests/*
 /wip/*
+outputtestdir/
+
 
 # Eclipse files
 .project
