@@ -121,7 +121,7 @@ public class AlgorithmFunctionality {
 	private void recalculateAndPrintResults(Timer t1){
 		int i = 0;
 		// if a file with interesting vertices was provided
-		if (GraphParameters.interestFile.length() != 0) {	// evaluates to 0 for both empty or non-existent files
+		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {	// evaluates to 0 for both empty or non-existent files
 
 			Double bonferroni = GraphParameters.pvalue / MiningState.supportedMotifsPValues.size();
 
