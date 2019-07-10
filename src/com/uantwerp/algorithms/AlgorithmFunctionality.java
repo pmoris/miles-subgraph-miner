@@ -112,8 +112,8 @@ public class AlgorithmFunctionality {
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
 			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " subgraphs in the group of interest met the support threshold " + GraphParameters.supportcutoff);
-			System.out.println("Of which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent");
+			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
+			System.out.println("Of which " + MiningState.supportedMotifsGraphSupport.size() + " meet the support threshold" + GraphParameters.supportcutoff);
 			System.out.println("Of which " + MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction");
 //		}
 	}
