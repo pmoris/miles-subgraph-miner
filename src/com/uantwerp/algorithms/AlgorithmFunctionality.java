@@ -162,7 +162,7 @@ public class AlgorithmFunctionality {
 
 			// write output file or print to stdout
 			if (!GraphParameters.output.equals("none")){
-				FileUtility.writeFile(GraphParameters.output, message.replace(" ", ""));
+				FileUtility.writeFile(GraphParameters.output, message.replace(" ", "_"));
 			}else{
 				System.out.println(message.replace(" ", "_"));
 			}
@@ -198,7 +198,7 @@ public class AlgorithmFunctionality {
 			
 			// write output file or print to stdout
 			if (!GraphParameters.output.equals("none")){
-				FileUtility.writeFile(GraphParameters.output, message.replace(" ", ""));
+				FileUtility.writeFile(GraphParameters.output, message.replace(" ", "_"));
 			}else{
 				System.out.println(message.replace(" ", "_"));
 			}
