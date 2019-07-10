@@ -200,7 +200,7 @@ The algorithms were adapted to run in the current problem domain and as well to 
 
 The aim of the significant subgraph mining algorithm is to **retrieve those subgraphs in a graph that are significantly associated with a specific set of nodes or vertices**. More specifically, given a set of nodes of interest _n_, are there subgraph patterns _S_ that contain vertices in _n_ more often than expected compared to the un-selected vertices in the rest of the graph, or in other words, are the nodes of interest _n_ enriched for a specific subgraph pattern _S_? Note that the concept of _"subgraph patterns that contain a vertex"_ is more strictly defined as _"a vertex being the source vertex of an instance of a specific subgraph pattern"_. An example is given below:
 
-![](./img/enriched_subgraph_example.svg)
+![](./img/enriched_subgraph_example.png)
 
 Suppose this toy graph represents a regulatory network. The vertex shape denotes the label of the proteins (e.g. the type of regulator: [] = transcription factors, o = kinases). The light green vertices were selected as the set of interest, based on some criteria (e.g. they are known to be involved in a specific disease). The goal is to find subgraph patterns (or motifs) that are specific to the disease-associated proteins. Upon closer inspection of the network, it becomes clear that the pattern where a kinase regulates a transcription factor, which in turn self-regulates, occurs for all light green vertices. Since it only occurs once in the rest of the network, we can conclude that this motif is associated with the light green disease-associated proteins.
 
