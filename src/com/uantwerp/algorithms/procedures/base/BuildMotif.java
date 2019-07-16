@@ -190,7 +190,7 @@ public abstract class BuildMotif {
 		return biggerfim;
 	}
 	
-	public static int build_motif_und(DFScode<DFSedge> motifs, HashSet<String> prevHits){
+	public static int build_motif_und(DFScode<DFSedge> motif, HashSet<String> prevHits){
 		int interestSupport = 0;
 		int checkedGroupNodes = 0;
 		int biggerfim = 0;
@@ -198,13 +198,13 @@ public abstract class BuildMotif {
 		HashSet<String> hitNodes = new HashSet<>();
 		HashMap<Integer,String> motifLabels = new HashMap<>();
 		HashMap<Integer,Integer> nodeSources = new HashMap<>();
-		String motifString = AlgorithmUtility.getStringMotifs(motifs);
+		String motifString = AlgorithmUtility.getStringMotifs(motif);
 		
-		for (int i = 0; i < motifs.size(); i++){
-			motifLabels.put(motifs.get(i).getSourceId(), motifs.get(i).getSourceLabel());
-			motifLabels.put(motifs.get(i).getTargetId(), motifs.get(i).getTargetLabel());
-			nodeSources.put(motifs.get(i).getTargetId(), (nodeSources.containsKey(motifs.get(i).getTargetId())?nodeSources.get(motifs.get(i).getTargetId())+1:1));
-			nodeSources.put(motifs.get(i).getSourceId(), (nodeSources.containsKey(motifs.get(i).getSourceId())?nodeSources.get(motifs.get(i).getSourceId())+1:1));
+		for (int i = 0; i < motif.size(); i++){
+			motifLabels.put(motif.get(i).getSourceId(), motif.get(i).getSourceLabel());
+			motifLabels.put(motif.get(i).getTargetId(), motif.get(i).getTargetLabel());
+			nodeSources.put(motif.get(i).getTargetId(), (nodeSources.containsKey(motif.get(i).getTargetId())?nodeSources.get(motif.get(i).getTargetId())+1:1));
+			nodeSources.put(motif.get(i).getSourceId(), (nodeSources.containsKey(motif.get(i).getSourceId())?nodeSources.get(motif.get(i).getSourceId())+1:1));
 		}
 		int maxId = motifLabels.size();
 		if (GraphParameters.verbose==1)
@@ -224,7 +224,7 @@ public abstract class BuildMotif {
 			HashMap<Integer,String> supMatch = new HashMap<>();
 			supMatch.put(1, keyValue);
 			HashMap<Integer, String> supMatchRef = new HashMap<>();
-			supMatchRef = MatchSubgraph.matchSubgraph_und(motifs,supMatch);
+			supMatchRef = MatchSubgraph.matchSubgraph_und(motif,supMatch);
 			if(supMatchRef!=null){
 				interestSupport++;
 				hitNodes.add(keyValue);
@@ -263,7 +263,7 @@ public abstract class BuildMotif {
 			HashMap<Integer,String> supMatch = new HashMap<>();
 			supMatch.put(1, node);
 			HashMap<Integer, String> supMatchRef = new HashMap<>();
-			supMatchRef = MatchSubgraph.matchSubgraph_und(motifs,supMatch);
+			supMatchRef = MatchSubgraph.matchSubgraph_und(motif,supMatch);
 			if(supMatchRef!=null){
 				totalSupport++;
 				hitNodes.add(node);
@@ -293,7 +293,7 @@ public abstract class BuildMotif {
 				if (sourceId >= targetId) { continue LABEL2; }
 				
 				DFSedge edge = new DFSedge(sourceId, motifLabels.get(sourceId), targetId, motifLabels.get(targetId));
-				if (AlgorithmUtility.checkContainsEdge(motifs, edge)) 
+				if (AlgorithmUtility.checkContainsEdge(motif, edge)) 
 					continue LABEL2;
 				else 
 					potentialEdges.add(edge);
@@ -307,7 +307,7 @@ public abstract class BuildMotif {
 			
 			TARGETLOOP: for(int i=0; i<potentialEdges.size(); i++){
 				DFScode<DFSedge> newMotif = new DFScode<>();
-				newMotif.addAll(motifs);
+				newMotif.addAll(motif);
 				newMotif.add(potentialEdges.get(i));
 				if (newMotif.maxVertexIndexNaive() > GraphParameters.maxsize)
 					continue TARGETLOOP;
