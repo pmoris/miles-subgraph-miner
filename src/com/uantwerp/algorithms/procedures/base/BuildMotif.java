@@ -278,6 +278,7 @@ public abstract class BuildMotif {
 		
 		MiningState.supportedMotifsPValues.put(motifString, pvalue);
 		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
+		MiningState.supportedMotifsDFScode.put(motifString, motif);
 		
 		Iterator<Integer> it3 = motifLabels.keySet().iterator();
 		while (it3.hasNext()){
