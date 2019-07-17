@@ -79,8 +79,10 @@ public class MotifToJsonConversion {
 			if (!encounteredNodeSet.contains(sourceNode)) {
 				// add to encountered list
 				encounteredNodeSet.add(sourceNode);
-				// create JSON structure
-				JsonDataNode data = new JsonDataNode(idSource, sourceLabel, pValue);
+				// store indicator signifying whether or not the current node is the source vertex of the motif
+				String motifSourceIndicator = (sourceNode == 1) ? "source" : "not-source";
+				// create JSON structure				
+				JsonDataNode data = new JsonDataNode(idSource, sourceLabel, pValue, motifSourceIndicator);
 				JsonGraphElement node = new JsonGraphElement("nodes", data);
 				nodesList.add(node);
 			}
@@ -89,8 +91,10 @@ public class MotifToJsonConversion {
 			if (!encounteredNodeSet.contains(targetNode)) {
 				// add to encountered list
 				encounteredNodeSet.add(targetNode);
+				// store indicator signifying whether or not the current node is the source vertex of the motif
+				String motifSourceIndicator = (targetNode == 1) ? "source" : "not-source";
 				// create JSON structure
-				JsonDataNode data = new JsonDataNode(idTarget, targetLabel, pValue);			
+				JsonDataNode data = new JsonDataNode(idTarget, targetLabel, pValue, motifSourceIndicator);			
 				JsonGraphElement node = new JsonGraphElement("nodes", data);
 				nodesList.add(node);
 			}
