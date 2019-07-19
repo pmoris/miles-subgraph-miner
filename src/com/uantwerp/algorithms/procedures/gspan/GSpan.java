@@ -36,15 +36,6 @@ public abstract class GSpan {
 			miningCall(projected);
 			dfsCode.remove(dfsCode.size() - 1);					
 		}
-		
-		// Populate DFScode hash map for visualisations
-		for (DFScode<DFSedge> dfsCode : orderedDFScode) {
-			ArrayList<String> motifStringArray = new ArrayList<String>(dfsCode.size());
-			for (DFSedge dfsEdge : dfsCode) {
-				motifStringArray.add(dfsEdge.toString());
-			}
-			MiningState.supportedMotifsDFScode.put(String.join(",", motifStringArray), dfsCode);
-		}
 	}
 	
 	private static void subGraphMiningUndirected(int prevHits,Projection<PDFS> projected) {
@@ -378,6 +369,7 @@ public abstract class GSpan {
 			return false;
 		else{
 			MiningState.supportedMotifsGraphSupport.put(minDfScode, totalSupport);
+			MiningState.supportedMotifsDFScode.put(minDfScode, dfsCode.getMinDfsCode()); // Populate DFScode hash map for visualisations
 			double prob = AlgorithmUtility.getProbability(prevHits, GraphParameters.graph.group.size(), totalSupport, groupSupport);
 			if (GraphParameters.verbose == 1)
 				System.out.println(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
