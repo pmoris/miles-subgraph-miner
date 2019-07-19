@@ -99,7 +99,7 @@ public class ParameterConfig {
 			}
 			else
 				GraphParameters.setDefaultPValue();
-			if(cmd.hasOption("all-pvalues"))
+			if(cmd.hasOption("allpvalues"))
 				GraphParameters.allPValues = 1;
 			else
 				GraphParameters.allPValues = 0;
