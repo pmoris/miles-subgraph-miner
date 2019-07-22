@@ -25,6 +25,22 @@
     </script>
 
     <script type="text/javascript">
+        $INCLUDE-DAGRE.JS
+    </script>
+
+    <script type="text/javascript">
+        $INCLUDE-CYTO-DAGRE.JS
+    </script>
+
+    <script type="text/javascript">
+        $INCLUDE-KLAY.JS
+    </script>
+
+    <script type="text/javascript">
+        $INCLUDE-CYTO-KLAY.JS
+    </script>
+
+    <script type="text/javascript">
         $INCLUDE-CODE.JS
     </script>
 
@@ -43,11 +59,14 @@
 
       <div class="u-cf"></div>
       <select id="layout">
-        <option value="grid" selected>Grid</option>
-        <option value="concentric" selected>Concentric</option>
-        <option value="circle" selected>Circle</option>
-        <option value="cose" selected>COSE</option>
-        <option value="random" selected>Random</option>
+          <option value="dagre" selected>Dagre</option>
+          <option value="dagrevertical">Dagre-vertical</option>
+          <option value="klay">Klay</option>
+          <option value="grid">Grid</option>
+          <option value="concentric">Concentric</option>
+          <option value="circle">Circle</option>
+          <option value="cose">COSE</option>
+          <option value="random">Random</option>
         </select>
       <i id="redo-layout" class="fas fa-sync-alt action-icon tooltip" title="Redo layout"></i>
 

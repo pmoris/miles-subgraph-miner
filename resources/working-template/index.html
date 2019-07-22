@@ -19,6 +19,10 @@
     <script src="./cytoscape.min.js"></script>
     <script src="./FileSaver.min.js"></script>
     <script src='./code-selector.js'></script>
+    <script src="./dagre.min.js"></script>
+    <script src="./cytoscape-dagre.js"></script>
+    <script src="./klay.js"></script>
+		<script src="./cytoscape-klay.js"></script>
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script src="https//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -93,11 +97,14 @@
       <!-- <label for="layout" class="tooltip u-pull-left" title="Change layout">Active layout</label> -->
       <div class="u-cf"></div>
       <select id="layout">
-        <option value="grid" selected>Grid</option>
-        <option value="concentric" selected>Concentric</option>
-        <option value="circle" selected>Circle</option>
-        <option value="cose" selected>COSE</option>
-        <option value="random" selected>Random</option>
+        <option value="dagre" selected>Dagre</option>
+        <option value="dagrevertical">Dagre-vertical</option>
+        <option value="klay">Klay</option>
+        <option value="grid">Grid</option>
+        <option value="concentric">Concentric</option>
+        <option value="circle">Circle</option>
+        <option value="cose">COSE</option>
+        <option value="random">Random</option>
         </select>
       <i id="redo-layout" class="fas fa-sync-alt action-icon tooltip" title="Redo layout"></i>
 

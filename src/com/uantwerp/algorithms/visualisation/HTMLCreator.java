@@ -41,6 +41,25 @@ public class HTMLCreator {
 		String codeJsFileSaver = IOUtils.toString(is, StandardCharsets.UTF_8);
 		htmlString = htmlString.replace("$INCLUDE-FILESAVER.JS", codeJsFileSaver);
 
+		
+		// dagre layout
+		is = HTMLCreator.class.getResourceAsStream("/dagre.min.js");
+		String codeJsDagre = IOUtils.toString(is, StandardCharsets.UTF_8);
+		htmlString = htmlString.replace("$INCLUDE-DAGRE.JS", codeJsDagre);
+		
+		is = HTMLCreator.class.getResourceAsStream("/cytoscape-dagre.js");
+		String codeJsCytoDagre = IOUtils.toString(is, StandardCharsets.UTF_8);
+		htmlString = htmlString.replace("$INCLUDE-CYTO-DAGRE.JS", codeJsCytoDagre);
+		
+		// klay layout
+		is = HTMLCreator.class.getResourceAsStream("/klay.js");
+		String codeJsKlay = IOUtils.toString(is, StandardCharsets.UTF_8);
+		htmlString = htmlString.replace("$INCLUDE-KLAY.JS", codeJsKlay);
+		
+		is = HTMLCreator.class.getResourceAsStream("/cytoscape-klay.js");
+		String codeJsCytoKlay = IOUtils.toString(is, StandardCharsets.UTF_8);
+		htmlString = htmlString.replace("$INCLUDE-CYTO-KLAY.JS", codeJsCytoKlay);
+				
 		// insert JSON data	
 		htmlString = htmlString.replace("$INCLUDE-ELEMENTS", elementsJSON);
 

@@ -60,11 +60,41 @@
    }
 
     let layouts = {
-      grid: {
+    dagre: {
+        name:'dagre',
+        rankDir: 'TB', // 'TB' for top to bottom flow, 'LR' for left to right,
+        animate: true,
+        animationDuration: maxLayoutDuration,
+        padding: layoutPadding,
+        fit: true, // whether to fit to viewport
+        nodeDimensionsIncludeLabels: true // whether labels should be included in determining the space used by a node
+    },
+    dagrevertical: {
+        name:'dagre',
+        rankDir: 'LR', // 'TB' for top to bottom flow, 'LR' for left to right,
+        animate: true,
+        animationDuration: maxLayoutDuration,
+        padding: layoutPadding,
+        fit: true, // whether to fit to viewport
+        nodeDimensionsIncludeLabels: true // whether labels should be included in determining the space used by a node
+    },
+    klay: {
+      name:'klay',
+      animate: true,
+      animationDuration: maxLayoutDuration,
+      padding: layoutPadding,
+      fit: true, // whether to fit to viewport
+      nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
+      klay: {
+        compactComponents: true, // Tries to further compact components (disconnected sub-graphs).
+      },
+  },
+    grid: {
         name: 'grid',
         condense: false,
         sort: function(a, b){ return a.data('pvalue') - b.data('pvalue')
       },
+      nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
       animate: true,
       animationDuration: maxLayoutDuration,
       padding: layoutPadding,
@@ -80,6 +110,7 @@
     cose: {
         name: 'cose',
         animate: 'end',
+        nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
         // animationDuration: maxLayoutDuration
         padding: layoutPadding,
         gravity: 2,
@@ -89,12 +120,14 @@
     },
     concentric: {
         name: 'concentric',
+        nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
         animate: true,
         animationDuration: maxLayoutDuration,
         padding: layoutPadding
     },
     random: {
       name: 'random',
+      nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
       animate: true,
       animationDuration: maxLayoutDuration,
       padding: layoutPadding,
@@ -161,8 +194,7 @@
         {
           selector: 'node[type="source"]',
           style: {
-            'shape': 'triangle',
-            'background-color': 'red'
+            'shape': 'triangle'
           }
         },
         {
