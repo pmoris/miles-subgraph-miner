@@ -15,13 +15,17 @@ html {
     bottom: 0;
   }
 
+.container {
+  width: 100%;
+  height: 100%;
+}
+
 .main {
   position: absolute;
   left: 0;
   top: 0;
   right: 25em;
   bottom: 0;
-  z-index: 1;
 }
 
 .sidebar {
@@ -31,15 +35,33 @@ html {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 25em;
+  width: 27em;
   background: #fff;
-  border-left: 1px solid #ddd;
+  border-left: 3px solid #ddd;
   z-index: 1;
   overflow: auto;
 }
 
-table {
+#drag {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  cursor: w-resize;
+}
+
+table,
+td,
+th {
   font-size: 10pt;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px;
 }
 
 .footer-link {
@@ -54,13 +76,13 @@ table {
   cursor: pointer;
 }
 
-h1 {
+h1, h2 {
   margin: 0 0.125em;
   position: absolute;
   pointer-events: none;
   color: #bbb;
 }
 
-* + h2 {
+* + h4 {
   margin-top: 0.5em;
 }

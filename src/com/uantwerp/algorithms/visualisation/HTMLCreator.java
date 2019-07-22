@@ -96,7 +96,7 @@ public class HTMLCreator {
 		table.append("<thead><tr>");
 		String[] headerSplit = lines[0].split("\t");
 		for (String columnName : headerSplit) {
-			table.append("<td>" + columnName + "</td>");
+			table.append("<th>" + columnName + "</th>");
 		}
 		
 		table.append("</thead><tbody>");

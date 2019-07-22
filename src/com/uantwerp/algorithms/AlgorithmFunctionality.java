@@ -137,9 +137,9 @@ public class AlgorithmFunctionality {
 			// generate table with motifs, freqs and p-values
 			String message;
 			if (GraphParameters.allPValues == 1)
-				message = "Motif\tFreq Interest\tFreq Total\tP-value\tBonferroni-adjusted P-value";
+				message = "Subgraph\tFreq interest\tFreq total\tP-value\tBonferroni-adjusted P-value";
 			else
-				message = "Motif\tFreq Interest\tFreq Total\tP-value";
+				message = "Subgraph\tFreq interest\tFreq total\tP-value";
 
 			Iterator<String> it = MiningState.supportedMotifsPValues.keySet().iterator();
 			while (it.hasNext()) {
