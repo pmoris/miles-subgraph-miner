@@ -152,7 +152,6 @@ public class ParameterConfig {
 			Boolean singleLabel,
 			Boolean undirected,
 			Boolean nestedPValue,
-			Boolean showStatistics,
 			Boolean verbose,
 			String areaProgressReport,
 			Boolean debugCheckBox) {
@@ -243,10 +242,6 @@ public class ParameterConfig {
 		else
 			GraphParameters.output = "none";
 		GraphParameters.typeAlgorithm = algorithm;
-//		if(showStatistics)
-//			GraphPathParameters.statistics = ;
-//		else
-//			GraphPathParameters.statistics = "";
 	}
 
 }

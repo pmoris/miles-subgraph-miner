@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
 import java.awt.GridBagLayout;
@@ -27,21 +26,22 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import java.awt.event.ActionEvent;
+import java.io.FileWriter;
 import java.io.PrintStream;
 import java.net.URI;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.Desktop;
 
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
-import javax.swing.JToolBar;
-import java.awt.Component;
-import javax.swing.Box;
+
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import java.awt.event.ActionListener;
 
 public class SubgraphMiningGUI {
 	
@@ -58,7 +58,6 @@ public class SubgraphMiningGUI {
 	private JCheckBox checkBoxSingleLabel;
 	private JCheckBox checkBoxUndirected;
 	private JCheckBox checkBoxNestedPValue;
-	private JCheckBox checkBoxShowStatistics;
 	private JCheckBox checkBoxVerbose;
 	private JTextArea textAreaLog;
 	private JCheckBox checkBoxDebug;
@@ -189,14 +188,6 @@ public class SubgraphMiningGUI {
 		this.checkBoxNestedPValue = checkBoxNestedPValue;
 	}
 
-	public JCheckBox getCheckBoxShowStatistics() {
-		return checkBoxShowStatistics;
-	}
-
-	public void setCheckBoxShowStatistics(JCheckBox checkBoxShowStatistics) {
-		this.checkBoxShowStatistics = checkBoxShowStatistics;
-	}
-
 	public JCheckBox getCheckBoxVerbose() {
 		return checkBoxVerbose;
 	}
@@ -251,11 +242,28 @@ public class SubgraphMiningGUI {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnFile = new JMenu("Save results");
-		menuBar.add(mnFile);
+		JButton btnExportLog = new JButton("Export log");
+		btnExportLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String log = textAreaLog.getText();
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Specify a file to save the log");
+				int returnVal = chooser.showSaveDialog(frame);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					try(FileWriter fw = new FileWriter(chooser.getSelectedFile() + ".txt")) {
+					    fw.write(log);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
 		
-		JMenu mnEdit = new JMenu("Export log");
-		menuBar.add(mnEdit);
+//		Define run button
+		JButton btnRun = new JButton("Run analysis");
+		menuBar.add(btnRun);
+		btnRun.addActionListener(new StartButton(SubgraphMiningGUI.this));
+		menuBar.add(btnExportLog);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -290,24 +298,12 @@ public class SubgraphMiningGUI {
 			}
 		});
 		mnHelp.add(mntmAbout);
-		
-//		Define separate tool bar for start button
-		JToolBar toolBar = new JToolBar();
-		menuBar.add(toolBar);
-		
-//		Define run button
-		JButton btnRun = new JButton("Run analysis");
-		btnRun.addActionListener(new StartButton(SubgraphMiningGUI.this));
-		
-		Component horizontalGlue = Box.createHorizontalGlue();
-		toolBar.add(horizontalGlue);
-		toolBar.add(btnRun);
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 		gridBagLayout.columnWidths = new int[] {10, 100, 100, 200, 10};
-		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200, 30};
+		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200};
 		
 //		Main content panel and scroll bar
 		JPanel pnlMain = new JPanel();
@@ -573,16 +569,6 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
 		
-		checkBoxShowStatistics = new JCheckBox("Show memory statistics");
-		checkBoxShowStatistics.setToolTipText("Log additional information about memory usage.");
-		GridBagConstraints gbc_checkBoxShowStatistics = new GridBagConstraints();
-		gbc_checkBoxShowStatistics.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBoxShowStatistics.anchor = GridBagConstraints.NORTHWEST;
-		gbc_checkBoxShowStatistics.gridx = 3;
-		gbc_checkBoxShowStatistics.gridy = 0;
-		gbc_checkBoxShowStatistics.gridwidth = 2;
-		panelAdvanced.add(checkBoxShowStatistics, gbc_checkBoxShowStatistics);
-		
 		checkBoxNestedPValue = new JCheckBox("Nested p-value", false);
 		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = true).");
 		GridBagConstraints gbc_checkBoxPValue = new GridBagConstraints();
@@ -609,13 +595,14 @@ public class SubgraphMiningGUI {
 		gbc_chckbxAllPvalues.anchor = GridBagConstraints.WEST;
 		gbc_chckbxAllPvalues.gridwidth = 2;
 		gbc_chckbxAllPvalues.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxAllPvalues.gridx = 1;
-		gbc_chckbxAllPvalues.gridy = 3;
+		gbc_chckbxAllPvalues.gridx = 0;
+		gbc_chckbxAllPvalues.gridy = 2;
 		panelAdvanced.add(checkBoxAllPvalues, gbc_chckbxAllPvalues);
 		
 		checkBoxVerbose = new JCheckBox("Verbose");
 		checkBoxVerbose.setToolTipText("Additional logging information.");
 		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
+		gbc_checkBoxVerbose.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxVerbose.gridwidth = 2;
 		gbc_checkBoxVerbose.gridx = 3;
@@ -668,7 +655,7 @@ public class SubgraphMiningGUI {
 		panelReport.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Log", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelReport = new GridBagConstraints();
 		gbc_panelReport.gridwidth = 3;
-		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
+		gbc_panelReport.insets = new Insets(0, 0, 0, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
 		gbc_panelReport.gridx = 1;
 		gbc_panelReport.gridy = 3;
@@ -684,37 +671,6 @@ public class SubgraphMiningGUI {
 		PrintStream logStream = new PrintStream(new CustomOutputStream(textAreaLog));
 		System.setOut(logStream);
 		System.setErr(logStream);
-		
-//		Define progress and status panel
-		JPanel panelProgress = new JPanel();
-		GridBagConstraints gbc_panelProgress = new GridBagConstraints();
-		gbc_panelProgress.insets = new Insets(0, 0, 0, 5);
-		gbc_panelProgress.gridwidth = 3;
-		gbc_panelProgress.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelProgress.gridx = 1;
-		gbc_panelProgress.gridy = 4;
-		pnlMain.add(panelProgress, gbc_panelProgress);
-		GridBagLayout gbl_panelProgress = new GridBagLayout();
-//		Double weight for progress bar so it takes up two columns
-		gbl_panelProgress.columnWeights = new double[]{0, 1};
-		gbl_panelProgress.rowWeights = new double[]{0};
-		panelProgress.setLayout(gbl_panelProgress);
-				
-//		Progress bar
-		JProgressBar progressBar = new JProgressBar();
-		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar.insets = new Insets(0, 0, 0, 5);
-		gbc_progressBar.gridx = 1;
-		gbc_progressBar.gridy = 0;
-		panelProgress.add(progressBar, gbc_progressBar);
-				
-//		Status panel
-		JLabel lblStatus = new JLabel("Status");
-		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
-		gbc_lblStatus.gridx = 0;
-		gbc_lblStatus.gridy = 0;
-		panelProgress.add(lblStatus, gbc_lblStatus);
 
 //		Set size of frame based on its underlying components
 		frame.pack();

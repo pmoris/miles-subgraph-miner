@@ -33,7 +33,6 @@ public class StartButton implements ActionListener {
 					gui.getCheckBoxSingleLabel().isSelected(),
 					gui.getCheckBoxUndirected().isSelected(),
 					gui.getCheckBoxNestedPValue().isSelected(),
-					gui.getCheckBoxShowStatistics().isSelected(),
 					gui.getCheckBoxVerbose().isSelected(),
 					gui.getTextAreaProgressReport().getText(),
 					gui.getCheckBoxDebug().isSelected()
