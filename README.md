@@ -178,6 +178,21 @@ Four example datasets are provided along with this project in the folder dataset
     --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \\
     --support 2 -maxsize 4 --algorithm base --verbose
 
+### Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination
+
+- **Graph:** protein-protein interactions collected from [IntAct](https://www.ebi.ac.uk/intact/downloads;jsessionid=A54FE4852854D1E07AB0AE10A2C012CF).
+- **Background:** human proteins whose underlying genes were measured in an RNASeq experiment.
+- **Selection of interest:** proteins whose underlying genes were significantly upregulated three days after Engerix-B vaccination in responders.
+- **Labels:** Gene Ontology terms. To increase the focus of the analysis and reduce the search space to more relevant results, only terms related to immune processes were selected. More specifically, every GO term was remapped to child terms of the main "immune system process" (GO:0002376) term. Depending on the desired level of detail, the depth of the children could also be set. In other cases, where a more general overview of GO terms is desired (i.e. there is no specific hypothesis to be explored), a good strategy could be to remap all terms to a specific depth (e.g. 6), which makes terms that are not substantially different (such as very specific child and parent term), homogeneous in terms of subgraph motifs.
+- **Additional options:** the protein-protein interaction network is undirected. If desired, the nested p-value option could have been used to reduce the number of returned subgraphs to a more manageable number. A motif size of three was chosen as a good balance between run-time and interpretability.
+
+<!-- -->
+
+    java -jar ./build/jar/subgraphmining.jar --graph ./datasets/deg/intact_simple.txt \\
+    --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \\
+    --background ./datasets/deg/background.txt --algorithm base --maxsize 3 --undirected \\
+    --out ./datasets/deg/deg-results.txt
+
 ### Manganese binding motifs in peptidase protein structures
 
 - **Graph:** combined protein structure of 72 peptidate proteins that bind a manganese (Mn) ion. Gathered from the RCSB Protein DataBase (PDB). Vertices are amino acid residues, edges are drawn between residues whose C&alpha; are within 4 angstrom from one another.
@@ -186,8 +201,6 @@ Four example datasets are provided along with this project in the folder dataset
 - **Additional options:** Single label option is used because every vertex corresponds to exactly one label, namely the corresponding amino acid residue. Protein molecular structure networks are undirected. The nested p-value option can be used to reduce the number of returned subgraphs to a more manageable number. If desired, a higher support threshold and smaller maximum subgraph size can even further reduce this number.
 
 <!-- -->
-
-undirected
 
     java -Xms64m -Xmx4096m -jar ./build/jar/subgraphmining.jar --graph ./datasets/pdb/SSM_GR.txt \\
     --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \\
