@@ -174,7 +174,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 ### Toy dataset
 
-    java -jar ./build/jar/subgraphmining.jar --graph datasets/example/example_graph.txt \\
+    java -jar ./build/jar/mules-subgraph-miner.jar --graph datasets/example/example_graph.txt \\
     --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \\
     --support 2 -maxsize 4 --algorithm base --verbose
 
@@ -188,7 +188,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -jar ./build/jar/subgraphmining.jar --graph ./datasets/deg/intact_simple.txt \\
+    java -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \\
     --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \\
     --background ./datasets/deg/background.txt --algorithm base --maxsize 3 --undirected \\
     --out ./datasets/deg/deg-results.txt
@@ -202,7 +202,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx4096m -jar ./build/jar/subgraphmining.jar --graph ./datasets/pdb/SSM_GR.txt \\
+    java -Xms64m -Xmx4096m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \\
     --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \\
     --algorithm base --singlelabel --nestedpvalue --undirected
 
@@ -215,7 +215,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    time java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar --graph ./datasets/yeast/yeastract_edges.txt \\
+    time java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \\
     --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt \\
     --support 10 --maxsize 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
 
@@ -228,7 +228,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx16384m -jar ./build/jar/subgraphmining.jar --graph ./datasets/bact/full_net.txt \\
+    java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/bact/full_net.txt \\
     --interest ./datasets/bact/phor.txt --background ./datasets/bact/tfs.txt \\
     --support 10 --algorithm base --output ./bactS5M5.txt --statistics ./bactS5M5Stats.txt
 
