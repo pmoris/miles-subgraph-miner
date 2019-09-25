@@ -90,7 +90,7 @@ public class OutputUtility {
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
 			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff);
+			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
 			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue);
 			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction");
 //		}
@@ -100,7 +100,7 @@ public class OutputUtility {
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
 			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff);
+			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
 //		}
 	}
 }
