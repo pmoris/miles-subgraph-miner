@@ -62,6 +62,15 @@ public class SubgraphMiningGUI {
 	private JTextArea textAreaLog;
 	private JCheckBox checkBoxDebug;
 	private JCheckBox checkBoxAllPvalues;
+	private JComboBox<String> comboBoxMultipleTesting;
+
+	public JComboBox<String> getComboBoxMultipleTesting() {
+		return comboBoxMultipleTesting;
+	}
+
+	public void setComboBoxMultipleTesting(JComboBox<String> comboBoxMultipleTesting) {
+		this.comboBoxMultipleTesting = comboBoxMultipleTesting;
+	}
 
 	public JCheckBox getCheckBoxDebug() {
 		return checkBoxDebug;
@@ -463,7 +472,7 @@ public class SubgraphMiningGUI {
 		panelOptions.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gbl_panelOptions = new GridBagLayout();
 		gbl_panelOptions.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
-		gbl_panelOptions.rowWeights = new double[]{0.0, 0.0, 0.0};
+		gbl_panelOptions.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 		panelOptions.setLayout(gbl_panelOptions);
 		
 //		P-value
@@ -495,25 +504,27 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxSingleLabel.gridy = 0;
 		panelOptions.add(checkBoxSingleLabel, gbc_checkBoxSingleLabel);
 		
-//		Vertices
-		JLabel labelVerticesSize = new JLabel("Maximum subgraph size:");
-		labelVerticesSize.setToolTipText("Maximum number of nodes in a subgraph or motif.");
-		GridBagConstraints gbc_labelVerticesSize = new GridBagConstraints();
-		gbc_labelVerticesSize.anchor = GridBagConstraints.EAST;
-		gbc_labelVerticesSize.insets = new Insets(0, 0, 5, 5);
-		gbc_labelVerticesSize.gridx = 0;
-		gbc_labelVerticesSize.gridy = 1;
-		panelOptions.add(labelVerticesSize, gbc_labelVerticesSize);
+//		Multiple testing combobox
+		JLabel lblMultipleTestingCorrection = new JLabel("Multiple testing correction method:");
+		GridBagConstraints gbc_lblMultipleTestingCorrection = new GridBagConstraints();
+		gbc_lblMultipleTestingCorrection.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMultipleTestingCorrection.gridx = 0;
+		gbc_lblMultipleTestingCorrection.gridy = 1;
+		panelOptions.add(lblMultipleTestingCorrection, gbc_lblMultipleTestingCorrection);
 		
-		textFieldVerticesSize = new JTextField();
-		textFieldVerticesSize.setColumns(10);
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 1;
-		panelOptions.add(textFieldVerticesSize, gbc_textField_3);
+		comboBoxMultipleTesting = new JComboBox<>();
+		GridBagConstraints gbc_comboBoxAlgorithm = new GridBagConstraints();
+		gbc_comboBoxAlgorithm.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxAlgorithm.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxAlgorithm.gridx = 1;
+		gbc_comboBoxAlgorithm.gridy = 1;
+		panelOptions.add(comboBoxMultipleTesting, gbc_comboBoxAlgorithm);
+		comboBoxMultipleTesting.addItem("Bonferroni");
+		comboBoxMultipleTesting.addItem("Holm");
+		comboBoxMultipleTesting.addItem("Benjamini–Hochberg");
+		comboBoxMultipleTesting.addItem("Benjamini–Yekutieli");
 		
+//		undirected network checkbox
 		checkBoxUndirected = new JCheckBox("Undirected network");
 		checkBoxUndirected.setToolTipText("Treat the network as undirected, e.g. where A -> B = B -> A and self-loops aren't allowed.");
 		GridBagConstraints gbc_checkBoxUndirected = new GridBagConstraints();
@@ -523,6 +534,25 @@ public class SubgraphMiningGUI {
 		gbc_checkBoxUndirected.gridy = 1;
 		panelOptions.add(checkBoxUndirected, gbc_checkBoxUndirected);
 		
+//		Vertices
+		JLabel labelVerticesSize = new JLabel("Maximum subgraph size:");
+		labelVerticesSize.setToolTipText("Maximum number of nodes in a subgraph or motif.");
+		GridBagConstraints gbc_labelVerticesSize = new GridBagConstraints();
+		gbc_labelVerticesSize.anchor = GridBagConstraints.EAST;
+		gbc_labelVerticesSize.insets = new Insets(0, 0, 5, 5);
+		gbc_labelVerticesSize.gridx = 0;
+		gbc_labelVerticesSize.gridy = 2;
+		panelOptions.add(labelVerticesSize, gbc_labelVerticesSize);
+		
+		textFieldVerticesSize = new JTextField();
+		textFieldVerticesSize.setColumns(10);
+		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
+		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_3.gridx = 1;
+		gbc_textField_3.gridy = 2;
+		panelOptions.add(textFieldVerticesSize, gbc_textField_3);
+		
 //		Algorithm
 		JLabel labelAlgorithm = new JLabel("Algorithm:");
 		labelAlgorithm.setToolTipText("Type of algorithm to use (default = base).");
@@ -530,7 +560,7 @@ public class SubgraphMiningGUI {
 		gbc_labelAlgorithm.anchor = GridBagConstraints.EAST;
 		gbc_labelAlgorithm.insets = new Insets(0, 0, 0, 5);
 		gbc_labelAlgorithm.gridx = 0;
-		gbc_labelAlgorithm.gridy = 2;
+		gbc_labelAlgorithm.gridy = 3;
 		panelOptions.add(labelAlgorithm, gbc_labelAlgorithm);
 		
 		comboBoxAlgorithm = new JComboBox<>();
@@ -538,7 +568,7 @@ public class SubgraphMiningGUI {
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 2;
+		gbc_comboBox.gridy = 3;
 		panelOptions.add(comboBoxAlgorithm, gbc_comboBox);
 		comboBoxAlgorithm.addItem("base");
 		comboBoxAlgorithm.addItem("gspan");
