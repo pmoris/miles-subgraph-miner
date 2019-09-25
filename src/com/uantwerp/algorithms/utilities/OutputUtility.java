@@ -16,7 +16,7 @@ public class OutputUtility {
 					+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue);
 		} else {
 			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
-					+ ") after " + GraphParameters.correctionMethod + "correction.");
+					+ ") after " + GraphParameters.correctionMethod + "-correction.");
 			}
 //		}
 	}
