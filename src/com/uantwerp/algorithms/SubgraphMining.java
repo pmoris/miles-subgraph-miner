@@ -28,17 +28,18 @@ public class SubgraphMining {
 		options.addOption("h", "help", false, "Print this help text");
 		options.addOption("g", "graph", true, "Path to a graph or network file");
 		options.addOption("l", "labels", true, "Path to a file containing nodes and labels (optional)");
-		options.addOption("i", "interest", true, "Path to a file containing nodes of interest (omit for frequent subgraph mining)");
-		options.addOption("b", "background", true, "Path to a file containing background nodes that are used (optional)");
-		options.addOption("o", "output", true, "Output file to store the significant motifs");
-		options.addOption("s", "support", true, "Support threshold (default = automatic calculation)");
-		options.addOption("p", "alpha", true, "Significance level for the hypergeometric tests (default = 0.05)");
+		options.addOption("i", "interest", true, "Path to a file containing nodes of interest (omit it for frequent subgraph mining)");
+		options.addOption("b", "background", true, "Path to a file containing background nodes for the enrichment test (optional)");
+		options.addOption("o", "output", true, "Output file");
+		options.addOption("s", "support", true, "Specify a custom support threshold (default = automatic calculation)");
+		options.addOption("p", "alpha", true, "Significance level (or q-value for FDR) for the hypergeometric tests (default = 0.05)");
 		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
-				+ "Bonferroni-corrected values, instead of only those passing the Bonferroni-adjusted significance threshold");
-		options.addOption("m", "maxsize", true, "Maximum number of vertices allowed in the subgraph patterns (default = 5)");
-		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label");
+		options.addOption(null, "all-pvalues", false, "Return all subgraphs, instead of"
+				+ "only those passing the (multiple testing corrected) significance level");
+		options.addOption("m", "max-size", true, "Maximum number of vertices allowed in the subgraph patterns (default = 5)");
+		options.addOption(null, "single-label", false, "Variant where each node has exactly one label");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");	
-		options.addOption("n", "nestedpvalue", false, "Variant where the significance of the child motif is based on the parent matches");
+		options.addOption("n", "nested-pvalue", false, "Variant where the significance of the child subgraph is based on the parent matches");
 		options.addOption("a", "algorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"base\", \"gspan\" and \"apriori\"");
 		options.addOption("v", "verbose", false, "Print additional intermediary output");	
 		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");

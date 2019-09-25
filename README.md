@@ -141,12 +141,13 @@ The following parameters can be selected on the command line:
 - `-o`/`--output <filepath>` -> Output text file where the significant motifs are stored. A second visualisation file with the same name and a `.html` extension will also be generated here.
 - `-b`/`--background <filepath>` -> Path to a file containing background nodes, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional, but using it makes the interest file mandatory).
 - `-s`/`--support <value>` -> Support threshold the subgraphs must meet (support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, a threshold will be calculated automatically as described in the [original publication](#publication).
-- `-p`/`--alpha <value>` -> Set the significance level alpha of the hypergeometric tests (default = $0.05$).
-- `--allpvalues` -> Return all motifs and their raw p-values alongside the Bonferroni-corrected values, instead of only those motifs that pass the Bonferroni-adjusted significance level.
-- `-m`/`maxsize <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 5).
+- `-p`/`--alpha <value>` -> Set the significance level (or q-value for FDR) for the hypergeometric tests (default = $0.05$).
+- `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
+- `--all-pvalues` -> Return all motifs and their raw p-values alongside the Bonferroni-corrected values, instead of only those motifs that pass the Bonferroni-adjusted significance level.
+- `-m`/`max-size <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 5).
 - `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 - `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
-- `-n`/`--nestedpvalue` -> Run with a nested p-value configuration, where the significance of the child motif is based on the parent matches.
+- `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of the child motif is based on the parent matches.
 - `-a`/`--algorithm <name>` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
 - `-v`/`--verbose` -> Print additional output messages during the analysis.
 - `--statistics <filepath>` -> Store additional memory usage statistics in a file.
