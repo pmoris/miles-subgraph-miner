@@ -128,7 +128,8 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
 			}else {
-				System.out.println(outputTable.replace(" ", "_"));
+				PrintUtility.print2LogView(outputTable.replace(" ", "_"), SubgraphMining.GUI);
+				//System.out.println(outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js
@@ -160,7 +161,8 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
 			}else{
-				System.out.println(outputTable.replace(" ", "_"));
+				PrintUtility.print2LogView(outputTable.replace(" ", "_"), SubgraphMining.GUI);
+				//System.out.println(outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js

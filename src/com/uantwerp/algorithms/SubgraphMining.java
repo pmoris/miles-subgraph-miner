@@ -11,6 +11,7 @@ import org.apache.commons.cli.Options;
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
 /** Class in charge of running the process of the algorithm  
 *
@@ -77,7 +78,7 @@ public class SubgraphMining {
 			}
 		}
 		finally{
-			System.out.println("The analysis is terminated!");
+			PrintUtility.print2LogView("The process was terminated", GUI);
 		}
 		
 	}

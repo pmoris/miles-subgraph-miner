@@ -3,29 +3,38 @@ package com.uantwerp.algorithms.utilities;
 import java.util.Iterator;
 
 import com.uantwerp.algorithms.MiningState;
+import com.uantwerp.algorithms.SubgraphMining;
 import com.uantwerp.algorithms.common.GraphParameters;
 
 public class OutputUtility {
 
 	public static void preResultMessage() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
+		PrintUtility.print2LogView("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs", SubgraphMining.GUI);
+		//System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
 
 		if (GraphParameters.allPValues == 1) {
-			System.out.println("Retrieving all subgraphs that meet the support threshold (" + GraphParameters.supportcutoff
-					+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue);
+			PrintUtility.print2LogView("Retrieving all subgraphs that meet the support threshold (" + GraphParameters.supportcutoff
+							+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue, SubgraphMining.GUI);
+			//System.out.println("Retrieving all subgraphs that meet the support threshold (" + GraphParameters.supportcutoff
+			//		+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue);
 		} else {
-			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
-					+ ") after " + GraphParameters.correctionMethod + "correction.");
+			PrintUtility.print2LogView("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
+							+ ") after " + GraphParameters.correctionMethod + "correction.", SubgraphMining.GUI);
+			//System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
+			//		+ ") after " + GraphParameters.correctionMethod + "correction.");
 			}
 //		}
 	}
 	
 	public static void preResultMessageFrequentMining() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
-		System.out.println("No enrichment testing was performed.");
-		System.out.println("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + ".");
+		PrintUtility.print2LogView("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs", SubgraphMining.GUI);
+		//System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
+		PrintUtility.print2LogView("No enrichment testing was performed.", SubgraphMining.GUI);
+		//System.out.println("No enrichment testing was performed.");
+		PrintUtility.print2LogView("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + ".", SubgraphMining.GUI);
+		//System.out.println("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + ".");
 //		}
 	}
 
@@ -89,18 +98,24 @@ public class OutputUtility {
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
-			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue);
-			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction");
+		PrintUtility.print2LogView(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered", SubgraphMining.GUI);
+			//System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
+		PrintUtility.print2LogView(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff, SubgraphMining.GUI);
+			//System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
+		PrintUtility.print2LogView(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue, SubgraphMining.GUI);
+			//System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue);
+		PrintUtility.print2LogView(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction", SubgraphMining.GUI);
+			//System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction");
 //		}
 	}
 	
 	public static void printStatisticsFrequent(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
+		PrintUtility.print2LogView(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered", SubgraphMining.GUI);
+			//System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
+		PrintUtility.print2LogView(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff, SubgraphMining.GUI);
+			//System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
 //		}
 	}
 }

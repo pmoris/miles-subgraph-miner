@@ -240,12 +240,17 @@ public class SubgraphMiningGUI {
 	 * @param status 
 	 */
 	public void updateGUI(String status) {
-		if (status == "start") {
-			this.btnRun.setText("Stop Analysis");
-		}
-		else {
-			this.btnRun.setText("Run analysis");
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (status == "start") {
+					btnRun.setText("Stop Analysis");
+				}
+				else {
+					btnRun.setText("Run analysis");
+				}
+			}
+		});
+		
 	}
 	/**
 	 * Create the application.
