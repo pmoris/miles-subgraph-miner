@@ -138,7 +138,7 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				try {
 					String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
-					FileUtility.writeFile(GraphParameters.output + ".html", htmlVisualisation);
+					FileUtility.writeFile(FilenameUtils.removeExtension(GraphParameters.output) + ".html", htmlVisualisation);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
