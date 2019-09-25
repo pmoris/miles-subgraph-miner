@@ -11,6 +11,7 @@
     - [Setup](#setup)
     - [Compiling from source](#compiling-from-source)
   - [How to use MULES](#how-to-use-mules)
+    - [Quick start](#quick-start)
     - [Input files](#input-files)
     - [Options](#options)
       - [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool)
@@ -18,6 +19,7 @@
     - [Output](#output)
   - [Example datasets](#example-datasets)
     - [Toy dataset](#toy-dataset)
+    - [Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination](#gene-ontology-protein-protein-interaction-modules-enriched-in-differentially-expressed-genes-after-hepatitis-b-vaccination)
     - [Manganese binding motifs in peptidase protein structures](#manganese-binding-motifs-in-peptidase-protein-structures)
     - [Duplicated genes in the yeast transcription regulatory network](#duplicated-genes-in-the-yeast-transcription-regulatory-network)
     - [Orthologous genes in prokaryotic transcription regulation networks](#orthologous-genes-in-prokaryotic-transcription-regulation-networks)
@@ -60,7 +62,7 @@ The standard JAR version of MULES requires Java version 8 or higher. Installatio
 
 The latest version of the runnable JAR file is available from our [releases page](https://github.com/pmoris/subgraph-miner/releases).
 
-MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#usage).
+MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described below.
 
 ### Compiling from source
 
@@ -72,6 +74,11 @@ These instructions will give you a copy of the project on your local machine for
   - Or an IDE such as Eclipse (don't forget to add the external jar libraries in the `lib` directory and JUnit 5 to the classpath).
 
 ## How to use MULES
+
+### Quick start
+
+    java -jar mules-subgraph-miner.jar --graph graph_file \
+    --labels label_file --interest nodes_of_interest_file --output output_file
 
 ### Input files
 
@@ -175,8 +182,8 @@ Four example datasets are provided along with this project in the folder dataset
 
 ### Toy dataset
 
-    java -jar ./build/jar/mules-subgraph-miner.jar --graph datasets/example/example_graph.txt \\
-    --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \\
+    java -jar ./build/jar/mules-subgraph-miner.jar --graph datasets/example/example_graph.txt \
+    --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \
     --support 2 -maxsize 4 --algorithm base --verbose
 
 ### Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination
@@ -189,9 +196,9 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \\
-    --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \\
-    --background ./datasets/deg/background.txt --algorithm base --maxsize 3 --undirected \\
+    java -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \
+    --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \
+    --background ./datasets/deg/background.txt --algorithm base --maxsize 3 --undirected \
     --out ./datasets/deg/deg-results.txt
 
 ### Manganese binding motifs in peptidase protein structures
@@ -203,8 +210,8 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx4096m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \\
-    --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \\
+    java -Xms64m -Xmx4096m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \
+    --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \
     --algorithm base --singlelabel --nestedpvalue --undirected
 
 ### Duplicated genes in the yeast transcription regulatory network
@@ -216,8 +223,8 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    time java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \\
-    --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt \\
+    time java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \
+    --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt \
     --support 10 --maxsize 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
 
 ### Orthologous genes in prokaryotic transcription regulation networks
@@ -229,8 +236,8 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/bact/full_net.txt \\
-    --interest ./datasets/bact/phor.txt --background ./datasets/bact/tfs.txt \\
+    java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/bact/full_net.txt \
+    --interest ./datasets/bact/phor.txt --background ./datasets/bact/tfs.txt \
     --support 10 --algorithm base --output ./bactS5M5.txt --statistics ./bactS5M5Stats.txt
 
 ## Implementation of the subgraph discovery algorithm
