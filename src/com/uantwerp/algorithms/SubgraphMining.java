@@ -19,6 +19,8 @@ import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 */
 public class SubgraphMining {
 	
+	public static Boolean GUI = false;
+	
 	public static Boolean DEBUG = false;
 
 	public static void main(String[] args) {
@@ -48,6 +50,7 @@ public class SubgraphMining {
 		try{			
 //			Launch GUI if no options are passed
 			if (args.length == 0) {
+				GUI = true;
 				SubgraphMiningGUI.launchGUI(args);
 //				ultimately, the SubgraphMiningGUI.StartButton class will invoke runProcesses()
 			} else {
@@ -101,6 +104,8 @@ public class SubgraphMining {
 			e.printStackTrace();
 		System.err.println(e.getMessage());
 		System.out.println("\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
-		System.exit(1);	// exit with error code 1
+
+		if (!GUI)
+			System.exit(1);	// exit with error code 1
 	}
 }
