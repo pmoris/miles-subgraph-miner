@@ -62,6 +62,7 @@ public class SubgraphMiningGUI {
 	private JTextArea textAreaLog;
 	private JCheckBox checkBoxDebug;
 	private JCheckBox checkBoxAllPvalues;
+	private JButton btnRun;
 
 	public JCheckBox getCheckBoxDebug() {
 		return checkBoxDebug;
@@ -203,6 +204,10 @@ public class SubgraphMiningGUI {
 	public void setTextAreaProgressReport(JTextArea textAreaProgressReport) {
 		this.textAreaLog = textAreaProgressReport;
 	}
+	
+	public JButton getRunButton() {
+		return this.btnRun;
+	}
 
 	/**
 	 * Launch the application.
@@ -221,7 +226,19 @@ public class SubgraphMiningGUI {
 			}
 		});
 	}
-
+	
+	/**
+	 * Update the application when the analysis start or stop
+	 * @param status 
+	 */
+	public void updateGUI(String status) {
+		if (status == "start") {
+			this.btnRun.setText("Stop Analysis");
+		}
+		else {
+			this.btnRun.setText("Run analysis");
+		}
+	}
 	/**
 	 * Create the application.
 	 */
@@ -260,7 +277,7 @@ public class SubgraphMiningGUI {
 		});
 		
 //		Define run button
-		JButton btnRun = new JButton("Run analysis");
+		btnRun = new JButton("Run analysis");
 		menuBar.add(btnRun);
 		btnRun.addActionListener(new StartButton(SubgraphMiningGUI.this));
 		menuBar.add(btnExportLog);

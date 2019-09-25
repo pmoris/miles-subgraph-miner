@@ -20,6 +20,8 @@ import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 public class SubgraphMining {
 	
 	public static Boolean DEBUG = false;
+	
+	public static Thread current_process = null;
 
 	public static void main(String[] args) {
 		ParameterConfig.resetVariables();
@@ -54,22 +56,49 @@ public class SubgraphMining {
 				CommandLineParser parser = new DefaultParser();
 				CommandLine cmd = parser.parse(options, args);			
 				ParameterConfig.transformCommandLine(cmd, options);
-				runProcesses();
+				runProcesses(null);
 		    }
 		} catch(Exception e){
 			exceptionBehaviour(e);
 		}
 	}
 	
-	public static void runProcesses(){
+	/*
+	 * Stop the current analysis process (if yes)
+	 */
+	public static void stopProcess() {
+		try {
+			if (SubgraphMining.current_process != null && SubgraphMining.current_process.isAlive()) {
+				SubgraphMining.current_process.interrupt();
+			}
+		}
+		finally{
+			System.out.println("The analysis is terminated!");
+		}
+		
+	}
+	
+	public static void runProcesses(SubgraphMiningGUI gui){
 		VariablesTimer.initializeVariable();
 		Timer t1 = new Timer();
-		Thread thread1 = new Thread() {
+		//Thread thread1 = new Thread() {
+		SubgraphMining.current_process = new Thread() {
 		    public void run() {
 		    	try {
+		    		if (gui != null)
+		    			gui.updateGUI("start");
+		    		
 			        new AlgorithmFunctionality().mainProcedure(t1);
-		    	} catch (Exception e) {
+			     
+		    	}catch (Exception e) {
 		    		exceptionBehaviour(e);
+		    	} finally {
+		    		
+		    		if (VariablesTimer.stateFinish)
+						VariablesTimer.writeResults(GraphParameters.statistics);
+		    		
+		    		if (gui != null)
+		    			gui.updateGUI("stop");
 		    	}
 		    }
 		};
@@ -85,14 +114,15 @@ public class SubgraphMining {
 		         }
 			 },1000,1000);
 		}
-		thread1.start();
+		SubgraphMining.current_process.start();
+		/*
 		try {
-			thread1.join();
+			SubgraphMining.current_process.join();
 			if (VariablesTimer.stateFinish)
 				VariablesTimer.writeResults(GraphParameters.statistics);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public static void exceptionBehaviour(Exception e) {
