@@ -9,14 +9,14 @@ public class OutputUtility {
 
 	public static void preResultMessage() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
+		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs.");
 
 		if (GraphParameters.allPValues == 1) {
 			System.out.println("Retrieving all subgraphs that meet the support threshold (" + GraphParameters.supportcutoff
-					+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue);
+					+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue + "...");
 		} else {
 			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
-					+ ") after " + GraphParameters.correctionMethod + "-correction.");
+					+ ") after " + GraphParameters.correctionMethod + "-correction...");
 			}
 //		}
 	}
@@ -25,7 +25,7 @@ public class OutputUtility {
 //		if (GraphParameters.verbose == 1) {
 		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
 		System.out.println("No enrichment testing was performed.");
-		System.out.println("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + ".");
+		System.out.println("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + "...");
 //		}
 	}
 
@@ -89,18 +89,18 @@ public class OutputUtility {
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
-			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue);
-			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction");
+			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.");
+			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").");
+			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction.");
 //		}
 	}
 	
 	public static void printStatisticsFrequent(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff);
+			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.");
+			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
 //		}
 	}
 }
