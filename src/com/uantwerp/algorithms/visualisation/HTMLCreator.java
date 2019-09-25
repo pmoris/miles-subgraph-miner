@@ -89,10 +89,11 @@ public class HTMLCreator {
 		StringBuilder sidebar = new StringBuilder();
 		
 		sidebar.append("<p>"
-				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered."
-				+ MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff + "."
-				+ MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + "."
-				+ MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction.");
+				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.<br>"
+				+ MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".<br>"
+				+ MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").<br>"
+				+ MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + "-correction."
+				+ "</p>");
 		
 		if (GraphParameters.allPValues == 1) sidebar.append(
 				"<p>" + "Listing all supported subgraphs (no filtering on enrichment significance).</p>");
@@ -105,8 +106,9 @@ public class HTMLCreator {
 		StringBuilder sidebar = new StringBuilder();
 		
 		sidebar.append("<p>"
-				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered."
-				+ MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.<br>"
+				+ MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff + "."
+				+ "</p>");
 		return sidebar.toString();
 	}
 
