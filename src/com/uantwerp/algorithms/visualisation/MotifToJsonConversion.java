@@ -9,10 +9,11 @@ import com.google.gson.Gson;
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
+import com.uantwerp.algorithms.common.GraphParameters;
 
 public class MotifToJsonConversion {
 	
-	public static String convertAllMotifs(Double bonferroni) {
+	public static String convertAllMotifs() {
 		
 		// Gson object to store all JSON entries
 		Gson gson = new Gson();
@@ -20,22 +21,41 @@ public class MotifToJsonConversion {
 		// List to store all motif data
 		ArrayList<JsonGraphElement> motifsData = new ArrayList<JsonGraphElement>();
 		
+//		// create DFScode objects for gspan algorithm (only necessary for visualisation)
+//		if (GraphParameters.typeAlgorithm.equals("gspan")) {
+//			Iterator<String> it = MiningState.supportedMotifsPValues.keySet().iterator();
+//			while (it.hasNext()) {
+//				String stringKey = it.next();
+//				DFScode<DFSedge> motif = new DFScode<>();
+//				// create motif
+//				for (String edge : stringKey.split(",")) {
+//					String[] edgeArray = edge.split(edge, '-');
+//				}
+//				motif.add(new DFSEdge)
+//				motif.add(new DFSedge(1,GraphParameters.graph.possibleLabels.get(i),2,GraphParameters.graph.possibleLabels.get(j),true));
+//				// add motif to hash map
+//				MiningState.supportedMotifsDFScode.put(stringKey, motif);
+//
+//			}
+//		}
+//		
 		// Loop through all stored motifs
-		Iterator<String> it = MiningState.supportedMotifsPValues.keySet().iterator();
+		Iterator<String> it = MiningState.supportedMotifsAdjustedPValues.keySet().iterator();
 		while (it.hasNext()) {
 			String stringKey = it.next();
 			
-			Double pValue = MiningState.supportedMotifsPValues.get(stringKey);
+			Double adjustedPValue = MiningState.supportedMotifsAdjustedPValues.get(stringKey);
 			
-			// If bonferroni option is used, skip all non-significant motifs
-			if (!(bonferroni.isNaN())) {
-				if (!(pValue <= bonferroni)) {
+			// if all-p-values option is used, convert all subgraphs,
+			// otherwise only those meeting the adjusted p-value threshold
+			if (GraphParameters.allPValues == 0) {
+				if ( adjustedPValue > GraphParameters.pvalue ) {
 					continue;
 				}
 			}
 			
 			// Retrieve JSON data for current motif in list format
-			HashMap<String, ArrayList<JsonGraphElement>> nodesEdgesMap = convertMotif(stringKey, Math.log(pValue) 
+			HashMap<String, ArrayList<JsonGraphElement>> nodesEdgesMap = convertMotif(stringKey, Math.log(adjustedPValue) 
 					/ Math.log(10));
 			
 			// append data to motifsList

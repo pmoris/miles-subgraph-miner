@@ -22,35 +22,36 @@ public class StartButton implements ActionListener {
 		if (task_name == "Stop Analysis") {
 			SubgraphMining.stopProcess();
 			this.gui.updateGUI("stop");
-		}
-		else {
-			try {
-				//Reset log area to empty
-				gui.getTextAreaProgressReport().setText("");
-				ParameterConfig.transformGUI(
-						gui.getTextGraphFile().getText(),
-						gui.getTextLabels().getText(),
-						gui.getTextInterestingVertices().getText(),
-						gui.getTextBackground().getText(),
-						gui.getTextFieldSupport().getText(),
-						gui.getTextFieldAlpha().getText(),
-						gui.getCheckBoxAllPvalues().isSelected(),
-						gui.getTextFieldVerticesSize().getText(),
-						gui.getTextFieldSavePath().getText(),
-						gui.getComboBoxAlgorithm().getSelectedItem().toString(),
-						gui.getCheckBoxSingleLabel().isSelected(),
-						gui.getCheckBoxUndirected().isSelected(),
-						gui.getCheckBoxNestedPValue().isSelected(),
-						gui.getCheckBoxVerbose().isSelected(),
-						gui.getTextAreaProgressReport().getText(),
-						gui.getCheckBoxDebug().isSelected()
-						);
-				SubgraphMining.runProcesses(this.gui);
-			} catch(Exception error){
-				if (SubgraphMining.DEBUG)
-					error.printStackTrace();
-				System.err.println(error.getMessage());
-			}
+		try {
+
+			// reset mining state and graph objects in case the run button is pressed again during the same session
+			ParameterConfig.resetVariables();
+
+			ParameterConfig.transformGUI(
+					gui.getTextGraphFile().getText(),
+					gui.getTextLabels().getText(),
+					gui.getTextInterestingVertices().getText(),
+					gui.getTextBackground().getText(),
+					gui.getTextFieldSupport().getText(),
+					gui.getTextFieldAlpha().getText(),
+					gui.getComboBoxMultipleTesting().getSelectedItem().toString(),
+					gui.getCheckBoxAllPvalues().isSelected(),
+					gui.getTextFieldVerticesSize().getText(),
+					gui.getTextFieldSavePath().getText(),
+					gui.getComboBoxAlgorithm().getSelectedItem().toString(),
+					gui.getCheckBoxSingleLabel().isSelected(),
+					gui.getCheckBoxUndirected().isSelected(),
+					gui.getCheckBoxNestedPValue().isSelected(),
+					gui.getCheckBoxVerbose().isSelected(),
+					gui.getTextAreaProgressReport().getText(),
+					gui.getCheckBoxDebug().isSelected()
+					);
+			SubgraphMining.runProcesses(this.gui);
+		} catch(Exception error){
+			if (SubgraphMining.DEBUG)
+				error.printStackTrace();
+			System.err.println(error.getMessage());
+			
 		}
 		
 	}
