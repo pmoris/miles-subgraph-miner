@@ -536,7 +536,7 @@ public class SubgraphMiningGUI {
 		
 //		Vertices
 		JLabel labelVerticesSize = new JLabel("Maximum subgraph size:");
-		labelVerticesSize.setToolTipText("Maximum number of nodes in a subgraph or motif.");
+		labelVerticesSize.setToolTipText("Maximum number of nodes in a subgraph or motif (default = 3).");
 		GridBagConstraints gbc_labelVerticesSize = new GridBagConstraints();
 		gbc_labelVerticesSize.anchor = GridBagConstraints.EAST;
 		gbc_labelVerticesSize.insets = new Insets(0, 0, 5, 5);

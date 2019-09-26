@@ -38,7 +38,7 @@ public class SubgraphMining {
 		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
 		options.addOption(null, "all-pvalues", false, "Return all subgraphs, instead of"
 				+ "only those passing the (multiple testing corrected) significance level");
-		options.addOption("m", "max-size", true, "Maximum number of vertices allowed in the subgraph patterns (default = 5)");
+		options.addOption("m", "max-size", true, "Maximum number of vertices allowed in the subgraph patterns (default = 3)");
 		options.addOption(null, "single-label", false, "Variant where each node has exactly one label");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");	
 		options.addOption("n", "nested-pvalue", false, "Variant where the significance of the child subgraph is based on the parent matches");

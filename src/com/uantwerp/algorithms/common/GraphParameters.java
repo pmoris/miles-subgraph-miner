@@ -5,7 +5,7 @@ import java.io.File;
 public abstract class GraphParameters {
 	
 	private static int DEFAULTSUPPORT = 0;
-	private static int DEFAULTMAXSIZE = 5;
+	private static int DEFAULTMAXSIZE = 3;
 	private static double DEFAULTPVALUE = 0.05;
 	
 	public static File graphFile;
