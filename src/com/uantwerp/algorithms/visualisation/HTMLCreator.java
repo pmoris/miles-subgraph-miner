@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.GraphParameters;
+import com.uantwerp.algorithms.utilities.OutputUtility;
 
 public class HTMLCreator {
 	
@@ -92,13 +93,13 @@ public class HTMLCreator {
 				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.<br>"
 				+ MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".<br>"
 				+ MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").<br>"
-				+ MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + "-correction."
+				+ MiningState.significantAdjustedSubgraphCounter + " are significant after " + OutputUtility.correctionMethodPrettyPrint() + " correction."
 				+ "</p>");
 		
 		if (GraphParameters.allPValues == 1) sidebar.append(
 				"<p>" + "Listing all supported subgraphs (no filtering on enrichment significance).</p>");
 		else sidebar.append(
-				"<p>" + "Listing all supported subgraphs that are significantly enriched after " + GraphParameters.correctionMethod + " correction.</p>");
+				"<p>" + "Listing all supported subgraphs that are significantly enriched after " + OutputUtility.correctionMethodPrettyPrint() + " correction.</p>");
 		return sidebar.toString();
 	}
 	

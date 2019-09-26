@@ -7,32 +7,34 @@ import com.uantwerp.algorithms.common.GraphParameters;
 
 public class OutputUtility {
 
-	public static void preResultMessage() {
+	public static void preResultStatistics() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs.");
-
+		System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+		System.out.println(MiningState.supportedMotifsPValues.size() 
+				+ " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
 		if (GraphParameters.allPValues == 1) {
-			System.out.println("Retrieving all subgraphs that meet the support threshold (" + GraphParameters.supportcutoff
-					+ "), without filtering on the (adjusted) p-value threshold: " + GraphParameters.pvalue + "...");
+			System.out.println("Retrieving all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
+					+ GraphParameters.pvalue + "...");
 		} else {
-			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold (" + GraphParameters.pvalue 
-					+ ") after " + GraphParameters.correctionMethod + "-correction...");
+			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold for enrichment (" 
+					+ GraphParameters.pvalue + ") after " + correctionMethodPrettyPrint() + " correction...");
 			}
 //		}
 	}
 	
-	public static void preResultMessageFrequentMining() {
+	public static void preResultStatisticsFrequent() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println("Checked: " + MiningState.supportedMotifsPValues.size() + " subgraphs");
-		System.out.println("No enrichment testing was performed.");
-		System.out.println("Retrieving all subgraphs that meet the support threshold " + GraphParameters.supportcutoff + "...");
+		System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+		System.out.println(MiningState.supportedMotifsPValues.size() 
+				+ " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+		System.out.println("No enrichment testing was performed...");
 //		}
 	}
 
 	public static String createTable() {
 //		create table header
 		String message = "Subgraph\tFreq interest\tFreq total\tRaw P-value\t"
-				+ GraphParameters.correctionMethod + "-adjusted P-value";
+				+ correctionMethodPrettyPrint() + " adjusted P-value";
 
 //		counter for the number of significant subgraphs after multiple testing correction
 		int adjustedPValueCounter = 0;
@@ -89,18 +91,44 @@ public class OutputUtility {
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.");
+			System.out.println("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
 			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
 			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").");
-			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction.");
+			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + correctionMethodPrettyPrint() + " correction.");
+			if (GraphParameters.allPValues == 1) {
+				System.out.println("Listing all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
+						+ GraphParameters.pvalue + ".");
+			} else {
+				System.out.println("Listing all subgraphs that meet the adjusted p-value threshold for enrichment (" 
+						+ GraphParameters.pvalue + ") after " + correctionMethodPrettyPrint() + " correction.");
+				}
 //		}
 	}
 	
 	public static void printStatisticsFrequent(){
 //		if (GraphParameters.verbose == 1){
 //			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered.");
+			System.out.println("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
 			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+			System.out.println("No enrichment testing was performed.");
 //		}
+	}
+	
+	
+	/**
+	 * @return Full name of the chosen multiple correction method
+	 */
+	public static String correctionMethodPrettyPrint() {
+		switch (GraphParameters.correctionMethod) {
+			case "bonferroni":
+				return "Bonferroni";
+			case "holm":
+				return "Holm";
+			case "BH":
+				return "Benjamini–Hochberg";
+			case "BY":
+				return "Benjamini–Yekutieli";
+		}
+		return null;
 	}
 }

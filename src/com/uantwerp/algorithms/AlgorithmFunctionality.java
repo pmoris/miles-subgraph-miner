@@ -116,7 +116,7 @@ public class AlgorithmFunctionality {
 		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
 		
 	//		print information on which type of subgraphs will be shown (all supported with raw p-values or only p <= alpha)
-			OutputUtility.preResultMessage();
+//			OutputUtility.preResultStatistics();
 			
 	//		perform multiple testing correction and store number of significant subgraphs
 			MiningState.supportedMotifsAdjustedPValues = MultipleTestingCorrection.adjustPValues(MiningState.supportedMotifsPValues, GraphParameters.correctionMethod);
@@ -125,10 +125,12 @@ public class AlgorithmFunctionality {
 			String outputTable = OutputUtility.createTable();
 			
 			// write output file or print to stdout
+			// IO catcher is already present inside writeFile function
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
-			}else {
-				System.out.println(outputTable.replace(" ", "_"));
+				System.out.println("\nSaved output file to " + GraphParameters.output);
+			} else {
+				System.out.println("\n" + outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js
@@ -138,7 +140,9 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				try {
 					String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
-					FileUtility.writeFile(FilenameUtils.removeExtension(GraphParameters.output) + ".html", htmlVisualisation);
+					String htmlFilePath = FilenameUtils.removeExtension(GraphParameters.output) + ".html";
+					FileUtility.writeFile(htmlFilePath, htmlVisualisation);
+					System.out.println("Saved visualisation file to " + htmlFilePath);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -146,13 +150,12 @@ public class AlgorithmFunctionality {
 			
 			// print summary statistics
 			OutputUtility.printStatistics();
-
 		}
 
 		// if no interesting vertices were provided
 		else {		
 			// print information on which type of subgraphs will be shown (support > threshold)
-			OutputUtility.preResultMessageFrequentMining();
+//			OutputUtility.preResultStatisticsFrequent();
 			
 			String outputTable = OutputUtility.createTableFrequent();
 			
@@ -160,7 +163,7 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
 			}else{
-				System.out.println(outputTable.replace(" ", "_"));
+				System.out.println("\n" + outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js
