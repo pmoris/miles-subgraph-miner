@@ -35,15 +35,12 @@ import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Dimension;
 
 import javax.swing.JTextArea;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
-import javax.swing.ScrollPaneConstants;
 import java.awt.BorderLayout;
 
 public class SubgraphMiningGUI {
