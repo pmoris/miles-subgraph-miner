@@ -35,13 +35,16 @@ import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 
 import javax.swing.JTextArea;
-import java.awt.BorderLayout;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import javax.swing.ScrollPaneConstants;
+import java.awt.BorderLayout;
 
 public class SubgraphMiningGUI {
 	
@@ -62,6 +65,7 @@ public class SubgraphMiningGUI {
 	private JTextArea textAreaLog;
 	private JCheckBox checkBoxDebug;
 	private JCheckBox checkBoxAllPvalues;
+	private JButton btnRun;
 	private JComboBox<String> comboBoxMultipleTesting;
 
 	public JComboBox<String> getComboBoxMultipleTesting() {
@@ -71,7 +75,6 @@ public class SubgraphMiningGUI {
 	public void setComboBoxMultipleTesting(JComboBox<String> comboBoxMultipleTesting) {
 		this.comboBoxMultipleTesting = comboBoxMultipleTesting;
 	}
-
 	public JCheckBox getCheckBoxDebug() {
 		return checkBoxDebug;
 	}
@@ -212,6 +215,10 @@ public class SubgraphMiningGUI {
 	public void setTextAreaProgressReport(JTextArea textAreaProgressReport) {
 		this.textAreaLog = textAreaProgressReport;
 	}
+	
+	public JButton getRunButton() {
+		return this.btnRun;
+	}
 
 	/**
 	 * Launch the application.
@@ -230,7 +237,24 @@ public class SubgraphMiningGUI {
 			}
 		});
 	}
-
+	
+	/**
+	 * Update the application when the analysis start or stop
+	 * @param status 
+	 */
+	public void updateGUI(String status) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (status == "start") {
+					btnRun.setText("Stop Analysis");
+				}
+				else {
+					btnRun.setText("Run analysis");
+				}
+			}
+		});
+		
+	}
 	/**
 	 * Create the application.
 	 */
@@ -269,7 +293,7 @@ public class SubgraphMiningGUI {
 		});
 		
 //		Define run button
-		JButton btnRun = new JButton("Run analysis");
+		btnRun = new JButton("Run analysis");
 		menuBar.add(btnRun);
 		btnRun.addActionListener(new StartButton(SubgraphMiningGUI.this));
 		menuBar.add(btnExportLog);
@@ -310,7 +334,8 @@ public class SubgraphMiningGUI {
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};
+		gridBagLayout.columnWeights = new double[]{0.05, 0.2, 0.2, 0.4, 0.05};
 		gridBagLayout.columnWidths = new int[] {10, 100, 100, 200, 10};
 		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200};
 		
@@ -319,7 +344,6 @@ public class SubgraphMiningGUI {
 		pnlMain.setLayout(gridBagLayout);
 
 		JScrollPane scrMain = new JScrollPane(pnlMain);
-		scrMain.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrMain.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 //		Add new scroll pane and embedded main panel to frame
@@ -692,14 +716,21 @@ public class SubgraphMiningGUI {
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
 		gbc_panelReport.gridx = 1;
 		gbc_panelReport.gridy = 3;
+		gbc_panelReport.weightx = 1;
+		gbc_panelReport.weighty = 1;
 		pnlMain.add(panelReport, gbc_panelReport);
 		panelReport.setLayout(new BorderLayout(0, 0));
 		
 		textAreaLog = new JTextArea();
-		textAreaLog.setEditable(false);
+		textAreaLog.setEditable(true);
+		textAreaLog.setLineWrap(false);
+		textAreaLog.setWrapStyleWord(true);
+		
 		JScrollPane scrollPaneTextAreaLog = new JScrollPane(textAreaLog);
-		panelReport.add(scrollPaneTextAreaLog, BorderLayout.CENTER);
-
+		scrollPaneTextAreaLog.setAutoscrolls(true);
+		scrollPaneTextAreaLog.setPreferredSize(textAreaLog.getSize());
+		panelReport.add(scrollPaneTextAreaLog);
+		
 //		Redirect console output
 		PrintStream logStream = new PrintStream(new CustomOutputStream(textAreaLog));
 		System.setOut(logStream);

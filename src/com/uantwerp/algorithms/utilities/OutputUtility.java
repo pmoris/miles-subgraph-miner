@@ -3,6 +3,7 @@ package com.uantwerp.algorithms.utilities;
 import java.util.Iterator;
 
 import com.uantwerp.algorithms.MiningState;
+import com.uantwerp.algorithms.SubgraphMining;
 import com.uantwerp.algorithms.common.GraphParameters;
 
 public class OutputUtility {

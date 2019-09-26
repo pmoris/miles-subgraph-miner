@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphParameters;
@@ -103,6 +105,21 @@ public class PrintUtility {
 		for (int i=0; i<code.size(); i++){
 			System.out.println(code.get(i).getSourceId()+" "+code.get(i).getSourceLabel()+" -> "+code.get(i).getTargetId()+" "+code.get(i).getTargetLabel());
 		}
+	}
+	
+	public static void print2LogView(String text, Boolean isGUI) {
+		if(isGUI == false) {
+			System.out.println(text);
+		}
+		else {
+			Runnable  runnable = new Runnable() {
+	            public void run(){
+	            	System.out.println(text);
+	            }
+	        };
+	        SwingUtilities.invokeLater(runnable);
+		}
+		
 	}
 	
 }
