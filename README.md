@@ -184,7 +184,7 @@ Four example datasets are provided along with this project in the folder dataset
 
     java -jar ./build/jar/mules-subgraph-miner.jar --graph datasets/example/example_graph.txt \
     --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \
-    --support 2 -maxsize 4 --algorithm base --verbose
+    --support 2 -max-size 4 --algorithm base --verbose
 
 ### Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination
 
@@ -198,7 +198,7 @@ Four example datasets are provided along with this project in the folder dataset
 
     java -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \
     --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \
-    --background ./datasets/deg/background.txt --algorithm base --maxsize 3 --undirected \
+    --background ./datasets/deg/background.txt --algorithm base --max-size 3 --undirected \
     --out ./datasets/deg/deg-results.txt
 
 ### Manganese binding motifs in peptidase protein structures
@@ -212,7 +212,7 @@ Four example datasets are provided along with this project in the folder dataset
 
     java -Xms64m -Xmx4096m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \
     --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \
-    --algorithm base --singlelabel --nestedpvalue --undirected
+    --algorithm base --singlelabel --nested-pvalue --undirected
 
 ### Duplicated genes in the yeast transcription regulatory network
 
@@ -225,7 +225,7 @@ Four example datasets are provided along with this project in the folder dataset
 
     time java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \
     --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt \
-    --support 10 --maxsize 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
+    --support 10 --max-size 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
 
 ### Orthologous genes in prokaryotic transcription regulation networks
 
