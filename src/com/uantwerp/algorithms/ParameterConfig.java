@@ -99,7 +99,11 @@ public class ParameterConfig {
 			}
 			else
 				GraphParameters.setDefaultPValue();
-			if(cmd.hasOption("allpvalues"))
+			if(cmd.hasOption("correction-method"))
+				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method");
+			else
+				GraphParameters.correctionMethod = "bonferroni";
+			if(cmd.hasOption("all-pvalues"))
 				GraphParameters.allPValues = 1;
 			else
 				GraphParameters.allPValues = 0;
@@ -145,6 +149,7 @@ public class ParameterConfig {
 			String backgroundPath,
 			String support,
 			String alpha,
+			String correctionMethod,
 			Boolean allPValues,
 			String verticesSize,
 			String savePath,
@@ -228,6 +233,7 @@ public class ParameterConfig {
 		}
 		else
 			GraphParameters.setDefaultPValue();
+		GraphParameters.correctionMethod = correctionMethod;
 		if(allPValues)
 			GraphParameters.allPValues = 1;
 		else

@@ -33,7 +33,7 @@ public class SubgraphMining {
 		options.addOption("o", "output", true, "Output file to store the significant motifs");
 		options.addOption("s", "support", true, "Support threshold (default = automatic calculation)");
 		options.addOption("p", "alpha", true, "Significance level for the hypergeometric tests (default = 0.05)");
-		options.addOption(null, "allpvalues", false, "Return all motifs and their raw p-values alongside the "
+		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
 				+ "Bonferroni-corrected values, instead of only those passing the Bonferroni-adjusted significance threshold");
 		options.addOption("m", "maxsize", true, "Maximum number of vertices allowed in the subgraph patterns (default = 5)");
 		options.addOption(null, "singlelabel", false, "Variant where each node has exactly one label");

@@ -11,7 +11,14 @@ import com.uantwerp.algorithms.common.GraphParameters;
 
 public class HTMLCreator {
 	
-	public static String createHTML(String elementsJSON, String message, double bonferroni, int sig) throws IOException {
+	
+	/**
+	 * @param elementsJSON JSON String containing the vertex and edge elements
+	 * @param outputTable String containing the output table as formatted for stdout or the output file
+	 * @return
+	 * @throws IOException
+	 */
+	public static String createHTML(String elementsJSON, String outputTable) throws IOException {
 		InputStream is = HTMLCreator.class.getResourceAsStream("/template.html");
 		String htmlString = IOUtils.toString(is, StandardCharsets.UTF_8);
 
@@ -41,7 +48,6 @@ public class HTMLCreator {
 		String codeJsFileSaver = IOUtils.toString(is, StandardCharsets.UTF_8);
 		htmlString = htmlString.replace("$INCLUDE-FILESAVER.JS", codeJsFileSaver);
 
-		
 		// dagre layout
 		is = HTMLCreator.class.getResourceAsStream("/dagre.min.js");
 		String codeJsDagre = IOUtils.toString(is, StandardCharsets.UTF_8);
@@ -63,28 +69,44 @@ public class HTMLCreator {
 		// insert JSON data	
 		htmlString = htmlString.replace("$INCLUDE-ELEMENTS", elementsJSON);
 
-		// include main side bar content
-		String sidebar = createSidebar(bonferroni, sig);
+		// include main side bar content and tweak content for frequent vs enriched subgraph mining
+		String sidebar;
+		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
+			sidebar = createSidebar();
+		} else {
+			sidebar = createSidebarFrequent();
+		}
 		htmlString = htmlString.replace("$INCLUDE-SIDEBAR", sidebar);
 
 		// include output table
-		String table = createTable(message);
+		String table = createTable(outputTable);
 		htmlString = htmlString.replace("$INCLUDE-TABLE", table);
 	
 		return htmlString;
 	}
 
-	private static String createSidebar(double bonferroni, int sig) {
+	private static String createSidebar() {
 		StringBuilder sidebar = new StringBuilder();
 		
-		sidebar.append("<p>" + MiningState.checkedMotifsGroupSupport.size() + " subgraphs were checked."
-				+ "\nOf which " + MiningState.supportedMotifsGraphSupport.size() + " are frequent and "
-				+ MiningState.supportedMotifsPValues.size() + " are significant before Bonferroni-correction.");
-		sidebar.append("<p>" + "Significantly enriched subgraphs after Bonferroni-correction: " + sig + " (using a Bonferonni-corrected P-value cutoff = " + bonferroni + ").</p>");
+		sidebar.append("<p>"
+				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered."
+				+ MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff + "."
+				+ MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + "."
+				+ MiningState.significantAdjustedSubgraphCounter + " are significant after " + GraphParameters.correctionMethod + " correction.");
+		
 		if (GraphParameters.allPValues == 1) sidebar.append(
-				"<p>" + "Showing all frequent subgraphs regardless of whether they pass the Bonferroni-adjusted significance threshold.</p>");
+				"<p>" + "Listing all supported subgraphs (no filtering on enrichment significance).</p>");
 		else sidebar.append(
-				"<p>" + "The following table shows all frequent subgraphs that pass the Bonferroni-adjusted significance threshold for enrichment:</p>");
+				"<p>" + "Listing all supported subgraphs that are significantly enriched after " + GraphParameters.correctionMethod + " correction.</p>");
+		return sidebar.toString();
+	}
+	
+	private static String createSidebarFrequent() {
+		StringBuilder sidebar = new StringBuilder();
+		
+		sidebar.append("<p>"
+				+ MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were discovered."
+				+ MiningState.supportedMotifsGraphSupport.size() + "subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
 		return sidebar.toString();
 	}
 

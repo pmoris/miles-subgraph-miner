@@ -26,6 +26,7 @@ public class StartButton implements ActionListener {
 					gui.getTextBackground().getText(),
 					gui.getTextFieldSupport().getText(),
 					gui.getTextFieldAlpha().getText(),
+					gui.getComboBoxMultipleTesting().getSelectedItem().toString(),
 					gui.getCheckBoxAllPvalues().isSelected(),
 					gui.getTextFieldVerticesSize().getText(),
 					gui.getTextFieldSavePath().getText(),
