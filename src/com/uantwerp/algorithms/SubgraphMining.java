@@ -35,7 +35,7 @@ public class SubgraphMining {
 		options.addOption("o", "output", true, "Output file");
 		options.addOption("s", "support", true, "Specify a custom support threshold (default = automatic calculation)");
 		options.addOption("p", "alpha", true, "Significance level (or q-value for FDR) for the hypergeometric tests (default = 0.05)");
-		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
+		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferonni' (default), 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
 		options.addOption(null, "all-pvalues", false, "Return all subgraphs, instead of"
 				+ "only those passing the (multiple testing corrected) significance level");
 		options.addOption("m", "max-size", true, "Maximum number of vertices allowed in the subgraph patterns (default = 3)");

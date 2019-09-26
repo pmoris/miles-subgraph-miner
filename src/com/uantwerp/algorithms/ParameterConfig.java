@@ -100,7 +100,7 @@ public class ParameterConfig {
 				GraphParameters.setDefaultPValue();
 			if(cmd.hasOption("correction-method"))
 				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method");
-			else
+			else // set bonferroni as the default correction method
 				GraphParameters.correctionMethod = "bonferroni";
 			if(cmd.hasOption("all-pvalues"))
 				GraphParameters.allPValues = 1;

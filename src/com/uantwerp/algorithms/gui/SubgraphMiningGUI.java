@@ -371,7 +371,7 @@ public class SubgraphMiningGUI {
 		
 //		Interesting vertices file
 		JLabel lblInterestingVertices = new JLabel("Nodes of interest:");
-		lblInterestingVertices.setToolTipText("Location of the nodes of interest file (optional - omit for frequent subgraph mining)");
+		lblInterestingVertices.setToolTipText("Location of the nodes of interest file (optional - leave blank for frequent subgraph mining)");
 		GridBagConstraints gbc_lblInterestingVertices = new GridBagConstraints();
 		gbc_lblInterestingVertices.anchor = GridBagConstraints.EAST;
 		gbc_lblInterestingVertices.insets = new Insets(0, 0, 5, 5);
@@ -506,6 +506,7 @@ public class SubgraphMiningGUI {
 		
 //		Multiple testing combobox
 		JLabel lblMultipleTestingCorrection = new JLabel("Multiple testing correction method:");
+		lblMultipleTestingCorrection.setToolTipText("Method to adjust for multiple tests.");
 		GridBagConstraints gbc_lblMultipleTestingCorrection = new GridBagConstraints();
 		gbc_lblMultipleTestingCorrection.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMultipleTestingCorrection.gridx = 0;
@@ -545,6 +546,7 @@ public class SubgraphMiningGUI {
 		panelOptions.add(labelVerticesSize, gbc_labelVerticesSize);
 		
 		textFieldVerticesSize = new JTextField();
+		textFieldVerticesSize.setText("3");
 		textFieldVerticesSize.setColumns(10);
 		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
 		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
@@ -600,7 +602,7 @@ public class SubgraphMiningGUI {
 		textFieldSupport.setColumns(10);
 		
 		checkBoxNestedPValue = new JCheckBox("Nested p-value", false);
-		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = true).");
+		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = false).");
 		GridBagConstraints gbc_checkBoxPValue = new GridBagConstraints();
 		gbc_checkBoxPValue.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxPValue.gridwidth = 2;
@@ -630,7 +632,7 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(checkBoxAllPvalues, gbc_chckbxAllPvalues);
 		
 		checkBoxVerbose = new JCheckBox("Verbose");
-		checkBoxVerbose.setToolTipText("Additional logging information.");
+		checkBoxVerbose.setToolTipText("Show additional logging information.");
 		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
 		gbc_checkBoxVerbose.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
@@ -655,7 +657,7 @@ public class SubgraphMiningGUI {
 		outputPanel.setLayout(gbl_outputPanel);
 		
 		JLabel labelSavePath = new JLabel("Savepath:");
-		labelSavePath.setToolTipText("Location where output files will be stored.");
+		labelSavePath.setToolTipText("Output file location. The visualisation file will be stored under the same name, but with a .html extension.");
 		GridBagConstraints gbc_labelSavePath = new GridBagConstraints();
 		gbc_labelSavePath.anchor = GridBagConstraints.EAST;
 		gbc_labelSavePath.insets = new Insets(0, 0, 0, 5);
