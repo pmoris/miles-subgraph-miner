@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+
+  <title>Significantly enriched subgraphs</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+  <!-- CHANGE TO JAVA INSERT -->
+  <link href="normalize.css" rel="stylesheet" />
+  <link href="skeleton.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" />
+
+  <!-- CHANGE TO JAVA INSERT -->
+  <script src="./cytoscape.min.js"></script>
+  <script src="./FileSaver.min.js"></script>
+  <script src='./code-selector.js'></script>
+  <script src="./dagre.min.js"></script>
+  <script src="./cytoscape-dagre.js"></script>
+  <script src="./klay.js"></script>
+  <script src="./cytoscape-klay.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/> -->
+
+  <!--Import jQuery before export.js-->
+  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+   <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript"  src=" https://cdn.datatables.net/buttons/1.10.19/js/dataTables.buttons.min.js"></script> -->
+
+  <!--Export table buttons-->
+  <!-- <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+   <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js" ></script>
+   <script type="text/javascript"  src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script> -->
+
+</head>
+
+<body>
+  <div id="container">
+
+
+    <div id="cy" class="main">
+      <h2>Significantly enriched subgraphs</h2>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+      <div id="drag"></div>
+
+      <h4>Layout</h4>
+
+      <p>Specifies how the nodes are positioned. The refresh can also reset the zoom level after resizing the browser window.</p>
+
+      <div class="u-cf">
+      <select id="layout">
+        <option value="dagre" selected>Dagre</option>
+        <option value="dagrevertical">Dagre-vertical</option>
+        <option value="klay">Klay</option>
+        <option value="grid">Grid</option>
+        <option value="concentric">Concentric</option>
+        <option value="circle">Circle</option>
+        <option value="cose">COSE</option>
+        <option value="random">Random</option>
+      </select>
+      <i id="redo-layout" class="fas fa-sync-alt action-icon tooltip" title="Redo layout"></i>
+      </div>
+
+      <h4>Export</h4>
+
+      <p>Export the subgraphs to a <code>png</code> or <code>JSON</code> file. The latter can be imported into Cytoscape
+        for further processing.</p>
+
+      <div class="u-cf">
+
+          <button type="button" id="save_button" style="float: left;">Save as</button>
+          <p style="float:right;">
+            Output type:
+            <select style="height:40px;" id="export">
+              <option value="png" selected>png</option>
+              <option value="JSON" selected>JSON</option>
+            </select>
+            <form style="float:right;">
+              Scale image: <input id="scale" type="number" value="1">
+            </form>
+          </p>
+      </div>
+
+      <h4>Retrieved subgraphs</h4>
+      <p>4140 subgraphs were checked, of which 1191 are frequent and 1191 are significant before Bonferroni-correction.</p>
+      <p>Significantly enriched subgraphs after Bonferroni-correction: 4 (using a Bonferonni-corrected P-value cutoff = 4.198152812762385E-5).</p>
+      <p>The following table shows all frequent subgraphs that pass the Bonferroni-adjusted significance threshold for enrichment:</p>
+
+      <button id="save_table_button">Export table to CSV file</button>
+      <p>
+        <table>
+          <thead>
+            <tr>
+              <th>Subgraph</th>
+              <th>Freq Interest</th>
+              <th>Freq Total</th>
+              <th>P-value</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1GO:0002252-2 </td>
+              <td>14</td>
+              <td>328</td>
+              <td>9.327677778730743E-7</td>
+            </tr>
+            <tr>
+              <td>1GO:0002252-2GO:0002682</td>
+              <td>11</td>
+              <td>213</td>
+              <td>2.541796307168218E-6</td>
+            </tr>
+            <tr>
+              <td>1GO:0002252-2GO:0002684</td>
+              <td>10</td>
+              <td>184</td>
+              <td>4.822141400702109E-6</td>
+            </tr>
+            <tr>
+              <td>1GO:0002252-2GO:0002253</td>
+              <td>9</td>
+              <td>153</td>
+              <td>7.891844701879093E-6</td>
+            </tr>
+          </tbody>
+        </table>
+      </p>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    var isResizing = false,
+      lastDownX = 0;
+
+    (function () {
+      var container = document.getElementById("container"),
+        left = document.getElementById("cy"),
+        right = document.getElementById("sidebar"),
+        handle = document.getElementById("drag");
+
+      handle.onmousedown = function (e) {
+        isResizing = true;
+        lastDownX = e.clientX;
+      };
+
+      document.onmousemove = function (e) {
+        if (!isResizing) {
+          return;
+        }
+
+        var offsetRight = container.clientWidth - (e.clientX - container.offsetLeft);
+
+        left.style.right = offsetRight + "px";
+        right.style.width = offsetRight + "px";
+      }
+
+      document.onmouseup = function (e) {
+        isResizing = false;
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
