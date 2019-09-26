@@ -1,0 +1,9 @@
+# Ignore everything
+**
+
+# Allow files and directories
+!/lib/**
+!/src/**
+!/resources/**
+!/datasets/**
+!./build.xml
