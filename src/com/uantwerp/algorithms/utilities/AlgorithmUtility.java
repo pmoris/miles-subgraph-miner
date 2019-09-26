@@ -62,11 +62,11 @@ public abstract class AlgorithmUtility {
 				}
 			}
 			if (supportcutoffResult > 0) {
-				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper-bound P-value");
+				System.out.println("Subgraph support set at " + supportcutoffResult + " due to upper-bound P-value.");
 			} else {
-				supportcutoffResult = GraphParameters.graph.group.size();//interestingVertices;
+				supportcutoffResult = GraphParameters.graph.group.size(); // number of interesting vertices;
 				System.out.println(
-						"Subgraph support set at " + supportcutoffResult + " for number of interesting vertices\n");
+						"Subgraph support set at " + supportcutoffResult + " ( = the number of interesting vertices).");
 			}
 		}
 		// if the user supplied a support cutoff, keep it

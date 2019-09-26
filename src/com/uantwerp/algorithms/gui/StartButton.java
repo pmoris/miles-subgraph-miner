@@ -19,6 +19,10 @@ public class StartButton implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		try {
+
+			// reset mining state and graph objects in case the run button is pressed again during the same session
+			ParameterConfig.resetVariables();
+
 			ParameterConfig.transformGUI(
 					gui.getTextGraphFile().getText(),
 					gui.getTextLabels().getText(),

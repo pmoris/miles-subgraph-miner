@@ -69,12 +69,12 @@ public class PrintUtility {
 	}
 	
 	public static void printSummary(){
-		System.out.println("Found " + GraphParameters.graph.vertex.size() + " nodes in graph");
-		System.out.println("Of which " + GraphParameters.graph.bgnodes.size()+" are part of the background");
-		System.out.println("Of which " + GraphParameters.graph.group.size()+" were selected as interesting");
-		System.out.println("Of which " + GraphParameters.graph.edgeHash.size()+" have targets");
-		System.out.println("Of which " + GraphParameters.graph.reverseEdgeHash.size()+" are targets");
-		System.out.println("With " + GraphParameters.graph.labelHash.size() + " possible labels");
+		System.out.println(GraphParameters.graph.vertex.size() + " nodes in the network.");
+		System.out.println(GraphParameters.graph.bgnodes.size() + " background nodes.");
+		System.out.println(GraphParameters.graph.group.size() + " nodes of interest.");
+		System.out.println(GraphParameters.graph.edgeHash.size() + " nodes have targets.");
+		System.out.println(GraphParameters.graph.reverseEdgeHash.size() + " nodes are targets.");
+		System.out.println(GraphParameters.graph.labelHash.size() + " unique label(s).");
 	}
 	
 	public static void printHashSetEdges(HashSet<DFSedge> edges){

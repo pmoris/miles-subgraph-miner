@@ -57,7 +57,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionVertexNotFound(String node, String type){
 		try {
-			System.out.println(node + " not in graph, excluded from " + type + " vertices");
+			System.out.println(node + " not found in graph; excluded from " + type + " vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,7 +74,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionNoMatchSourceTarget(String edge){
 		try {
-			System.out.println("Undefined targetid and sourceid in motif "+edge+". Continuing anyway.");
+			System.out.println("Undefined targetid and sourceid in motif " + edge + ". Continuing anyway.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

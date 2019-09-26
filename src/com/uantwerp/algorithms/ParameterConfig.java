@@ -63,14 +63,14 @@ public class ParameterConfig {
 					if (Integer.valueOf(cmd.getOptionValue('m')) >= 1)
 						GraphParameters.maxsize = Integer.valueOf(cmd.getOptionValue('m'));
 					else
-						SubGraphMiningException.exceptionInvalidValue("maxsize");
+						SubGraphMiningException.exceptionInvalidValue("max-size");
 				} catch (NumberFormatException e) {
-					SubGraphMiningException.exceptionInvalidValue("maxsize");
+					SubGraphMiningException.exceptionInvalidValue("max-size");
 				}
 			}
 			else
 				GraphParameters.setDefaultMaxSize();
-			if(cmd.hasOption("singlelabel"))
+			if(cmd.hasOption("single-label"))
 				GraphParameters.singleLabel = 1;
 			else
 				GraphParameters.singleLabel = 0;
@@ -88,20 +88,19 @@ public class ParameterConfig {
 				GraphParameters.nestedpval = 0;
 			if(cmd.hasOption('p')) {
 				try {
-
 					if (Double.valueOf(cmd.getOptionValue('p')) <= 1 && Double.valueOf(cmd.getOptionValue('p')) >= 0)
 						GraphParameters.pvalue = Double.valueOf(cmd.getOptionValue('p'));
 					else
 						SubGraphMiningException.exceptionInvalidValue("alpha");
 				} catch (NumberFormatException e) {
-				SubGraphMiningException.exceptionInvalidValue("alpha");
+					SubGraphMiningException.exceptionInvalidValue("alpha");
 				}
 			}
 			else
 				GraphParameters.setDefaultPValue();
 			if(cmd.hasOption("correction-method"))
 				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method");
-			else
+			else // set bonferroni as the default correction method
 				GraphParameters.correctionMethod = "bonferroni";
 			if(cmd.hasOption("all-pvalues"))
 				GraphParameters.allPValues = 1;
