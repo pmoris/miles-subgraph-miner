@@ -21,9 +21,7 @@ import com.uantwerp.algorithms.utilities.PrintUtility;
 public class SubgraphMining {
 	
 	public static Boolean GUI = false;
-	
 	public static Boolean DEBUG = false;
-	
 	public static Thread current_process = null;
 
 	public static void main(String[] args) {
@@ -78,7 +76,7 @@ public class SubgraphMining {
 			}
 		}
 		finally{
-			PrintUtility.print2LogView("The process was terminated", GUI);
+			PrintUtility.print2LogView("The process was terminated");
 		}
 		
 	}

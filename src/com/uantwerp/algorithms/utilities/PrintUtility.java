@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import com.uantwerp.algorithms.SubgraphMining;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphParameters;
@@ -107,8 +108,8 @@ public class PrintUtility {
 		}
 	}
 	
-	public static void print2LogView(String text, Boolean isGUI) {
-		if(isGUI == false) {
+	public static void print2LogView(String text) {
+		if(SubgraphMining.GUI == false) {
 			System.out.println(text);
 		}
 		else {
