@@ -145,16 +145,16 @@ The following parameters can be selected on the command line:
 - `-g`/`--graph <filepath>` -> Path to a graph or network file.
 - `-l`/`--labels <filepath>` -> Path to a file containing nodes and labels (optional).
 - `-i`/`--interest <filepath>` -> Path to a file containing nodes of interest. For frequent subgraph mining, this argument should be omitted (i.e. all nodes will be considered interesting).
-- `-o`/`--output <filepath>` -> Output text file where the significant motifs are stored. A second visualisation file with the same name and a `.html` extension will also be generated here.
+- `-o`/`--output <filepath>` -> Output file where the significant subgraphs will be stored. A second visualisation file with the same name and a `.html` extension will also be generated here.
 - `-b`/`--background <filepath>` -> Path to a file containing background nodes, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional, but using it makes the interest file mandatory).
-- `-s`/`--support <value>` -> Support threshold the subgraphs must meet (support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, a threshold will be calculated automatically as described in the [original publication](#publication).
+- `-s`/`--support <value>` -> Support threshold the subgraphs must meet in order to prune the search space. The support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, an appropriate threshold will be calculated automatically as described in the [algorithm's original publication](#publication).
 - `-p`/`--alpha <value>` -> Set the significance level (or q-value for FDR) for the hypergeometric tests (default = $0.05$).
-- `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferonni', 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
-- `--all-pvalues` -> Return all motifs and their raw p-values alongside the Bonferroni-corrected values, instead of only those motifs that pass the Bonferroni-adjusted significance level.
-- `-m`/`max-size <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 5).
-- `--singlelabel` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
-- `-u`/`--undirected` -> When present, runs analysis using an undirected configuration, e.g. where `A->B = B->A` and self-loops aren't allowed.
-- `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of the child motif is based on the parent matches.
+- `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferonni' (default), 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
+- `--all-pvalues` -> Return all subgraphs and their raw p-values alongside the adjusted p-values, instead of only those passing the (multiple testing corrected significance level.
+- `-m`/`max-size <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 3).
+- `--single-label` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
+- `-u`/`--undirected` -> Run the analysis using an undirected configuration, i.e. `A->B = B->A` and self-loops aren't allowed.
+- `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of a child subgraph is based on the parent matches.
 - `-a`/`--algorithm <name>` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
 - `-v`/`--verbose` -> Print additional output messages during the analysis.
 - `--statistics <filepath>` -> Store additional memory usage statistics in a file.

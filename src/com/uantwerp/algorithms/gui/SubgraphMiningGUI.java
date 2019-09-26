@@ -573,8 +573,8 @@ public class SubgraphMiningGUI {
 		gbc_comboBox.gridy = 3;
 		panelOptions.add(comboBoxAlgorithm, gbc_comboBox);
 		comboBoxAlgorithm.addItem("base");
-		comboBoxAlgorithm.addItem("gspan");
-		comboBoxAlgorithm.addItem("fsg");
+		comboBoxAlgorithm.addItem("gSpan");
+		comboBoxAlgorithm.addItem("FSG");
 
 //		Advanced options
 		JPanel panelAdvanced = new JPanel();
@@ -612,6 +612,7 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(checkBoxNestedPValue, gbc_checkBoxPValue);
 		
 		checkBoxDebug = new JCheckBox("Debug mode");
+		checkBoxDebug.setToolTipText("Print the full stack trace for debugging purposes.");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
