@@ -6,8 +6,8 @@
 	<property name="build.resources.dir" location="${build.dir}/resources"/>
 	<property name="build.jar.dir" location="${build.dir}/jar"/>
 	<property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/>
-	<property name="test.dir" location="src/com/uantwerp/tests" />
-	<property name="test.report.dir"  value="${build.dir}/junitreport"/>
+	<!-- <property name="test.dir" location="src/com/uantwerp/tests" /> -->
+	<!-- <property name="test.report.dir"  value="${build.dir}/junitreport"/> -->
 
 	<path id="classpath">
 		<fileset dir="lib" includes="*.jar"/>
@@ -43,7 +43,8 @@
 		<delete dir="data"/>
 	</target>
 
-	<target name="junit" depends="jar">
+	<!-- <target name="junit" depends="jar">
+	 	<formatter type="brief" usefile="false"/>
 		<mkdir dir="${test.report.dir}"/>
 		<junit printsummary="yes">
 			<classpath>
@@ -62,8 +63,8 @@
 				<fileset dir="${test.report.dir}" includes="TEST-*.xml"/>
 				<report todir="${test.report.dir}"/>
 		</junitreport>
-	</target>
+	</target> -->
 
-	<target name="all" depends="clean,junit,jar">
+	<target name="all" depends="clean,jar">
 	</target>
 </project>
