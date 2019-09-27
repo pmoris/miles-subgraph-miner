@@ -132,7 +132,7 @@ public class SubgraphMining {
 		if (DEBUG)
 			e.printStackTrace();
 		System.err.println(e.getMessage());
-		System.out.println("\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
+		PrintUtility.print2LogView("\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
 
 		if (!GUI)
 			System.exit(1);	// exit with error code 1

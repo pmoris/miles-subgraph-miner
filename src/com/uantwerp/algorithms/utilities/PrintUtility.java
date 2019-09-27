@@ -15,36 +15,36 @@ import com.uantwerp.algorithms.common.GraphParameters;
 public class PrintUtility {
 
 	public static void printHasMap(HashMap<String,String> hashToPtint){
-		System.out.println("printing new hash");
+		PrintUtility.print2LogView("printing new hash");
 		Iterator<String> it = hashToPtint.keySet().iterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
 			String value = hashToPtint.get(key);
-			System.out.println(key+" "+value);
+			PrintUtility.print2LogView(key+" "+value);
 		}
 	}
 	
 	public static void printHashSet(HashSet<String> hashToPtint){
-		System.out.println("printing new hash");
+		PrintUtility.print2LogView("printing new hash");
 		Iterator<String> it = hashToPtint.iterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
-			System.out.println(key);
+			PrintUtility.print2LogView(key);
 		}
 	}
 	
 	public static void printHasMap2(HashMap<String,Integer> hashToPtint){
-		System.out.println("printing new hash");
+		PrintUtility.print2LogView("printing new hash");
 		Iterator<String> it = hashToPtint.keySet().iterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
 			int value = hashToPtint.get(key);
-			System.out.println(key+" "+value);
+			PrintUtility.print2LogView(key+" "+value);
 		}
 	}
 	
 	public static void printHasMapHashSet(HashMap<String,HashSet<String>> hashToPtint){
-		System.out.println("printing new hash with hasSet");
+		PrintUtility.print2LogView("printing new hash with hasSet");
 		Iterator<String> it = hashToPtint.keySet().iterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
@@ -52,14 +52,14 @@ public class PrintUtility {
 			Iterator<String> itint = value.iterator();
 			while (itint.hasNext()){
 				String valueIntSet = (String) itint.next();
-				System.out.println(key+" "+valueIntSet);
+				PrintUtility.print2LogView(key+" "+valueIntSet);
 			}
 		}
 	}
 	
 	public static void printListString(List<String> list){
 		for (int i=0;i < list.size(); i++){
-			System.out.println(list.get(i));
+			PrintUtility.print2LogView(list.get(i));
 		}
 	}
 	
@@ -67,24 +67,24 @@ public class PrintUtility {
 		Iterator<String> it = hSet.iterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
-			System.out.println(key);
+			PrintUtility.print2LogView(key);
 		}
 	}
 	
 	public static void printSummary(){
-		System.out.println(GraphParameters.graph.vertex.size() + " nodes in the network.");
-		System.out.println(GraphParameters.graph.bgnodes.size() + " background nodes.");
-		System.out.println(GraphParameters.graph.group.size() + " nodes of interest.");
-		System.out.println(GraphParameters.graph.edgeHash.size() + " nodes have targets.");
-		System.out.println(GraphParameters.graph.reverseEdgeHash.size() + " nodes are targets.");
-		System.out.println(GraphParameters.graph.labelHash.size() + " unique label(s).");
+		PrintUtility.print2LogView(GraphParameters.graph.vertex.size() + " nodes in the network.");
+		PrintUtility.print2LogView(GraphParameters.graph.bgnodes.size() + " background nodes.");
+		PrintUtility.print2LogView(GraphParameters.graph.group.size() + " nodes of interest.");
+		PrintUtility.print2LogView(GraphParameters.graph.edgeHash.size() + " nodes have targets.");
+		PrintUtility.print2LogView(GraphParameters.graph.reverseEdgeHash.size() + " nodes are targets.");
+		PrintUtility.print2LogView(GraphParameters.graph.labelHash.size() + " unique label(s).");
 	}
 	
 	public static void printHashSetEdges(HashSet<DFSedge> edges){
 		Iterator<DFSedge> it = edges.iterator();
 		while (it.hasNext()){
 			DFSedge edge = it.next();
-			System.out.println(edge.getSourceId()+" "+edge.getSourceLabel()+" ->"+edge.getTargetId()+" "+edge.getTargetLabel());
+			PrintUtility.print2LogView(edge.getSourceId()+" "+edge.getSourceLabel()+" ->"+edge.getTargetId()+" "+edge.getTargetLabel());
 		}
 	}
 	
@@ -92,22 +92,30 @@ public class PrintUtility {
 		Iterator<DFSedge> it = hashToPtint.keySet().iterator();
 		while (it.hasNext()){
 			DFSedge edge = it.next();
-			System.out.println(edge.getSourceId()+" "+edge.getSourceLabel()+" -> "+edge.getTargetId()+" "+edge.getTargetLabel() + "\t" + hashToPtint.get(edge));
+			PrintUtility.print2LogView(edge.getSourceId()+" "+edge.getSourceLabel()+" -> "+edge.getTargetId()+" "+edge.getTargetLabel() + "\t" + hashToPtint.get(edge));
 		}
 	}
 	
 	public static void printDFScode(DFScode<DFSedge> code){
 		for (int i=0; i<code.size(); i++){
-			System.out.println(code.get(i).getSourceId()+" "+code.get(i).getSourceLabel()+" -> "+code.get(i).getTargetId()+" "+code.get(i).getTargetLabel());
+			PrintUtility.print2LogView(code.get(i).getSourceId()+" "+code.get(i).getSourceLabel()+" -> "+code.get(i).getTargetId()+" "+code.get(i).getTargetLabel());
 		}
 	}
 	
 	public static void printDFScode(List<DFSedge> code){
 		for (int i=0; i<code.size(); i++){
-			System.out.println(code.get(i).getSourceId()+" "+code.get(i).getSourceLabel()+" -> "+code.get(i).getTargetId()+" "+code.get(i).getTargetLabel());
+			PrintUtility.print2LogView(code.get(i).getSourceId()+" "+code.get(i).getSourceLabel()+" -> "+code.get(i).getTargetId()+" "+code.get(i).getTargetLabel());
 		}
 	}
 	
+	
+	/**
+	 * Helper function that checks whether the program is running in GUI or CLI mode.
+	 * When in CLI, it simply prints the output to the stdout using System.out.println().
+	 * In GUI mode, the print statement is run inside a separate runnable class in order
+	 * to allow the main run thread to be cancelled.
+	 * @param String text to print to stdout or log
+	 */
 	public static void print2LogView(String text) {
 		if(SubgraphMining.GUI == false) {
 			System.out.println(text);
@@ -120,7 +128,5 @@ public class PrintUtility {
 	        };
 	        SwingUtilities.invokeLater(runnable);
 		}
-		
 	}
-	
 }

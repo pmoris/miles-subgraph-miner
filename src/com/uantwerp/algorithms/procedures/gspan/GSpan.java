@@ -18,6 +18,7 @@ import com.uantwerp.algorithms.common.History;
 import com.uantwerp.algorithms.common.PDFS;
 import com.uantwerp.algorithms.common.Projection;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
 public abstract class GSpan {
 
@@ -47,7 +48,7 @@ public abstract class GSpan {
 		if (!groupupportcheck(prevHits, projected, minStr)){
 			return;
 		}
-		if (GraphParameters.verbose== 1) System.out.println("Number of projections = " + projected.size());
+		if (GraphParameters.verbose== 1) PrintUtility.print2LogView("Number of projections = " + projected.size());
 		int numVertices = dfsCode.getNumVertices();
 		dfsCode.build_rmpath();
 		List<Integer> rmpath = dfsCode.rmpath;
@@ -131,7 +132,7 @@ public abstract class GSpan {
 		if (!groupupportcheck(prevHits, projected, minStr)){
 			return;
 		}
-		if (GraphParameters.verbose== 1) System.out.println("Number of projections = " + projected.size());
+		if (GraphParameters.verbose== 1) PrintUtility.print2LogView("Number of projections = " + projected.size());
 		int numVertices = dfsCode.getNumVertices();
 		dfsCode.build_rmpath();
 		List<Integer> rmpath = dfsCode.rmpath;
@@ -372,7 +373,7 @@ public abstract class GSpan {
 			MiningState.supportedMotifsDFScode.put(minDfScode, dfsCode.getMinDfsCode()); // Populate DFScode hash map for visualisations
 			double prob = AlgorithmUtility.getProbability(prevHits, GraphParameters.graph.group.size(), totalSupport, groupSupport);
 			if (GraphParameters.verbose == 1)
-				System.out.println(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
+				PrintUtility.print2LogView(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
 			MiningState.supportedMotifsPValues.put(minDfScode, prob);
 			return true;
 		}
@@ -390,10 +391,10 @@ public abstract class GSpan {
 			return false;
 		else{
 			if(minDFScodes.contains(minStr)){
-				if (GraphParameters.verbose == 1) System.out.println(dfsCode.dfsCodeToString()+ " already saved with min: " + minStr);
+				if (GraphParameters.verbose == 1) PrintUtility.print2LogView(dfsCode.dfsCodeToString()+ " already saved with min: " + minStr);
 				return false;
 			}else{
-				if (GraphParameters.verbose == 1) System.out.println(dfsCode.dfsCodeToString() + " saved with min DFS: " + minStr);
+				if (GraphParameters.verbose == 1) PrintUtility.print2LogView(dfsCode.dfsCodeToString() + " saved with min DFS: " + minStr);
 				minDFScodes.add(minStr);
 			}
 			return true;

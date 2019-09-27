@@ -91,21 +91,21 @@ public class AlgorithmFunctionality {
 	}
 	
 //	public void printGraphVariables(){
-//		System.out.println("print graph");
+//		PrintUtility.print2LogView("print graph");
 //		PrintUtility.printHasMapHashSet(GraphParameters.graph.edgeHash);
-//		System.out.println("print reverse graph");
+//		PrintUtility.print2LogView("print reverse graph");
 //		PrintUtility.printHasMapHashSet(GraphParameters.graph.reverseEdgeHash);
-//		System.out.println("print labels");
+//		PrintUtility.print2LogView("print labels");
 //		PrintUtility.printHasMapHashSet(GraphParameters.graph.vertex);
-//		System.out.println("print reverse labels");
+//		PrintUtility.print2LogView("print reverse labels");
 //		PrintUtility.printHasMapHashSet(GraphParameters.graph.reverseVertex);
-//		System.out.println("print possible labels");
+//		PrintUtility.print2LogView("print possible labels");
 //		PrintUtility.printListString(GraphParameters.graph.possibleLabels);
-//		System.out.println("print group, size: " + GraphParameters.graph.group.size());
+//		PrintUtility.print2LogView("print group, size: " + GraphParameters.graph.group.size());
 //		PrintUtility.printHSetString(GraphParameters.graph.group);
-//		System.out.println("print bgnodes");
+//		PrintUtility.print2LogView("print bgnodes");
 //		PrintUtility.printHashSet(GraphParameters.graph.bgnodes);
-//		System.out.println("Label hash");
+//		PrintUtility.print2LogView("Label hash");
 //		PrintUtility.printHasMap2(GraphParameters.graph.labelHash);
 //	}
 
@@ -128,9 +128,9 @@ public class AlgorithmFunctionality {
 			// IO catcher is already present inside writeFile function
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
-				System.out.println("\nSaved output file to " + GraphParameters.output);
+				PrintUtility.print2LogView("\nSaved output file to " + GraphParameters.output);
 			} else {
-				System.out.println("\n" + outputTable.replace(" ", "_"));
+				PrintUtility.print2LogView("\n" + outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js
@@ -142,7 +142,7 @@ public class AlgorithmFunctionality {
 					String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
 					String htmlFilePath = FilenameUtils.removeExtension(GraphParameters.output) + ".html";
 					FileUtility.writeFile(htmlFilePath, htmlVisualisation);
-					System.out.println("Saved visualisation file to " + htmlFilePath);
+					PrintUtility.print2LogView("Saved visualisation file to " + htmlFilePath);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -163,7 +163,7 @@ public class AlgorithmFunctionality {
 			if (!GraphParameters.output.equals("none")){
 				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
 			}else{
-				System.out.println("\n" + outputTable.replace(" ", "_"));
+				PrintUtility.print2LogView("\n" + outputTable.replace(" ", "_"));
 			}
 			
 			// convert motifs to JSON format for cytoscape.js
