@@ -1,9 +1,6 @@
 package com.uantwerp.algorithms;
 
-import java.io.IOException;
 import java.util.Timer;
-
-import org.apache.commons.io.FilenameUtils;
 
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.DFScode;
@@ -14,12 +11,9 @@ import com.uantwerp.algorithms.procedures.base.BuildMotif;
 import com.uantwerp.algorithms.procedures.fsg.FSG;
 import com.uantwerp.algorithms.procedures.gspan.GSpan;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
-import com.uantwerp.algorithms.utilities.FileUtility;
 import com.uantwerp.algorithms.utilities.MultipleTestingCorrection;
 import com.uantwerp.algorithms.utilities.OutputUtility;
 import com.uantwerp.algorithms.utilities.PrintUtility;
-import com.uantwerp.algorithms.visualisation.HTMLCreator;
-import com.uantwerp.algorithms.visualisation.MotifToJsonConversion;
 
 public class AlgorithmFunctionality {
 
@@ -125,30 +119,9 @@ public class AlgorithmFunctionality {
 			// generate table with motifs, freqs and p-values (also stores the number of significant subgraphs after correction)
 			String outputTable = OutputUtility.createTable();
 			
-			// write output file or print to stdout
-			// IO catcher is already present inside writeFile function
-			if (!GraphParameters.output.equals("none")){
-				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
-				System.out.println("\nSaved output file to " + GraphParameters.output);
-			} else {
-				System.out.println("\n" + outputTable.replace(" ", "_"));
-			}
-			
-			// convert motifs to JSON format for cytoscape.js
-			String JSON = MotifToJsonConversion.convertAllMotifs();			
-	
-			// write html visualisation file
-			if (!GraphParameters.output.equals("none")){
-				try {
-					String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
-					String htmlFilePath = FilenameUtils.removeExtension(GraphParameters.output) + ".html";
-					FileUtility.writeFile(htmlFilePath, htmlVisualisation);
-					System.out.println("Saved visualisation file to " + htmlFilePath);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
+			// write output files or print to stdout
+			OutputUtility.writeOutputFiles(outputTable);
+
 			// print summary statistics
 			OutputUtility.printStatistics();
 		}
@@ -157,29 +130,13 @@ public class AlgorithmFunctionality {
 		else {		
 			// print information on which type of subgraphs will be shown (support > threshold)
 //			OutputUtility.preResultStatisticsFrequent();
-			
-			String outputTable = OutputUtility.createTableFrequent();
-			
-			// write output file or print to stdout
-			if (!GraphParameters.output.equals("none")){
-				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
-			}else{
-				System.out.println("\n" + outputTable.replace(" ", "_"));
-			}
-			
-			// convert motifs to JSON format for cytoscape.js
-			String JSON = MotifToJsonConversion.convertAllMotifs();			
 
-			// write html visualisation file
-			if (!GraphParameters.output.equals("none")){
-				try {
-					String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
-					FileUtility.writeFile(FilenameUtils.removeExtension(GraphParameters.output) + ".html", htmlVisualisation);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
+			// generate table with motifs and support values
+			String outputTable = OutputUtility.createTableFrequent();
+
+			// write output files or print to stdout
+			OutputUtility.writeOutputFiles(outputTable);
+
 			// print summary statistics
 			OutputUtility.printStatisticsFrequent();
 		}

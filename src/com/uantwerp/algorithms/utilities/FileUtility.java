@@ -27,7 +27,7 @@ public abstract class FileUtility {
 		return file;
 	}
 	
-	public static void writeFile(String path, String message){
+	public static void writeFile(String path, String message) throws IOException {
 		try {
 			File file = new File(path);
 			file.delete();

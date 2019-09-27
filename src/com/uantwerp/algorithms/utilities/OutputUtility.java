@@ -1,9 +1,14 @@
 package com.uantwerp.algorithms.utilities;
 
+import java.io.IOException;
 import java.util.Iterator;
+
+import org.apache.commons.io.FilenameUtils;
 
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.GraphParameters;
+import com.uantwerp.algorithms.visualisation.HTMLCreator;
+import com.uantwerp.algorithms.visualisation.MotifToJsonConversion;
 
 public class OutputUtility {
 
@@ -86,6 +91,39 @@ public class OutputUtility {
 			message = message + "\n" + key + "\t" + MiningState.supportedMotifsGraphSupport.get(key);
 		}
 		return message;
+	}
+	
+	
+	/**
+	 * Write output file to stdout or output file.
+	 * Generate JSON and write HTML visualisation file.
+	 * @param outputTable
+	 */
+	public static void writeOutputFiles(String outputTable) {
+
+		// if output file is specified, write to it and create a visualsation HTML file
+		if (!GraphParameters.output.equals("none")){
+			try {
+				// write output file
+				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
+				System.out.println("\nSaved output file to " + GraphParameters.output);
+				
+				// convert motifs to JSON format for cytoscape.js
+				String JSON = MotifToJsonConversion.convertAllMotifs();
+				
+				// write HTML visualisation file
+				String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
+				String htmlFilePath = FilenameUtils.removeExtension(GraphParameters.output) + ".html";
+				FileUtility.writeFile(htmlFilePath, htmlVisualisation);
+				System.out.println("Saved visualisation file to " + htmlFilePath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// otherwise print to stdout
+		else {
+			System.out.println("\n" + outputTable.replace(" ", "_"));
+		}
 	}
 	
 	public static void printStatistics(){
