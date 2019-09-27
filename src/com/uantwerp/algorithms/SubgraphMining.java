@@ -15,8 +15,12 @@ import com.uantwerp.algorithms.utilities.PrintUtility;
 
 /** Class in charge of running the process of the algorithm  
 *
+* @author Pieter Moris
+* @author Danh Bui
+* @version 1.0 2019
+* 
 * @author gerito
-* @version 1.0 2016
+* @version 0.1 2016
 */
 public class SubgraphMining {
 	
