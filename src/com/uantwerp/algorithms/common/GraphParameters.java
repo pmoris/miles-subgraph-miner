@@ -26,6 +26,7 @@ public abstract class GraphParameters {
 	public static Graph graph = new Graph();
 	public static String statistics;
 	public static String correctionMethod;
+	public static boolean frequentMining;
 
 	public static void setDefaultMaxSize(){
 		GraphParameters.maxsize = DEFAULTMAXSIZE;

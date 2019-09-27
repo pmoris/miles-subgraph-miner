@@ -40,6 +40,11 @@ public abstract class SubGraphMiningException {
 //			System.exit(1);
 //		} 
 	}
+	
+
+	public static void exceptionNoSupport() {
+		throw new CustomizedUncheckedException("No file of interest was provided, but the frequent subgraph mining mode requires a support threshold to be set.");
+	}
 
 	public static void exceptionWrongAlgorithmChoice(String algorithm){
 //		try {

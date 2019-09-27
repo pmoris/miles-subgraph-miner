@@ -113,8 +113,8 @@ public class AlgorithmFunctionality {
 		
 		// if a file with interesting vertices was provided
 		// evaluates to 0 for both empty or non-existent files
-		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
-		
+//		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
+		if (GraphParameters.frequentMining == false) {
 	//		print information on which type of subgraphs will be shown (all supported with raw p-values or only p <= alpha)
 //			OutputUtility.preResultStatistics();
 			
@@ -152,7 +152,7 @@ public class AlgorithmFunctionality {
 			OutputUtility.printStatistics();
 		}
 
-		// if no interesting vertices were provided
+		// if no interesting vertices were provided = frequent subgraph mode
 		else {		
 			// print information on which type of subgraphs will be shown (support > threshold)
 //			OutputUtility.preResultStatisticsFrequent();
