@@ -331,10 +331,10 @@ public class SubgraphMiningGUI {
 
 //		Define grid for multiple panels
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0};
 		gridBagLayout.columnWeights = new double[]{0.05, 0.2, 0.2, 0.4, 0.05};
 		gridBagLayout.columnWidths = new int[] {10, 100, 100, 200, 10};
-		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200};
+		gridBagLayout.rowHeights = new int[] {200, 200, 75, 200, 0};
 		
 //		Main content panel and scroll bar
 		JPanel pnlMain = new JPanel();
@@ -709,7 +709,7 @@ public class SubgraphMiningGUI {
 		panelReport.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Log", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelReport = new GridBagConstraints();
 		gbc_panelReport.gridwidth = 3;
-		gbc_panelReport.insets = new Insets(0, 0, 0, 5);
+		gbc_panelReport.insets = new Insets(0, 0, 5, 5);
 		gbc_panelReport.fill = GridBagConstraints.BOTH;
 		gbc_panelReport.gridx = 1;
 		gbc_panelReport.gridy = 3;
