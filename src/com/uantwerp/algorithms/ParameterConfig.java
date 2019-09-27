@@ -100,8 +100,8 @@ public class ParameterConfig {
 				GraphParameters.setDefaultPValue();
 			if(cmd.hasOption("correction-method"))
 				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method");
-			else // set bonferroni as the default correction method
-				GraphParameters.correctionMethod = "bonferroni";
+			else // set holm as the default correction method
+				GraphParameters.correctionMethod = "holm";
 			if(cmd.hasOption("all-pvalues"))
 				GraphParameters.allPValues = 1;
 			else
