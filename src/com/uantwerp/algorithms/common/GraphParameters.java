@@ -22,7 +22,6 @@ public abstract class GraphParameters {
 	public static int nestedpval;
 	public static String output;
 	public static String typeAlgorithm;
-	public static String typeResult;
 	public static Graph graph = new Graph();
 	public static String statistics;
 	public static String correctionMethod;
