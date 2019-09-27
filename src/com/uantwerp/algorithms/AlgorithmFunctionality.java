@@ -115,13 +115,14 @@ public class AlgorithmFunctionality {
 		// evaluates to 0 for both empty or non-existent files
 //		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
 		if (GraphParameters.frequentMining == false) {
-	//		print information on which type of subgraphs will be shown (all supported with raw p-values or only p <= alpha)
+
+			// print information on which type of subgraphs will be shown (all supported with raw p-values or only p <= alpha)
 //			OutputUtility.preResultStatistics();
 			
-	//		perform multiple testing correction and store number of significant subgraphs
+			// perform multiple testing correction and store number of significant subgraphs
 			MiningState.supportedMotifsAdjustedPValues = MultipleTestingCorrection.adjustPValues(MiningState.supportedMotifsPValues, GraphParameters.correctionMethod);
 			
-	//		generate table with motifs, freqs and p-values (also stores the number of significant subgraphs after correction)
+			// generate table with motifs, freqs and p-values (also stores the number of significant subgraphs after correction)
 			String outputTable = OutputUtility.createTable();
 			
 			// write output file or print to stdout
