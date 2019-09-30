@@ -11,15 +11,15 @@ import javax.swing.JTextField;
 
 //This action creates and shows a modal open-file dialog.
 public class OpenFileAction implements ActionListener {
-	
+
 	private JTextField textField;
 	private JFrame frame;
-	
+
 	public OpenFileAction(JTextField textField, JFrame frame) {
 		this.textField = textField;
 		this.frame = frame;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
@@ -28,7 +28,7 @@ public class OpenFileAction implements ActionListener {
 		int returnVal = chooser.showOpenDialog(frame);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			String filePath = chooser.getSelectedFile().getAbsolutePath();
-			textField.setText(filePath);	
+			textField.setText(filePath);
 		}
 	}
 };

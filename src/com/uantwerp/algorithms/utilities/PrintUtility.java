@@ -123,7 +123,7 @@ public class PrintUtility {
 		else {
 			Runnable  runnable = new Runnable() {
 	            public void run(){
-	            	System.out.println(text);
+					System.out.println(text);
 	            }
 	        };
 	        SwingUtilities.invokeLater(runnable);

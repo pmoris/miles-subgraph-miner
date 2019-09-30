@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 import com.uantwerp.algorithms.ParameterConfig;
 import com.uantwerp.algorithms.SubgraphMining;
 
-//Methods
-
 //This action creates and shows a modal open-file dialog.
 public class StartButton implements ActionListener {
-	
+
 	private SubgraphMiningGUI gui;
-	
+
 	public StartButton(SubgraphMiningGUI gui) {
 		this.gui = gui;
 	}
@@ -24,7 +22,6 @@ public class StartButton implements ActionListener {
 		}
 		else {
 			try {
-	
 				// reset mining state and graph objects in case the run button is pressed again during the same session
 				ParameterConfig.resetVariables();
 				gui.getTextAreaProgressReport().setText("");
@@ -52,7 +49,6 @@ public class StartButton implements ActionListener {
 				if (SubgraphMining.DEBUG)
 					error.printStackTrace();
 				System.err.println(error.getMessage());
-				
 			}
 		}
 	}
