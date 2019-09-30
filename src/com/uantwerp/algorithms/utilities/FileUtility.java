@@ -7,11 +7,11 @@ import java.io.IOException;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 
 public abstract class FileUtility {
-	
+
 	/**
 	 * 
-	 * @param path	path to an input file
-	 * @return content	a file object of the input file
+	 * @param path path to an input file
+	 * @return content a file object of the input file
 	 * 
 	 * throws an exception when the file is empty or when the path cannot be resolved
 	 */
@@ -26,17 +26,17 @@ public abstract class FileUtility {
 			SubGraphMiningException.exceptionEmptyFile(path);
 		return file;
 	}
-	
-	public static void writeFile(String path, String message){
+
+	public static void writeFile(String path, String message) throws IOException {
 		try {
 			File file = new File(path);
 			file.delete();
-			FileWriter writer =  new FileWriter(path,true);
+			FileWriter writer = new FileWriter(path, true);
 			writer.write(message);
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

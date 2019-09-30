@@ -14,6 +14,7 @@ import org.javatuples.Quintet;
 
 import com.uantwerp.algorithms.procedures.gspan.AuxiliaryFunctions;
 import com.uantwerp.algorithms.procedures.gspan.EdgeFunctions;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
 /*the class is a list of dfs edge*/
 public class DFScode<E> extends ArrayList<E> {
@@ -35,7 +36,7 @@ public class DFScode<E> extends ArrayList<E> {
 	}
 	
 	public DFScode<DFSedge> getMinDfsCode() {
-		if (GraphParameters.verbose == 1 && GraphParameters.undirected == 1) System.out.println(this.dfsCodeToString() + " checking by normal root");
+		if (GraphParameters.verbose == 1 && GraphParameters.undirected == 1) PrintUtility.print2LogView(this.dfsCodeToString() + " checking by normal root");
 		Graph g = this.dfsCodeToGraph();
 		DFScode<DFSedge> DFScode_min = new DFScode<>();
 		HashMap<Quintet<Integer, String, Integer, String, Boolean>, Projection<PDFS>> root = getFirstCentricProjection(g);

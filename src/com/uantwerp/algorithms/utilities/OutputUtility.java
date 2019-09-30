@@ -1,23 +1,27 @@
 package com.uantwerp.algorithms.utilities;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.uantwerp.algorithms.MiningState;
-import com.uantwerp.algorithms.SubgraphMining;
 import com.uantwerp.algorithms.common.GraphParameters;
+import com.uantwerp.algorithms.visualisation.HTMLCreator;
+import com.uantwerp.algorithms.visualisation.MotifToJsonConversion;
 
 public class OutputUtility {
 
 	public static void preResultStatistics() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
-		System.out.println(MiningState.supportedMotifsPValues.size() 
+		PrintUtility.print2LogView(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+		PrintUtility.print2LogView(MiningState.supportedMotifsPValues.size() 
 				+ " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
 		if (GraphParameters.allPValues == 1) {
-			System.out.println("Retrieving all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
+			PrintUtility.print2LogView("Retrieving all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
 					+ GraphParameters.pvalue + "...");
 		} else {
-			System.out.println("Retrieving all subgraphs that meet the adjusted p-value threshold for enrichment (" 
+			PrintUtility.print2LogView("Retrieving all subgraphs that meet the adjusted p-value threshold for enrichment (" 
 					+ GraphParameters.pvalue + ") after " + correctionMethodPrettyPrint() + " correction...");
 			}
 //		}
@@ -25,10 +29,10 @@ public class OutputUtility {
 	
 	public static void preResultStatisticsFrequent() {
 //		if (GraphParameters.verbose == 1) {
-		System.out.println(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
-		System.out.println(MiningState.supportedMotifsPValues.size() 
+		PrintUtility.print2LogView(MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+		PrintUtility.print2LogView(MiningState.supportedMotifsPValues.size() 
 				+ " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
-		System.out.println("No enrichment testing was performed...");
+		PrintUtility.print2LogView("No enrichment testing was performed...");
 //		}
 	}
 
@@ -89,18 +93,51 @@ public class OutputUtility {
 		return message;
 	}
 	
+	
+	/**
+	 * Write output file to stdout or output file.
+	 * Generate JSON and write HTML visualisation file.
+	 * @param outputTable
+	 */
+	public static void writeOutputFiles(String outputTable) {
+
+		// if output file is specified, write to it and create a visualsation HTML file
+		if (!GraphParameters.output.equals("none")){
+			try {
+				// write output file
+				FileUtility.writeFile(GraphParameters.output, outputTable.replace(" ", "_"));
+				PrintUtility.print2LogView("\nSaved output file to " + GraphParameters.output);
+				
+				// convert motifs to JSON format for cytoscape.js
+				String JSON = MotifToJsonConversion.convertAllMotifs();
+				
+				// write HTML visualisation file
+				String htmlVisualisation = HTMLCreator.createHTML(JSON, outputTable);
+				String htmlFilePath = FilenameUtils.removeExtension(GraphParameters.output) + ".html";
+				FileUtility.writeFile(htmlFilePath, htmlVisualisation);
+				PrintUtility.print2LogView("Saved visualisation file to " + htmlFilePath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// otherwise print to stdout
+		else {
+			PrintUtility.print2LogView("\n" + outputTable.replace(" ", "_"));
+		}
+	}
+	
 	public static void printStatistics(){
 //		if (GraphParameters.verbose == 1){
-//			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
-			System.out.println(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").");
-			System.out.println(MiningState.significantAdjustedSubgraphCounter + " are significant after " + correctionMethodPrettyPrint() + " correction.");
+//			PrintUtility.print2LogView("After looking through the graph the following statistics were found:");
+			PrintUtility.print2LogView("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+			PrintUtility.print2LogView(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+			PrintUtility.print2LogView(MiningState.significantRawSubgraphCounter + " are significant before multiple testing correction (alpha = " + GraphParameters.pvalue + ").");
+			PrintUtility.print2LogView(MiningState.significantAdjustedSubgraphCounter + " are significant after " + correctionMethodPrettyPrint() + " correction.");
 			if (GraphParameters.allPValues == 1) {
-				System.out.println("Listing all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
+				PrintUtility.print2LogView("Listing all subgraphs without filtering on the (adjusted) p-value threshold for enrichment: "
 						+ GraphParameters.pvalue + ".");
 			} else {
-				System.out.println("Listing all subgraphs that meet the adjusted p-value threshold for enrichment (" 
+				PrintUtility.print2LogView("Listing all subgraphs that meet the adjusted p-value threshold for enrichment (" 
 						+ GraphParameters.pvalue + ") after " + correctionMethodPrettyPrint() + " correction.");
 				}
 //		}
@@ -108,10 +145,10 @@ public class OutputUtility {
 	
 	public static void printStatisticsFrequent(){
 //		if (GraphParameters.verbose == 1){
-//			System.out.println("After looking through the graph the following statistics were found:");
-			System.out.println("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
-			System.out.println(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
-			System.out.println("No enrichment testing was performed.");
+//			PrintUtility.print2LogView("After looking through the graph the following statistics were found:");
+			PrintUtility.print2LogView("\n" + MiningState.checkedMotifsGroupSupport.size() + " candidate subgraphs were checked.");
+			PrintUtility.print2LogView(MiningState.supportedMotifsGraphSupport.size() + " subgraphs meet the support threshold " + GraphParameters.supportcutoff + ".");
+			PrintUtility.print2LogView("No enrichment testing was performed.");
 //		}
 	}
 	

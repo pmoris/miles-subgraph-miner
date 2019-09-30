@@ -111,6 +111,9 @@ public abstract class HashGeneration {
 		
 		// if the interest file is supplied and not empty
 		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
+			// perform enriched mining method
+			GraphParameters.frequentMining = false;
+			// loop through interesting nodes
 			for (String[] row : parser.iterate(file)) {
 				// Check if nodes of interest occur in graph and add them to HashSet
 				if (GraphParameters.graph.vertex.containsKey(row[0])){
@@ -119,11 +122,18 @@ public abstract class HashGeneration {
 					SubGraphMiningException.exceptionVertexNotFound(row[0], "interesting");
 			}
 		} else {
-			// add all vertices in the graph to both the interest group and background set
-			GraphParameters.graph.group = HashFuctions.returnKeySetHash(GraphParameters.graph.vertex);
-			Iterator<String> it = GraphParameters.graph.vertex.keySet().iterator();
-			while (it.hasNext())
-				GraphParameters.graph.bgnodes.add(it.next());
+			// perform frequent subgraph mining if no interest file is supplied
+			GraphParameters.frequentMining = true;
+			// which also requires a specified support value
+			if (GraphParameters.supportcutoff != 0) {
+				// add all vertices in the graph to both the interest group and background set
+				GraphParameters.graph.group = HashFuctions.returnKeySetHash(GraphParameters.graph.vertex);
+				Iterator<String> it = GraphParameters.graph.vertex.keySet().iterator();
+				while (it.hasNext())
+					GraphParameters.graph.bgnodes.add(it.next());
+			} else {
+				SubGraphMiningException.exceptionNoSupport();
+			}
 		}
 	}
 

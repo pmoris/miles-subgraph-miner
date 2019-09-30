@@ -14,9 +14,9 @@
     - [Quick start](#quick-start)
     - [Input files](#input-files)
     - [Options](#options)
-      - [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool)
     - [Command line options](#command-line-options)
     - [Output](#output)
+    - [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool)
   - [Example datasets](#example-datasets)
     - [Toy dataset](#toy-dataset)
     - [Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination](#gene-ontology-protein-protein-interaction-modules-enriched-in-differentially-expressed-genes-after-hepatitis-b-vaccination)
@@ -40,17 +40,17 @@
 
 ## Purpose of the tool
 
-MULES is a Java tool to discover **subgraphs** (or network motifs) in a graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. For more information on enriched subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it). MULES should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
+MULES is a Java tool to discover **subgraphs** (or network motifs) in a graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. For more information on enriched subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
+
+MULES should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
 
 The networks compatible with MULES can consist of various types of biological entities, such as proteins, genes, metabolites or amino acid residues, whose relation can be described through edges. The nodes of interest can originate from experimental results (e.g. a list of differentially expressed genes in an expression assay) or essentially any other method of delineating a subset within the network based on certain properties (e.g. the target proteins of a small molecule that is being studied). Given such a network and list of interesting nodes, MULES finds motifs that are significantly associated with, or enriched in, the nodes of interest. The retrieved subgraphs can either consist of only a topological structure (e.g. a feed-forward/back loop in a regulatory network) or they can include relevant biological labels (e.g. a self-regulating transcription factor).
 
 Because this enriched subgraph mining approach is not tailored to a specific type of biological network, it can accommodate a broad range of hypotheses by placing the entities under study in a network context and analysing their role within it. In this manner, additional information, in the form of both network structure and labels derived from various annotation sources, becomes available for inference. It can be seen as an extension of more standard enrichment analysis methodologies that integrates network information in order to discover novel and biologically relevant patterns among a subset of the biological entities under study.
 
-The included [example datasets](#examples) are for illustrative and testing purposes.
+Note that MULES can also be used to perform regular frequent subgraph mining instead of searching for enrichment in a specific subset.
 
-This implementation is provided for free and is intended for research purposes. Some bugs may be present within the software and no guarantees are given!
-
-We would appreciate any comments, bug descriptions, suggestions or success stories regarding the tool.
+This implementation is provided for free and is intended for research purposes. Some bugs may be present within the software and no guarantees are given! The included [example datasets](#examples) are for illustrative and testing purposes. We would appreciate any comments, bug descriptions, suggestions or success stories regarding the tool.
 
 ## Getting started
 
@@ -91,7 +91,7 @@ These instructions will give you a copy of the project on your local machine for
       2 4
       5 4
 
-- **Nodes of interest**: a text file listing the names of the nodes of interest, one node per line.
+- **Nodes of interest**: a text file listing the names of the nodes of interest, one node per line. If no such file is provided, a regular frequent subgraph mining analysis will be performed.
 
       2
       5
@@ -116,26 +116,18 @@ These instructions will give you a copy of the project on your local machine for
 
 Several analysis options can be selected:
 
-- The **support** threshold can be manually set or left blank, in which case an appropriate threshold will be selected automatically. In brief, a value will be selected that prunes the search space in order to speed up the analysis, by pruning subgraphs that could never be significantly enriched due to a too low frequency in the interesting subset. For the derivation of the threshold value, refer to the [original publication](#publication). Alternatively, a value could be manually specified in order to be more stringent and force subgraphs to occur at least $x$ amount of times among the interesting set of nodes. For example, by setting the support to the number of nodes of interest, only subgraphs that are common to *all nodes of interest* will be returned. In case an unmanageable number of subgraphs are returned (several thousands), making the support threshold more stringent is a recommended strategy (also see the nested p-value mode). Also see [Orthologous genes in prokaryotic transcription regulation networks](#orthologous-genes-in-prokaryotic-transcription-regulation-networks).
-- The **significance** level for the statistical testing ( = p-value cut-off before multiple testing correction), defaults to $0.05$.
-- The **maximum size** of subgraphs, expressed in the number of nodes it contains. We recommend a subgraph size of three as a balanced starting point for most types of graphs, because of the large effect on  runtime and interpretability. The higher the number of subgraphs considered, the longer the analysis will take and the more stringent the multiple testing correction will have to be.
+- The **significance** level &alpha; used for the enrichment tests ( = p-value cut-off before multiple testing correction), defaults to $0.05$.
+- A **multiple testing correction** method can be chosen from the following options: bonferroni, [Holm]( https://www.jstor.org/stable/4615733 ) (default), [Benjamini-Hochberg](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_hochberg1995.pdf) FDR or [Benjamini-Yekutieli](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_yekutieli_ANNSTAT2001.pdf) FDR. The former two methods guarantee that the family-wise error rate (FWER) is less than the significance level &alpha; (Holm being uniformly more powerful), whereas the latter two control the number of false positives among all discoveries (= subgraph patterns deemed enriched by the hypergeometric tests) at the level &alpha; (sometimes referred to as a q-value in this context). For more information on these controlling procedures we refer to the Wikipedia pages on [FWER](https://en.wikipedia.org/wiki/Family-wise_error_rate) and [FDR](https://en.wikipedia.org/wiki/False_discovery_rate#Controlling_procedures) and the original publications.
+- A **nested p-value** mode, in which the threshold for significance of a subgraph grows increasingly more stringent if one of its parent subgraphs (i.e. "1-2" is a parent of "1-2, 1-3") has already been found, by basing its enrichment test on the frequency of the parent subgraph instead of the entire graph. This is a useful method to reduce the total number of returned subgraphs, specifically when a number of significant parent subgraphs have a large number of child subgraphs that do not differ substantially from their parent subgraph in terms of the strength of their association to the interesting nodes (i.e. which are all more or less equally enriched). Also see the [example datasets](#example-datasets).
+- Rather than only storing the subgraphs that meet the multiple testing corrected significance threshold, all subgraphs that meet the support threshold can be returned via the **all p-values** option. Both the raw and adjusted p-values will be stored.
+- The **maximum size** of the subgraphs, expressed in the number of nodes they contain. We recommend a subgraph size of 3 as a balanced starting point for most types of graphs, because of the large effect on runtime and interpretability. Also note that the higher the number of subgraphs that are considered, the longer the analysis will take and the more stringent the multiple testing correction will have to be.
 - A **single label** mode for graphs where each node has exactly one label (e.g. for molecular structures encoded as graphs).
-- An **undirected** mode that does not consider directionality of edges.
-- A **nested p-value** mode, in which the threshold for significance of a subgraph grows increasingly more stringent if one of its parent subgraphs (i.e. "1-2" is a parent of "1-2, 1-3") has already been found, by basing its enrichment test on the frequency of the parent subgraph instead of the entire graph. This is another useful method to reduce the total number of returned subgraphs, specifically when this is caused by a significant parent subgraph that has a large number of child subgraphs that do not differ substantially from the parent subgraph in terms of the strength of its association to the interesting nodes. Also see the [example datasets](#example-datasets).
+- An **undirected** mode that does not consider the directionality of edges.
 - The type of subgraph discovery **algorithm**: `base`, `gSpan` and `fsg` (experimental). The `base` algorithm (described in the [original publication](#publication)) is recommended for most scenarios as it provides a good balance of speed and memory efficiency in our tests.
-- Rather than only storing the subgraphs that meet the bonferroni-corrected significance threshold, all subgraphs that meet the support threshold can be returned via the **all p-values** option.
 - The **background** set allows for the comparison of the association between a subgraph and the nodes of interest against another specified set of nodes, rather than against the entire network. For example, this can be used to compare a set of differentially expressed transcription factors (the group of interest) against either all proteins in a protein-protein interaction network or to limit it to just the set of all transcription factors in the network. This allows researchers to infer properties of the set of interest that are more common in the set of interest in comparison to the general collection of proteins in an organism, versus the more restricted question: are the selected transcription factors different from transcription factors in general in this organism.
+- The **support** threshold which is used to prune the search space can be manually set or left blank, in which case an appropriate threshold will be selected automatically. In brief, a conservative lower bound will be selected that speeds up the analysis by pruning subgraphs that could never be significantly enriched due to a too low frequency in the interesting subset. For the derivation of the threshold value, refer to the [original publication](#publication). Alternatively, a value could be manually specified in order to be more stringent and force subgraphs to occur at least $x$ amount of times among the interesting set of nodes. For example, by setting the support to the number of nodes of interest, only subgraphs that are common to *all nodes of interest* will be returned. In case an unmanageable number of subgraphs are returned (several thousands), making the support threshold more stringent is a recommended strategy (alongside the nested p-value mode). Also see the following example: [Orthologous genes in prokaryotic transcription regulation networks](#orthologous-genes-in-prokaryotic-transcription-regulation-networks).
 
-For further information about these options, please consult the [command line section](#command-line-options) below.
-
-#### MULES as a GO/pathway enrichment tool
-
-MULES can be used as an alternative to traditional GO/pathway enrichment analysis tools whenever network context is available. By overlaying this topology information on top of the annotations, more information becomes available for delineating patterns that are associated with the group of interest. Here we list a few useful things to consider when using this approach for GO terms specifically:
-
-- Gene ontology labels are available in the form of gene association files (`.gaf`) from [https://www.ebi.ac.uk/GOA/downloads](https://www.ebi.ac.uk/GOA/downloads)
-- It is recommended to remap the terms to reduce the total number of subgraphs. This can be done by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). Alternatively, a specific term of interest could be selected (e.g. immune system process) and only terms that can be remapped to its direct descendants could be retained (and remapped).
-This is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. metabolic process versus primary metabolic process), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
-Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
+For more information about these options, please consult the [command line section](#command-line-options) below.
 
 ### Command line options
 
@@ -147,15 +139,15 @@ The following parameters can be selected on the command line:
 - `-i`/`--interest <filepath>` -> Path to a file containing nodes of interest. For frequent subgraph mining, this argument should be omitted (i.e. all nodes will be considered interesting).
 - `-o`/`--output <filepath>` -> Output file where the significant subgraphs will be stored. A second visualisation file with the same name and a `.html` extension will also be generated here.
 - `-b`/`--background <filepath>` -> Path to a file containing background nodes, a pre-selected reduced subset of the graph to which the selected nodes are compared (optional, but using it makes the interest file mandatory).
-- `-s`/`--support <value>` -> Support threshold the subgraphs must meet in order to prune the search space. The support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, an appropriate threshold will be calculated automatically as described in the [algorithm's original publication](#publication).
+- `-s`/`--support <value>` -> Support threshold the subgraphs must meet in order to prune the search space. The support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, an appropriate threshold will be calculated automatically as described in the [algorithm's original publication](#publication). However, for frequent subgraph mining a value must be set explicitly.
 - `-p`/`--alpha <value>` -> Set the significance level (or q-value for FDR) for the hypergeometric tests (default = $0.05$).
-- `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferonni' (default), 'holm', 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
-- `--all-pvalues` -> Return all subgraphs and their raw p-values alongside the adjusted p-values, instead of only those passing the (multiple testing corrected significance level.
+- `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferroni', 'holm' (default), 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
+- `--all-pvalues` -> Return all subgraphs and their raw p-values alongside the adjusted p-values, instead of only those passing the multiple testing corrected significance level.
 - `-m`/`max-size <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 3).
 - `--single-label` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 - `-u`/`--undirected` -> Run the analysis using an undirected configuration, i.e. `A->B = B->A` and self-loops aren't allowed.
 - `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of a child subgraph is based on the parent matches.
-- `-a`/`--algorithm <name>` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
+- `-a`/`--algorithm <name>` -> The subgraph mining algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
 - `-v`/`--verbose` -> Print additional output messages during the analysis.
 - `--statistics <filepath>` -> Store additional memory usage statistics in a file.
 - `--debug` -> Print the full stack trace for debugging purposes.
@@ -175,6 +167,15 @@ The output is provided in both a tab-separated text file and an interactive `cyt
 | 2GLY-1GLU           | 30            | 301        | 3.9013929550490746E-23 |
 | 2THR-1ASP           | 28            | 154        | 4.4049029924853627E-29 |
 | 1ASP-2ILE,3THR-2ILE | 33            | 78         | 4.532207930640488E-48  |
+
+### MULES as a GO/pathway enrichment tool
+
+MULES can be used as an alternative to traditional GO/pathway enrichment analysis tools whenever network context is available. By overlaying this topology information on top of the annotations, more information becomes available for delineating patterns that are associated with the group of interest. Here we list a few useful things to consider when using this approach for GO terms specifically:
+
+- Gene ontology labels are available in the form of gene association files (`.gaf`) from [https://www.ebi.ac.uk/GOA/downloads](https://www.ebi.ac.uk/GOA/downloads)
+- It is recommended to remap the terms to reduce the total number of subgraphs. This can be done by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). Alternatively, a specific term of interest could be selected (e.g. immune system process) and only terms that can be remapped to its direct descendants could be retained (and remapped).
+This is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. metabolic process versus primary metabolic process), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
+Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
 
 ## Example datasets
 
@@ -309,7 +310,7 @@ The null hypothesis is then defined as there being no association between a vert
 
 #### Multiple testing correction
 
-Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ _S_ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed, which retains the desired family-wise error rate by testing each individual hypothesis at a significance level of &alpha;/_m_. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested.
+Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ _S_ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed by default, which retains the desired family-wise error rate (FWER) by testing each individual hypothesis at a significance level of &alpha;/_m_. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested. MULES also provides support for the Holm procedure, which also controls the FWER rate, but is uniformly more powerful, and two false discovery rate controlling procedures ([Benjamini-Hochberg](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_hochberg1995.pdf) and [Benjamini-Yekutieli](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_yekutieli_ANNSTAT2001.pdf).)
 
 ## History of the algorithm
 
