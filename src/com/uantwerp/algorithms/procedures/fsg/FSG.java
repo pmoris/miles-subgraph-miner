@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Timer;
 
 import org.javatuples.Quintet;
 import org.apache.commons.lang3.SerializationUtils;
 
+import com.uantwerp.algorithms.BasicRepresentation;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.Edge;
 import com.uantwerp.algorithms.common.Graph;
 import com.uantwerp.algorithms.common.GraphParameters;
+import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 import com.uantwerp.algorithms.procedures.base.MatchSubgraph;
 import com.uantwerp.algorithms.utilities.HashFuctions;
 
 
-public class FSG {
+public class FSG extends BasicRepresentation{
 	static HashMap<String, List<HashMap<Integer, String>>> root = new HashMap<>();	
 	static HashMap<String, String> codeCanonical = new HashMap<>();
 	static HashMap<String, DFScode<DFSedge>> canCodeDFSCode = new HashMap<>();
@@ -34,10 +37,9 @@ public class FSG {
 	private HashMap<String, Graph> canonicalToGraphs = new HashMap<>();
 	
 	
-	
-	public FSG() {
-		super();
-	}		
+	public FSG(Timer t, SubgraphMiningGUI mainThread) {
+		super(t, mainThread);
+	}
 	
 	private void transformToGraphs(){
 		for (String code: codeDFSRep.keySet()){
@@ -49,14 +51,21 @@ public class FSG {
 		}
 	}
 	
-	public void fsg(){
-		AuxFSG.oneEdgeMotifs();
-		AuxFSG.generateTwoFirstEdges();
-		transformToGraphs();
+	public void doAnalysis(){
+		if (!Thread.interrupted())
+			AuxFSG.oneEdgeMotifs();
+		
+		if (!Thread.interrupted())
+			AuxFSG.generateTwoFirstEdges();
+		
+		if (!Thread.interrupted())
+			transformToGraphs();
+		
 		resetVariables();
+		
 		int k = 3;
 		boolean candidatesActive = true;
-		while(candidatesActive){	
+		while(candidatesActive && !Thread.interrupted()){	
 			HashMap<Graph, HashSet<String>> candidates = fsg_gen(frequentGraphs.get(k-1));
 			if (candidates.isEmpty())
 				candidatesActive = false;

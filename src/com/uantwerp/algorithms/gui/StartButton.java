@@ -21,7 +21,6 @@ public class StartButton implements ActionListener {
 		String task_name = this.gui.getRunButton().getText();
 		if (task_name == "Stop Analysis") {
 			SubgraphMining.stopProcess();
-			this.gui.updateGUI("stop");
 		}
 		else {
 			try {

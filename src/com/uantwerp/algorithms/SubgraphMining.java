@@ -10,7 +10,10 @@ import org.apache.commons.cli.Options;
 
 import com.uantwerp.algorithms.Efficiency.VariablesTimer;
 import com.uantwerp.algorithms.common.GraphParameters;
+import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
+import com.uantwerp.algorithms.procedures.fsg.FSG;
+import com.uantwerp.algorithms.procedures.gspan.GSpan;
 import com.uantwerp.algorithms.utilities.PrintUtility;
 
 /** Class in charge of running the process of the algorithm  
@@ -74,41 +77,28 @@ public class SubgraphMining {
 	 * Stop the current analysis process (if yes)
 	 */
 	public static void stopProcess() {
-		try {
-			if (SubgraphMining.current_process != null && SubgraphMining.current_process.isAlive()) {
-				SubgraphMining.current_process.interrupt();
-			}
+		if (SubgraphMining.current_process  != null && SubgraphMining.current_process.isAlive()) {
+			System.out.println("The analysis process is terminating...");
+			SubgraphMining.current_process.interrupt();
 		}
-		finally{
-			PrintUtility.print2LogView("The process was terminated");
-		}
-		
 	}
 	
 	public static void runProcesses(SubgraphMiningGUI gui){
 		VariablesTimer.initializeVariable();
 		Timer t1 = new Timer();
-		//Thread thread1 = new Thread() {
-		SubgraphMining.current_process = new Thread() {
-		    public void run() {
-		    	try {
-		    		if (gui != null)
-		    			gui.updateGUI("start");
-		    		
-			        new AlgorithmFunctionality().mainProcedure(t1);
-			     
-		    	}catch (Exception e) {
-		    		exceptionBehaviour(e);
-		    	} finally {
-		    		
-		    		if (VariablesTimer.stateFinish)
-						VariablesTimer.writeResults(GraphParameters.statistics);
-		    		
-		    		if (gui != null)
-		    			gui.updateGUI("stop");
-		    	}
-		    }
-		};
+		
+		SubgraphMining.current_process = null;
+		
+		if (GraphParameters.typeAlgorithm.toLowerCase().equals("base")){
+			SubgraphMining.current_process = new NaivePresentation(t1, gui);
+		}else if (GraphParameters.typeAlgorithm.toLowerCase().equals("gspan")) {
+			SubgraphMining.current_process = new GSpan(t1, gui);
+		}else if (GraphParameters.typeAlgorithm.toLowerCase().equals("fsg")) {
+			SubgraphMining.current_process = new FSG(t1, gui);
+		}else {
+			SubGraphMiningException.exceptionWrongAlgorithmChoice(GraphParameters.typeAlgorithm);
+		}
+		
 		if (!GraphParameters.statistics.equals("")){
 			t1.scheduleAtFixedRate(new TimerTask() {
 		        @Override
@@ -121,15 +111,10 @@ public class SubgraphMining {
 		         }
 			 },1000,1000);
 		}
-		SubgraphMining.current_process.start();
-		/*
-		try {
-			SubgraphMining.current_process.join();
-			if (VariablesTimer.stateFinish)
-				VariablesTimer.writeResults(GraphParameters.statistics);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
+		
+		if (SubgraphMining.current_process != null) {
+			SubgraphMining.current_process.start();
+		}
 	}
 
 	public static void exceptionBehaviour(Exception e) {
