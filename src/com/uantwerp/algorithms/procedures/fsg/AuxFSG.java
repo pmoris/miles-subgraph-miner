@@ -16,6 +16,7 @@ import com.uantwerp.algorithms.procedures.gspan.AuxiliaryFunctions;
 import com.uantwerp.algorithms.procedures.gspan.EdgeFunctions;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.HashFuctions;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
 public abstract class AuxFSG {
 	
@@ -268,7 +269,7 @@ public abstract class AuxFSG {
 			MiningState.supportedMotifsGraphSupport.put(canonicalCode, support.size());
 			double prob = AlgorithmUtility.getProbability(0, GraphParameters.graph.group.size(), support.size(), groupSupport);
 			if (GraphParameters.verbose == 1)
-				System.out.println(canonicalCode + "\t" + groupSupport + "\t" + support.size() + "\t" + prob);
+				PrintUtility.print2LogView(canonicalCode + "\t" + groupSupport + "\t" + support.size() + "\t" + prob);
 			MiningState.supportedMotifsPValues.put(canonicalCode, prob);
 		}
 	}

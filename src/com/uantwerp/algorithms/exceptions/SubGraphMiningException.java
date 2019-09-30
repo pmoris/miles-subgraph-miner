@@ -1,5 +1,7 @@
 package com.uantwerp.algorithms.exceptions;
 
+import com.uantwerp.algorithms.utilities.PrintUtility;
+
 public abstract class SubGraphMiningException {
 	
 	public static void exceptionEmptyFile(String nameFile){
@@ -17,8 +19,8 @@ public abstract class SubGraphMiningException {
 //			throw new Exception(e);
 //		} catch (Exception message) {
 //			message.printStackTrace();
-//			System.out.println("\nThe file " + filepath + " could not be found.");
-//			System.out.println("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
+//			PrintUtility.print2LogView("\nThe file " + filepath + " could not be found.");
+//			PrintUtility.print2LogView("Use the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
 //			System.exit(1);	
 //		}
 	}
@@ -62,7 +64,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionVertexNotFound(String node, String type){
 		try {
-			System.out.println(node + " not found in graph; excluded from " + type + " vertices");
+			PrintUtility.print2LogView(node + " not found in graph; excluded from " + type + " vertices");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,7 +81,7 @@ public abstract class SubGraphMiningException {
 	
 	public static void exceptionNoMatchSourceTarget(String edge){
 		try {
-			System.out.println("Undefined targetid and sourceid in motif " + edge + ". Continuing anyway.");
+			PrintUtility.print2LogView("Undefined targetid and sourceid in motif " + edge + ". Continuing anyway.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
