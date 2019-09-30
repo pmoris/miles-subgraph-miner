@@ -32,17 +32,16 @@ public class SubgraphMining {
 		options.addOption("l", "labels", true, "Path to a file containing nodes and labels (optional)");
 		options.addOption("i", "interest", true, "Path to a file containing nodes of interest (omit it for frequent subgraph mining)");
 		options.addOption("b", "background", true, "Path to a file containing background nodes for the enrichment test (optional)");
-		options.addOption("o", "output", true, "Output file");
+		options.addOption("o", "output", true, "Output file to store the results. A second visualisation file with the same name and a `.html` extension will also be generated here.");
 		options.addOption("s", "support", true, "Specify a custom support threshold (default = automatic calculation)");
 		options.addOption("p", "alpha", true, "Significance level (or q-value for FDR) for the hypergeometric tests (default = 0.05)");
-		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: 'bonferroni', 'holm' (default), 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli)");
-		options.addOption(null, "all-pvalues", false, "Return all subgraphs, instead of"
-				+ "only those passing the (multiple testing corrected) significance level");
+		options.addOption("c", "correction-method", true, "Multiple testing correction method to use: \"bonferroni\", \"holm\" (default), \"BH\" (Benjamini-Hochberg) or \"BY\" (Benjamini-Yekutieli)");
+		options.addOption(null, "all-pvalues", false, "Return all subgraphs, instead of only those passing the (multiple testing corrected) significance level");
 		options.addOption("m", "max-size", true, "Maximum number of vertices allowed in the subgraph patterns (default = 3)");
 		options.addOption(null, "single-label", false, "Variant where each node has exactly one label");
 		options.addOption("u", "undirected", false, "Undirected option where A->B = B->A and self-loops aren't allowed");	
 		options.addOption("n", "nested-pvalue", false, "Variant where the significance of the child subgraph is based on the parent matches");
-		options.addOption("a", "algorithm", true, "The type of algorithm to run the signficant subgraph mining, the options are \"base\", \"gspan\" and \"apriori\"");
+		options.addOption("a", "algorithm", true, "The type of subgraph mining algorithm: the options are \"base\", \"gspan\" and \"fsg\"");
 		options.addOption("v", "verbose", false, "Print additional intermediary output");	
 		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");
 		options.addOption(null, "debug", false, "Print the full stack trace for debugging purposes");

@@ -142,12 +142,12 @@ The following parameters can be selected on the command line:
 - `-s`/`--support <value>` -> Support threshold the subgraphs must meet in order to prune the search space. The support is defined as the number of instances of the subgraph among the interesting nodes or equivalently the number of valid source vertices in the selected subset). If this option is omitted, an appropriate threshold will be calculated automatically as described in the [algorithm's original publication](#publication). However, for frequent subgraph mining a value must be set explicitly.
 - `-p`/`--alpha <value>` -> Set the significance level (or q-value for FDR) for the hypergeometric tests (default = $0.05$).
 - `-c`/`--correction-method` -> Multiple testing correction method to use: 'bonferroni', 'holm' (default), 'BH' (Benjamini-Hochberg) or 'BY' (Benjamini-Yekutieli).
-- `--all-pvalues` -> Return all subgraphs and their raw p-values alongside the adjusted p-values, instead of only those passing the (multiple testing corrected significance level.
+- `--all-pvalues` -> Return all subgraphs and their raw p-values alongside the adjusted p-values, instead of only those passing the multiple testing corrected significance level.
 - `-m`/`max-size <value>` -> Maximum number of vertices allowed in the subgraph patterns (default = 3).
 - `--single-label` -> Perform a single label run. Use this when all nodes in the network have exactly one label, e.g. for molecular structures encoded as graphs.
 - `-u`/`--undirected` -> Run the analysis using an undirected configuration, i.e. `A->B = B->A` and self-loops aren't allowed.
 - `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of a child subgraph is based on the parent matches.
-- `-a`/`--algorithm <name>` -> The algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
+- `-a`/`--algorithm <name>` -> The subgraph mining algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
 - `-v`/`--verbose` -> Print additional output messages during the analysis.
 - `--statistics <filepath>` -> Store additional memory usage statistics in a file.
 - `--debug` -> Print the full stack trace for debugging purposes.
