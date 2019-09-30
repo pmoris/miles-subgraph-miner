@@ -99,7 +99,7 @@ public class ParameterConfig {
 			else
 				GraphParameters.setDefaultPValue();
 			if(cmd.hasOption("correction-method"))
-				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method");
+				GraphParameters.correctionMethod = cmd.getOptionValue("correction-method").toLowerCase();
 			else // set holm as the default correction method
 				GraphParameters.correctionMethod = "holm";
 			if(cmd.hasOption("all-pvalues"))
@@ -116,7 +116,7 @@ public class ParameterConfig {
 			else
 				GraphParameters.output = "none";
 			if (cmd.hasOption('a'))
-				GraphParameters.typeAlgorithm = cmd.getOptionValue('a');
+				GraphParameters.typeAlgorithm = cmd.getOptionValue('a').toLowerCase();
 			else
 				GraphParameters.typeAlgorithm = "base";
 			/****************************************************************************/
@@ -232,7 +232,7 @@ public class ParameterConfig {
 		}
 		else
 			GraphParameters.setDefaultPValue();
-		GraphParameters.correctionMethod = correctionMethod;
+		GraphParameters.correctionMethod = correctionMethod.toLowerCase();
 		if(allPValues)
 			GraphParameters.allPValues = 1;
 		else
@@ -246,7 +246,7 @@ public class ParameterConfig {
 			}
 		else
 			GraphParameters.output = "none";
-		GraphParameters.typeAlgorithm = algorithm;
+		GraphParameters.typeAlgorithm = algorithm.toLowerCase();
 	}
 
 }
