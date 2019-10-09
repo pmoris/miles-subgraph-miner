@@ -75,6 +75,44 @@ These instructions will give you a copy of the project on your local machine for
   - [Apache Ant](http://ant.apache.org/): `ant all`.
   - Or an IDE such as Eclipse (don't forget to add the external jar libraries in the `lib` directory and JUnit 5 to the classpath).
 
+### Docker
+
+A Dockerized version of MULES is also available.
+
+To build the image:
+
+```
+# Download or clone the repository
+git clone https://github.com/pmoris/mules-subgraph-miner.git && cd mules-subgraph-miner
+# build the image locally (default user)
+docker build -f docker/Dockerfile -t mules .
+```
+
+To run an analysis, simply append the desired command line arguments to the `docker run` command:
+
+```
+docker run --rm mules \
+-graph datasets/example/example_graph.txt \
+--labels datasets/example/example_labels.txt \
+--interest datasets/example/example_vertexset.txt
+```
+
+To access input data on the host machine or to export the results of the analysis to an output file, a bind mount can be specified as follows:
+
+```
+docker run --rm \
+-v /home/user/project/:/data \
+mules \
+--graph /data/input-graph.txt \
+--labels /data/node-labels.txt \
+--interest /data/interesting-nodes.txt \
+--output /data/subgraph-output.txt
+```
+
+The above statement creates a mapping between the host directory `/home/user/project/` and a directory located at `/data` inside the container. When supplying the names of input and output files, their path should be described relative to this directory inside the container, i.e. placing a file named `input-graph.txt` inside `/home/user/project/` will make it accessible at `/data/input-graph.txt` inside the docker container.
+
+Note that, by default, the tool runs as a the root user inside the container. On some systems this could lead to permission issues when trying to access the output files. To circumvent this issue, the docker container should be run with an additional flag that specifies the UID of the host user: `--user="$(id -u):$(id -g)"`.
+
 ## How to use MULES
 
 ### Quick start
