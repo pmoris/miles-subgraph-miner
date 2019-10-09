@@ -178,6 +178,17 @@ MULES can be used as an alternative to traditional GO/pathway enrichment analysi
 - It is recommended to either remap the terms to reduce the total number of subgraphs or to limit the annotations to a specific (sub-)category based on the context of the analysis and prior knowledge. The former can be achieved by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). The latter requires, a specific term of interest to be selected (e.g. immune system process) and only its direct descendants could be retained (and potentially also remapped).
 Remapping is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. `metabolic process` versus `primary metabolic process`), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
 Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
+In short, these methods will result in a smaller, and more focused, set of labels, which should alleviate some of the combinatorial issues plaguing larger subgraph sizes.
+
+#### Generating genes of interest files from a DESeq2 analysis
+
+If the nodes of interest are the differentially expressed genes detected by DESeq2 in R, the following code snippet can be used to export the results to a csv file that can be read by MULES.
+
+
+    dds <- DESeq(dds)
+    res <- results(dds, alpha=0.05)
+
+    write.table(x, file="genes_of_interest.csv", row.names=FALSE, quote=FALSE, col.names=FALSE)
 
 ## Example datasets
 
