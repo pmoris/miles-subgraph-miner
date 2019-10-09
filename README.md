@@ -6,10 +6,11 @@
 
 - [MULES - Mining (Un)Labeled Enriched Subgraphs](#mules-mining-unlabeled-enriched-subgraphs)
   - [Purpose of the tool](#purpose-of-the-tool)
-  - [Getting started](#getting-started)
+  - [Installation](#installation)
     - [Prerequisites](#prerequisites)
-    - [Setup](#setup)
+    - [Local executable](#local-executable)
     - [Compiling from source](#compiling-from-source)
+    - [Docker](#docker)
   - [How to use MULES](#how-to-use-mules)
     - [Quick start](#quick-start)
     - [Input files](#input-files)
@@ -17,6 +18,7 @@
     - [Command line options](#command-line-options)
     - [Output](#output)
     - [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool)
+      - [Generating genes of interest file from a DESeq2 analysis](#generating-genes-of-interest-file-from-a-deseq2-analysis)
   - [Example datasets](#example-datasets)
     - [Toy dataset](#toy-dataset)
     - [Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination](#gene-ontology-protein-protein-interaction-modules-enriched-in-differentially-expressed-genes-after-hepatitis-b-vaccination)
@@ -52,17 +54,17 @@ Note that MULES can also be used to perform regular frequent subgraph mining ins
 
 This implementation is provided for free and is intended for research purposes. Some bugs may be present within the software and no guarantees are given! The included [example datasets](#examples) are for illustrative and testing purposes. We would appreciate any comments, bug descriptions, suggestions or success stories regarding the tool.
 
-## Getting started
+## Installation
 
 ### Prerequisites
 
 The standard JAR version of MULES requires Java version 8 or higher. Installation instructions for various operating systems can be found on the [Java website](https://www.java.com/en/download/help/download_options.xml).
 
-### Setup
+### Local executable
 
 The latest version of the runnable JAR file is available from our [releases page](https://github.com/pmoris/subgraph-miner/releases).
 
-MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described below.
+MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#how-to-use-mules).
 
 ### Compiling from source
 
@@ -173,8 +175,8 @@ The output is provided in both a tab-separated text file and an interactive `cyt
 MULES can be used as an alternative to traditional GO/pathway enrichment analysis tools whenever network context is available. By overlaying this topology information on top of the annotations, more information becomes available for delineating patterns that are associated with the group of interest. Here we list a few useful things to consider when using this approach for GO terms specifically:
 
 - Gene ontology labels are available in the form of gene association files (`.gaf`) from [https://www.ebi.ac.uk/GOA/downloads](https://www.ebi.ac.uk/GOA/downloads)
-- It is recommended to remap the terms to reduce the total number of subgraphs. This can be done by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). Alternatively, a specific term of interest could be selected (e.g. immune system process) and only terms that can be remapped to its direct descendants could be retained (and remapped).
-This is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. metabolic process versus primary metabolic process), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
+- It is recommended to either remap the terms to reduce the total number of subgraphs or to limit the annotations to a specific (sub-)category based on the context of the analysis and prior knowledge. The former can be achieved by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). The latter requires, a specific term of interest to be selected (e.g. immune system process) and only its direct descendants could be retained (and potentially also remapped).
+Remapping is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. `metabolic process` versus `primary metabolic process`), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
 Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
 
 ## Example datasets
@@ -190,7 +192,7 @@ Four example datasets are provided along with this project in the folder dataset
 ### Gene ontology protein-protein interaction modules enriched in differentially expressed genes after Hepatitis B vaccination
 
 - **Graph:** protein-protein interactions collected from [IntAct](https://www.ebi.ac.uk/intact/downloads;jsessionid=A54FE4852854D1E07AB0AE10A2C012CF).
-- **Background:** human proteins whose underlying genes were measured in an RNASeq experiment.
+- **Background:** human proteins whose underlying genes were measured in an RNA-Seq experiment.
 - **Selection of interest:** proteins whose underlying genes were significantly upregulated three days after Engerix-B vaccination in responders.
 - **Labels:** Gene Ontology terms. To increase the focus of the analysis and reduce the search space to more relevant results, only terms related to immune processes were selected. More specifically, every GO term was remapped to child terms of the main "immune system process" (GO:0002376) term. Depending on the desired level of detail, the depth of the children could also be set. In other cases, where a more general overview of GO terms is desired (i.e. there is no specific hypothesis to be explored), a good strategy could be to remap all terms to a specific depth (e.g. 6), which makes terms that are not substantially different (such as very specific child and parent term), homogeneous in terms of subgraph motifs.
 - **Additional options:** the protein-protein interaction network is undirected. If desired, the nested p-value option could have been used to reduce the number of returned subgraphs to a more manageable number. A motif size of three was chosen as a good balance between run-time and interpretability.
