@@ -107,11 +107,20 @@ public class ParameterConfig {
 			else
 				GraphParameters.allPValues = 0;
 			if(cmd.hasOption('o')) {
+				// convert filename into an File object after mapping it to the absolute filepath
 				File outFile = new File(cmd.getOptionValue('o')).getAbsoluteFile();
-				if (outFile.getParentFile().exists())
-					GraphParameters.output = outFile.getPath();
-				else
-					SubGraphMiningException.exceptionDirNotExists(outFile.getParent());
+				// retrieve parent directory
+				File outParent = outFile.getParentFile();
+				// check if parent directory exists
+				if (!outParent.exists())
+					SubGraphMiningException.exceptionDirNotExists(outParent.getAbsolutePath());
+				// check if parent directory is writable
+				if (!outParent.canWrite())
+					SubGraphMiningException.exceptionPermissions(outParent.getAbsolutePath());
+				// check if file already exists and is writable
+				if ( outFile.exists() && !outFile.canWrite() )
+						SubGraphMiningException.exceptionPermissions(outFile.getAbsolutePath());
+				GraphParameters.output = outFile.getPath();
 			}
 			else
 				GraphParameters.output = "none";
@@ -237,16 +246,29 @@ public class ParameterConfig {
 			GraphParameters.allPValues = 1;
 		else
 			GraphParameters.allPValues = 0;
+
 		if(!savePath.isEmpty()) {
+			// convert filename into an File object after mapping it to the absolute filepath
 			File outFile = new File(savePath).getAbsoluteFile();
-			if (outFile.getParentFile().exists())
-				GraphParameters.output = outFile.getPath();
-			else
-				SubGraphMiningException.exceptionDirNotExists(outFile.getParent());
-			}
-		else
+			// retrieve parent directory
+			File outParent = outFile.getParentFile();
+		
+			// check if parent directory exists
+			if (!outParent.exists())
+				SubGraphMiningException.exceptionDirNotExists(outParent.getAbsolutePath());
+			// check if parent directory is writable
+			if (!outParent.canWrite())
+				SubGraphMiningException.exceptionPermissions(outParent.getAbsolutePath());
+			// check if file already exists and is writable
+			if ( outFile.exists() && !outFile.canWrite() )
+					SubGraphMiningException.exceptionPermissions(outFile.getAbsolutePath());
+			GraphParameters.output = outFile.getPath();
+		}
+		else {
 			GraphParameters.output = "none";
+		}
 		GraphParameters.typeAlgorithm = algorithm.toLowerCase();
+
 	}
 
 }

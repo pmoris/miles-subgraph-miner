@@ -25,6 +25,11 @@ public abstract class SubGraphMiningException {
 //		}
 	}
 
+	public static void exceptionPermissions(String filepath) {
+		throw new CustomizedUncheckedException("Permission denied when trying to access " + filepath);
+		
+	}
+	
 	public static void exceptionDirNotExists(String dirpath) {
 		throw new CustomizedUncheckedException(dirpath + " directory could not be found.");
 	}

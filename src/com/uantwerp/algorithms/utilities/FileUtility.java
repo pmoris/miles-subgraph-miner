@@ -13,14 +13,19 @@ public abstract class FileUtility {
 	 * @param path path to an input file
 	 * @return content a file object of the input file
 	 * 
-	 * throws an exception when the file is empty or when the path cannot be resolved
+	 *         throws an exception when the file is empty or when the path cannot be
+	 *         resolved
 	 */
 	public static File readFile(String path) {
 		File file = new File(path);
 		if (!file.exists() || file.isDirectory()) {
-			// Throw exception if path cannot be resolved
+			// Throw exception if path cannot be resolved or points to a directory instead
+			// of a file
 			SubGraphMiningException.exceptionFileNotExists(path);
 		}
+		if (!file.canRead())
+			// Throw exception if file lacks read permissions
+			SubGraphMiningException.exceptionPermissions(path);
 		if (file.length() == 0)
 			// Throw exception if file is empty
 			SubGraphMiningException.exceptionEmptyFile(path);
