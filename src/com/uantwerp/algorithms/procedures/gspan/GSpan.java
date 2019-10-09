@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
 
 import org.javatuples.Pair;
 
+import com.uantwerp.algorithms.BasicRepresentation;
 import com.uantwerp.algorithms.MiningState;
 import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
@@ -17,18 +19,32 @@ import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.common.History;
 import com.uantwerp.algorithms.common.PDFS;
 import com.uantwerp.algorithms.common.Projection;
+import com.uantwerp.algorithms.gui.SubgraphMiningGUI;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
-public abstract class GSpan {
+public class GSpan extends BasicRepresentation{
 
-	private static DFScode<DFSedge> dfsCode = new DFScode<>();
-	private static List<DFScode<DFSedge>> firstFrequentGraphs = new ArrayList<>();
-	private static HashSet<String> minDFScodes = new HashSet<>();
+	public DFScode<DFSedge> dfsCode = new DFScode<>();
+	public List<DFScode<DFSedge>> firstFrequentGraphs = new ArrayList<>();
+	private HashSet<String> minDFScodes = new HashSet<>();
 	
-	public static void startAlgorithm() {		
-		generate1edgeFrequentGraphs();
-		HashMap<DFSedge, Projection<PDFS>> root = getFirstProjections();
-		List<DFScode<DFSedge>> orderedDFScode = AuxiliaryFunctions.orderDFScode(firstFrequentGraphs);
+	public GSpan(Timer t, SubgraphMiningGUI mainThread) {
+		super(t, mainThread);
+	}
+	
+	public void doAnalysis() {		
+		if (!Thread.interrupted()) {
+			 generate1edgeFrequentGraphs();
+		}
+		HashMap<DFSedge, Projection<PDFS>> root = null;
+		if(!Thread.interrupted()) {
+			root =  getFirstProjections();
+		}
+		List<DFScode<DFSedge>> orderedDFScode = null;
+		if (!Thread.interrupted()) {
+			orderedDFScode = AuxiliaryFunctions.orderDFScode(firstFrequentGraphs);
+		}
 		for (int i = 0; i < orderedDFScode.size(); i++) {
 			DFSedge dfsEdge = orderedDFScode.get(i).get(0);		
 			Projection<PDFS> projected = root.get(dfsEdge);
@@ -36,9 +52,9 @@ public abstract class GSpan {
 			miningCall(projected);
 			dfsCode.remove(dfsCode.size() - 1);					
 		}
-	}
-	
-	private static void subGraphMiningUndirected(int prevHits,Projection<PDFS> projected) {
+
+	}		
+	private void subGraphMiningUndirected(int prevHits,Projection<PDFS> projected) {
 		String minStr = getMinStrStr();
 		/*********************************Checks minimum DFS***********************************/
 		if (!checkMinimumDFScode(minStr))
@@ -47,7 +63,7 @@ public abstract class GSpan {
 		if (!groupupportcheck(prevHits, projected, minStr)){
 			return;
 		}
-		if (GraphParameters.verbose== 1) System.out.println("Number of projections = " + projected.size());
+		if (GraphParameters.verbose== 1) PrintUtility.print2LogView("Number of projections = " + projected.size());
 		int numVertices = dfsCode.getNumVertices();
 		dfsCode.build_rmpath();
 		List<Integer> rmpath = dfsCode.rmpath;
@@ -122,7 +138,7 @@ public abstract class GSpan {
 		}
 	}
 	
-	private static void subGraphMiningDirected(int prevHits, Projection<PDFS> projected) {
+	private void subGraphMiningDirected(int prevHits, Projection<PDFS> projected) {
 		String minStr = getMinStrStr();
 		/*********************************Checks minimum DFS***********************************/
 		if (!checkMinimumDFScode(minStr))
@@ -131,7 +147,7 @@ public abstract class GSpan {
 		if (!groupupportcheck(prevHits, projected, minStr)){
 			return;
 		}
-		if (GraphParameters.verbose== 1) System.out.println("Number of projections = " + projected.size());
+		if (GraphParameters.verbose== 1) PrintUtility.print2LogView("Number of projections = " + projected.size());
 		int numVertices = dfsCode.getNumVertices();
 		dfsCode.build_rmpath();
 		List<Integer> rmpath = dfsCode.rmpath;
@@ -299,7 +315,7 @@ public abstract class GSpan {
 	}
 	
 	/*check the support of the pair of values given that it is gonna prune the edges with no required support*/
-	private static void generate1edgeFrequentGraphs() {
+	public void generate1edgeFrequentGraphs() {
 		HashSet<DFSedge> vvlbEdges = new HashSet<>();
 		for (String vertex: GraphParameters.graph.getAllNodes(GraphParameters.graph)){		
 			for (String vertex2: GraphParameters.graph.getAllEdges(vertex,GraphParameters.graph)){
@@ -354,12 +370,12 @@ public abstract class GSpan {
 		}
 	}
 	
-	private static int calculateGroupSupport(HashSet<String> valueSet){
+	private int calculateGroupSupport(HashSet<String> valueSet){
 		valueSet.retainAll(GraphParameters.graph.group);
 		return valueSet.size();
 	}
 	
-	private static boolean groupupportcheck(int prevHits, Projection<PDFS> projected, String minDfScode){
+	private boolean groupupportcheck(int prevHits, Projection<PDFS> projected, String minDfScode){
 		/*********************************Measures the support***********************************/
 		HashSet<String> support = AuxiliaryFunctions.getTotalSupport(projected);
 		int totalSupport = support.size();
@@ -372,35 +388,35 @@ public abstract class GSpan {
 			MiningState.supportedMotifsDFScode.put(minDfScode, dfsCode.getMinDfsCode()); // Populate DFScode hash map for visualisations
 			double prob = AlgorithmUtility.getProbability(prevHits, GraphParameters.graph.group.size(), totalSupport, groupSupport);
 			if (GraphParameters.verbose == 1)
-				System.out.println(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
+				PrintUtility.print2LogView(minDfScode + "\t" + groupSupport + "\t" + totalSupport + "\t" + prob);
 			MiningState.supportedMotifsPValues.put(minDfScode, prob);
 			return true;
 		}
 		/****************************************************************************************/
 	}
 	
-	private static String getMinStrStr(){
+	private String getMinStrStr(){
 		DFScode<DFSedge> minDFS = new DFScode<>();
 		minDFS = dfsCode.getMinDfsCode();
 		return minDFS.dfsCodeToString();		
 	}
 	
-	private static boolean checkMinimumDFScode(String minStr){		
+	private boolean checkMinimumDFScode(String minStr){		
 		if (!dfsCode.dfsCodeToString().equals(minStr))
 			return false;
 		else{
 			if(minDFScodes.contains(minStr)){
-				if (GraphParameters.verbose == 1) System.out.println(dfsCode.dfsCodeToString()+ " already saved with min: " + minStr);
+				if (GraphParameters.verbose == 1) PrintUtility.print2LogView(dfsCode.dfsCodeToString()+ " already saved with min: " + minStr);
 				return false;
 			}else{
-				if (GraphParameters.verbose == 1) System.out.println(dfsCode.dfsCodeToString() + " saved with min DFS: " + minStr);
+				if (GraphParameters.verbose == 1) PrintUtility.print2LogView(dfsCode.dfsCodeToString() + " saved with min DFS: " + minStr);
 				minDFScodes.add(minStr);
 			}
 			return true;
 		}
 	}
 	
-	private static HashMap<DFSedge, Projection<PDFS>> getFirstProjections(){
+	public HashMap<DFSedge, Projection<PDFS>> getFirstProjections(){
 		HashMap<DFSedge, Projection<PDFS>> root = new HashMap<>();
 		for (String node: GraphParameters.graph.bgnodes){
 			for (String edge : GraphParameters.graph.getAllEdges(node,GraphParameters.graph)) {
@@ -447,7 +463,7 @@ public abstract class GSpan {
 		return root;
 	}
 	
-	private static void miningCall(Projection<PDFS> projected){
+	public void miningCall(Projection<PDFS> projected){
 		if (GraphParameters.undirected ==1)
 			subGraphMiningUndirected(GraphParameters.graph.bgnodes.size(), projected);
 		else

@@ -14,6 +14,7 @@ import com.uantwerp.algorithms.common.DFScode;
 import com.uantwerp.algorithms.common.DFSedge;
 import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
+import com.uantwerp.algorithms.utilities.PrintUtility;
 
 /**
  * @author gerardo
@@ -52,7 +53,7 @@ public abstract class BuildMotif {
 		}
 		int maxId = motifLabels.size();
 		if (GraphParameters.verbose==1)
-			System.out.println("Starting on "+motifString);
+			PrintUtility.print2LogView("Starting on "+motifString);
 		
 		// loop through all nodes of interest and check if match the motif source node
 		// if so, try and match the current motif by building upon it
@@ -131,7 +132,7 @@ public abstract class BuildMotif {
 		double pvalue = AlgorithmUtility.getProbability(prevHits.size(),checkedGroupNodes, totalSupport, interestSupport);
 		
 		if(GraphParameters.verbose==1)
-			System.out.println(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
+			PrintUtility.print2LogView(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
 		
 		MiningState.supportedMotifsPValues.put(motifString, pvalue);
 		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
@@ -176,7 +177,7 @@ public abstract class BuildMotif {
 					optNewMotif = OptimizeMotif.optimizeMotif(newMotif);
 					MiningState.motifTransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
 					if (GraphParameters.verbose==1)
-						System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
+						PrintUtility.print2LogView("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
 					newMotifString = AlgorithmUtility.getStringMotifs(optNewMotif); // only used to check presence, can be changed by storing list of dfsCode motifs in mining state instead of string, then call tostring inside printing function
 				}
 				if (MiningState.checkedMotifsGroupSupport.containsKey(newMotifString)){
@@ -208,7 +209,7 @@ public abstract class BuildMotif {
 		}
 		int maxId = motifLabels.size();
 		if (GraphParameters.verbose==1)
-			System.out.println("Starting on "+ motifString);
+			PrintUtility.print2LogView("Starting on "+ motifString);
 		
 		Iterator<String> it = GraphParameters.graph.group.iterator();
 		checkgroup: while(it.hasNext()){//Check each interesting node if they are a root node
@@ -274,7 +275,7 @@ public abstract class BuildMotif {
 		double pvalue = AlgorithmUtility.getProbability(prevHits.size(),checkedGroupNodes, totalSupport, interestSupport);
 		
 		if(GraphParameters.verbose==1)
-			System.out.println(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
+			PrintUtility.print2LogView(motifString+"\t"+interestSupport+"\t"+totalSupport+"\t"+pvalue);
 		
 		MiningState.supportedMotifsPValues.put(motifString, pvalue);
 		MiningState.supportedMotifsGraphSupport.put(motifString, totalSupport);
@@ -319,7 +320,7 @@ public abstract class BuildMotif {
 					optNewMotif = OptimizeMotif.optimizeMotif_und(newMotif);
 					MiningState.motifTransformations.put(newMotifString, AlgorithmUtility.getStringMotifs(optNewMotif));
 					if (GraphParameters.verbose==1)
-						System.out.println("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
+						PrintUtility.print2LogView("Transformed "+AlgorithmUtility.getStringMotifs(newMotif)+" into: "+AlgorithmUtility.getStringMotifs(optNewMotif));
 					newMotifString = AlgorithmUtility.getStringMotifs(optNewMotif);
 				}
 				if (MiningState.checkedMotifsGroupSupport.containsKey(newMotifString)){

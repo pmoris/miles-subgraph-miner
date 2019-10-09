@@ -1,5 +1,7 @@
 package com.uantwerp.algorithms.Efficiency;
 
+import java.io.IOException;
+
 import com.uantwerp.algorithms.utilities.FileUtility;
 
 public abstract class VariablesTimer {
@@ -31,8 +33,13 @@ public abstract class VariablesTimer {
 	}
 	
 	public static void writeResults(String pathFile){
-		if (!pathFile.equals(""))
-			FileUtility.writeFile(pathFile, statistics);
+		if (!pathFile.equals("")) {
+			try {
+				FileUtility.writeFile(pathFile, statistics);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
