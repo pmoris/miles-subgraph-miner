@@ -1,5 +1,7 @@
 package com.uantwerp.algorithms.exceptions;
 
+import java.nio.file.Path;
+
 import com.uantwerp.algorithms.utilities.PrintUtility;
 
 public abstract class SubGraphMiningException {
@@ -109,6 +111,12 @@ public abstract class SubGraphMiningException {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void exceptionRowEntries(Path path, int lineCount, String line) {
+		// TODO Auto-generated method stub
+		throw new CustomizedUncheckedException(
+				"An unexpected number of elements was encountered in the file " + path + " on the following line:\n" + Integer.toString(lineCount) + ": " + line);
 	}
 
 }

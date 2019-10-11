@@ -1,14 +1,15 @@
 package com.uantwerp.algorithms;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Iterator;
 
 import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
 import com.uantwerp.algorithms.utilities.HashFuctions;
-import com.univocity.parsers.csv.CsvParser;
-import com.univocity.parsers.csv.CsvParserSettings;
 
 public abstract class HashGeneration {
 	
@@ -28,8 +29,9 @@ public abstract class HashGeneration {
 	 * just the last statement, because it will output 0 if the file does not exist.
 	 * The first statement has to be placed first, to prevent a NullPointerException from occurring
 	 * when .exists() is supplied to a null variable.
+	 * @throws IOException 
 	 */
-	public static void graphGeneration(){		
+	public static void graphGeneration() throws IOException{		
 		readGraph(GraphParameters.graphFile);
 		readLabels(GraphParameters.labelsFile);
 		readInterest(GraphParameters.interestFile);
@@ -39,59 +41,88 @@ public abstract class HashGeneration {
 
 	/**
 	 * 
-	 * @param file	the input file as a String (see ParameterConfig and FileUtility.readFile)
+	 * @param file	the input file as a file object (see ParameterConfig and FileUtility.readFile)
+	 * @throws IOException 
 	 */
-	public static void readGraph(File file) {
-		CsvParserSettings settings = new CsvParserSettings();
-		settings.detectFormatAutomatically();
-		CsvParser parser = new CsvParser(settings);
-		for (String[] row : parser.iterate(file)) {
-			GraphParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.edgeHash,
-					row[0],row[1]);
-			GraphParameters.graph.reverseEdgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseEdgeHash,
-								row[1],row[0]);
-			// If not in single label mode, add empty labels to HashSet value of vertex key in HashMap
-			if (GraphParameters.singleLabel == 0){
-				GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-									row[0]," ");
-				GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-									row[1]," ");
-				// Also add labels to HashMap of labels and assign them a value
-				if (!GraphParameters.graph.labelHash.containsKey(" "))
-					GraphParameters.graph.labelHash.put(" ", 1);
-				else
-					// the value will constantly be overwritten, so the final value will equal the number of nodes
-					GraphParameters.graph.labelHash.put(" ", GraphParameters.graph.labelHash.get(" ") + 1);
+	public static void readGraph(File file) throws IOException {
+		try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+			String line;
+			int lineCount = 0;
+			while ((line = reader.readLine()) != null) {
+				lineCount++;
+				// skip empty rows
+				if (line.length() == 0) continue;	
+				
+				// split line into two vertices
+				String[] splitLine = line.split("\\s+");
+				
+				// check number of entries
+				if (splitLine.length != 2) {
+					SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+				}
+				
+				// store vertices
+				GraphParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.edgeHash,
+						splitLine[0],splitLine[1]);
+				GraphParameters.graph.reverseEdgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseEdgeHash,
+									splitLine[1],splitLine[0]);
+				// If not in single label mode, add empty labels to HashSet value of vertex key in HashMap
+				if (GraphParameters.singleLabel == 0){
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
+										splitLine[0]," ");
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
+										splitLine[1]," ");
+					// Also add labels to HashMap of labels and assign them a value
+					if (!GraphParameters.graph.labelHash.containsKey(" "))
+						GraphParameters.graph.labelHash.put(" ", 1);
+					else
+						// the value will constantly be overwritten, so the final value will equal the number of nodes
+						GraphParameters.graph.labelHash.put(" ", GraphParameters.graph.labelHash.get(" ") + 1);
+				}
 			}
 		}
 	}
 
 	/**
 	 * 
-	 * @param file	the input file as a String (see ParameterConfig and FileUtility.readFile)
+	 * @param file	the input file as a file object (see ParameterConfig and FileUtility.readFile)
+	 * @throws IOException 
 	 */
-	public static void readLabels(File file) {
-		CsvParserSettings settings = new CsvParserSettings();
-		settings.detectFormatAutomatically();
-		CsvParser parser = new CsvParser(settings);
-		
+	public static void readLabels(File file) throws IOException {
 		// the label file is optional...
 		if (GraphParameters.labelsFile != null && GraphParameters.labelsFile.length() != 0) {
-			for (String[] row : parser.iterate(file)) {
-				// Labels will be added as a HashSet to a HashMap with vertex keys
-				GraphParameters.graph.reverseVertex = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseVertex,
-																						row[1],row[0]);
-				GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-						row[0],row[1]);
-				// The OneLabel HashMap will be overwritten with the last label value found for each node
-				GraphParameters.graph.vertexOneLabel.put(row[0], row[1]);
-				GraphParameters.graph.reverseVertexOneLabel.put(row[1], row[0]);
-				// Labels will also be added to the label HashMap and given a value
-				if (!GraphParameters.graph.labelHash.containsKey(row[1]))
-					GraphParameters.graph.labelHash.put(row[1], 1);
-				else
-				// This will overwrite the previous value, so the final value for the label key will equal its frequency
-					GraphParameters.graph.labelHash.put(row[1], GraphParameters.graph.labelHash.get(row[1])+1);
+			
+			try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+				String line;
+				int lineCount = 0;
+				while ((line = reader.readLine()) != null) {
+					lineCount++;
+					// skip empty rows
+					if (line.length() == 0) continue;	
+					
+					// split line into two vertices
+					String[] splitLine = line.split("\\s+");
+					
+					// check number of entries
+					if (splitLine.length != 2) {
+						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+					}
+					
+					// Labels will be added as a HashSet to a HashMap with vertex keys
+					GraphParameters.graph.reverseVertex = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseVertex,
+																							splitLine[1],splitLine[0]);
+					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
+							splitLine[0],splitLine[1]);
+					// The OneLabel HashMap will be overwritten with the last label value found for each node
+					GraphParameters.graph.vertexOneLabel.put(splitLine[0], splitLine[1]);
+					GraphParameters.graph.reverseVertexOneLabel.put(splitLine[1], splitLine[0]);
+					// Labels will also be added to the label HashMap and given a value
+					if (!GraphParameters.graph.labelHash.containsKey(splitLine[1]))
+						GraphParameters.graph.labelHash.put(splitLine[1], 1);
+					else
+					// This will overwrite the previous value, so the final value for the label key will equal its frequency
+						GraphParameters.graph.labelHash.put(splitLine[1], GraphParameters.graph.labelHash.get(splitLine[1])+1);
+				}
 			}
 		} else {
 			// ...unless the single label option is selected
@@ -102,27 +133,42 @@ public abstract class HashGeneration {
 
 	/**
 	 * 
-	 * @param file	the input file as a String (see ParameterConfig and FileUtility.readFile)
+	 * @param file	the input file as a file object (see ParameterConfig and FileUtility.readFile)
+	 * @throws IOException 
 	 */
-	public static void readInterest(File file) {
-		CsvParserSettings settings = new CsvParserSettings();
-		settings.detectFormatAutomatically();
-		CsvParser parser = new CsvParser(settings);
-		
+	public static void readInterest(File file) throws IOException {
 		// if the interest file is supplied and not empty
 		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
 			// perform enriched mining method
 			GraphParameters.frequentMining = false;
 			// loop through interesting nodes
-			for (String[] row : parser.iterate(file)) {
-				// Check if nodes of interest occur in graph and add them to HashSet
-				if (GraphParameters.graph.vertex.containsKey(row[0])){
-					GraphParameters.graph.group.add(row[0]);
-				}else
-					SubGraphMiningException.exceptionVertexNotFound(row[0], "interesting");
+			
+			try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+				String line;
+				int lineCount = 0;
+				while ((line = reader.readLine()) != null) {
+					lineCount++;
+					// skip empty rows
+					if (line.length() == 0) continue;	
+					
+					// split line into two vertices
+					String[] splitLine = line.split("\\s+");
+					
+					// check number of entries
+					if (splitLine.length != 1) {
+						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+					}
+
+					// Check if nodes of interest occur in graph and add them to HashSet
+					if (GraphParameters.graph.vertex.containsKey(splitLine[0])){
+						GraphParameters.graph.group.add(splitLine[0]);
+					} else
+						SubGraphMiningException.exceptionVertexNotFound(splitLine[0], "interesting");
+					}
+				}
 			}
-		} else {
-			// perform frequent subgraph mining if no interest file is supplied
+		// perform frequent subgraph mining if no interest file is supplied
+		else {
 			GraphParameters.frequentMining = true;
 			// which also requires a specified support value
 			if (GraphParameters.supportcutoff != 0) {
@@ -139,40 +185,52 @@ public abstract class HashGeneration {
 
 	/**
 	 * 
-	 * @param file	the input file as a String (see ParameterConfig and FileUtility.readFile)
+	 * @param file	the input file as a file object (see ParameterConfig and FileUtility.readFile)
+	 * @throws IOException 
 	 */
-	public static void readBackground(File file) {
-		CsvParserSettings settings = new CsvParserSettings();
-		settings.detectFormatAutomatically();
-		CsvParser parser = new CsvParser(settings);
-		
+	public static void readBackground(File file) throws IOException {
 		// Background nodes are of no use when there is no interest file (or if it is empty)
 		if (GraphParameters.interestFile != null && GraphParameters.interestFile.length() != 0) {
 
 			// if background file is provided and not empty
 			if (GraphParameters.backgroundFile != null && GraphParameters.backgroundFile.length() != 0) {
 
-				for (String[] row : parser.iterate(file)) {
+				try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+					String line;
+					int lineCount = 0;
+					while ((line = reader.readLine()) != null) {
+						lineCount++;
+						// skip empty rows
+						if (line.length() == 0) continue;	
+						
+						// split line into two vertices
+						String[] splitLine = line.split("\\s+");
+						
+						// check number of entries
+						if (splitLine.length != 1) {
+							SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+						}
 
-					// Check if background vertices occur in graph and add them to HashSet
-					if (GraphParameters.graph.vertex.containsKey(row[0])) {
-						GraphParameters.graph.bgnodes.add(row[0]);
-					} else
-						SubGraphMiningException.exceptionVertexNotFound(row[0], "background");
+						// Check if background vertices occur in graph and add them to HashSet
+						if (GraphParameters.graph.vertex.containsKey(splitLine[0])) {
+							GraphParameters.graph.bgnodes.add(splitLine[0]);
+						} else
+							SubGraphMiningException.exceptionVertexNotFound(splitLine[0], "background");
+						}
+					}
 				}
-
-			} else {
 			// If no background file or an empty file (null) is provided,
-			// add all graph nodes as background
+			else {
+				// add all graph nodes as background
 				Iterator<String> it = GraphParameters.graph.vertex.keySet().iterator();
 				while (it.hasNext())
 					GraphParameters.graph.bgnodes.add(it.next());
+				}
 			}
-
 		// if no (or empty interest) file is supplied
-		} else
+		else
 			// but the background file is supplied, raise exception
 			if (GraphParameters.backgroundFile != null && GraphParameters.backgroundFile.length() != 0)
 				SubGraphMiningException.exceptionBackgroundWithoutInterest();
 		}
-}	
+}
