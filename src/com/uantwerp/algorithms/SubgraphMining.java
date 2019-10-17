@@ -131,7 +131,9 @@ public class SubgraphMining {
 	public static void exceptionBehaviour(Exception e) {
 		if (DEBUG)
 			e.printStackTrace();
-		System.err.println(e.getMessage());
+		else 
+			System.err.println(e.getMessage());
+
 		PrintUtility.print2LogView(
 				"\nUse the --help flag to display usage information or omit all parameters to launch in GUI mode.\n");
 

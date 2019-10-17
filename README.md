@@ -167,7 +167,7 @@ Several analysis options can be selected:
 - An **undirected** mode that does not consider the directionality of edges.
 - The type of subgraph discovery **algorithm**: `base`, `gSpan` and `fsg` (experimental). The `base` algorithm (described in the [original publication](#publication)) is recommended for most scenarios as it provides a good balance of speed and memory efficiency in our tests.
 - The **background** set allows for the comparison of the association between a subgraph and the nodes of interest against another specified set of nodes, rather than against the entire network. For example, this can be used to compare a set of differentially expressed transcription factors (the group of interest) against either all proteins in a protein-protein interaction network or to limit it to just the set of all transcription factors in the network. This allows researchers to infer properties of the set of interest that are more common in the set of interest in comparison to the general collection of proteins in an organism, versus the more restricted question: are the selected transcription factors different from transcription factors in general in this organism.
-- The **support** threshold which is used to prune the search space can be manually set or left blank, in which case an appropriate threshold will be selected automatically. In brief, a conservative lower bound will be selected that speeds up the analysis by pruning subgraphs that could never be significantly enriched due to a too low frequency in the interesting subset. For the derivation of the threshold value, refer to the [original publication](#publication). Alternatively, a value could be manually specified in order to be more stringent and force subgraphs to occur at least $x$ amount of times among the interesting set of nodes. For example, by setting the support to the number of nodes of interest, only subgraphs that are common to *all nodes of interest* will be returned. In case an unmanageable number of subgraphs are returned (several thousands), making the support threshold more stringent is a recommended strategy (alongside the nested p-value mode). Also see the following example: [Orthologous genes in prokaryotic transcription regulation networks](#orthologous-genes-in-prokaryotic-transcription-regulation-networks).
+- The **support** threshold which is used to prune the search space can be manually set or left blank, in which case an appropriate threshold will be selected automatically. In brief, a conservative lower bound will be selected that speeds up the analysis by pruning subgraphs that could never be significantly enriched due to a too low frequency in the interesting subset. For the derivation of the threshold value, refer to the [original publication](#publication). Alternatively, a value could be manually specified in order to be more stringent and force subgraphs to occur at least $x$ amount of times among the interesting set of nodes. For example, by setting the support to the number of nodes of interest, only subgraphs that are common to *all nodes of interest* will be returned. In case an unmanageable number of subgraphs are returned (several thousands), making the support threshold more stringent (i.e. higher) is a recommended strategy (alongside the nested p-value mode). Also see the following example: [Orthologous genes in prokaryotic transcription regulation networks](#orthologous-genes-in-prokaryotic-transcription-regulation-networks).
 
 For more information about these options, please consult the [command line section](#command-line-options) below.
 
@@ -201,15 +201,16 @@ The output of the significant subgraph mining analysis consists of a list of sub
 
 The syntax used for the motifs is a sequential list of edges, where each edge starts with the source vertex name, immediately followed by its label (without spaces), a dash, and finally the target vertex name, immediately followed by its label, and edges are separated by commas. The very first vertex always represents the "source" vertex of the subgraph itself. E.g. `vertexOneLabelX-vertexTwoLabelY,vertexOneLabelX-vertexOneLabelX` would represent a two-vertex motif where the first one points to the second one and contains a self-loop.
 
-The output is provided in both a tab-separated text file and an interactive `cytoscape.js` visualisation in the form of a HTML file ([see top of README](#visualisation)).
+The output is provided in both a tab-separated text file and an interactive `cytoscape.js` visualisation in the form of a HTML file ([see top of README](#visualisation)). Note that empty labels in a subgraph are denoted with an underscore `_`: e.g. `1labelX-2_,` represents a subgraph where the source node 1 is labeled with `X` and points to an unlabeled node 2.
 
-| Motif               | Freq Interest | Freq Total | P-value                |
-|---------------------|---------------|------------|------------------------|
-| 2ILE-1GLU           | 32            | 320        | 1.1121874550841103E-24 |
-| 1ASP-2ILE           | 41            | 242        | 4.3311993599366595E-41 |
-| 2GLY-1GLU           | 30            | 301        | 3.9013929550490746E-23 |
-| 2THR-1ASP           | 28            | 154        | 4.4049029924853627E-29 |
-| 1ASP-2ILE,3THR-2ILE | 33            | 78         | 4.532207930640488E-48  |
+
+| Subgraph            | Freq interest | Freq total | Raw P-value            | Holm_adjusted_P-value |
+|---------------------|---------------|------------|------------------------|-----------------------|
+| 1GLU-2ALA,2ALA-3GLN | 14            | 82         | 1.4058307066977361E-5  | 0.01470498919205832   |
+| 1GLU-2PHE,2PHE-3PRO | 13            | 54         | 4.2669039462736834E-6  | 0.004531451990942651  |
+| 1GLU-2PHE,2PHE-3CYS | 13            | 41         | 9.997341680557166E-8   | 1.0847115723404524E-4 |
+| 1ASP-2ALA,1ASP-3GLU | 21            | 106        | 4.1352053895963484E-5  | 0.04296478399790606   |
+| 1GLU-2HIS           | 19            | 234        | 2.1823565410074943E-13 | 2.415868690895296E-10 |
 
 ### MULES as a GO/pathway enrichment tool
 
@@ -221,7 +222,7 @@ Remapping is helpful because terms that are similar or related to each other, in
 Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
 In short, these methods will result in a smaller, and more focused, set of labels, which should alleviate some of the combinatorial issues plaguing larger subgraph sizes.
 
-#### Generating genes of interest files from a DESeq2 analysis
+#### Generating genes of interest file from a DESeq2 analysis
 
 If the nodes of interest are the differentially expressed genes detected by DESeq2 in R, the following code snippet can be used to export the results to a csv file that can be read by MULES.
 

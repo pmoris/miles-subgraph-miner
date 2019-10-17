@@ -66,7 +66,7 @@ public abstract class AlgorithmUtility {
 			} else {
 				supportcutoffResult = GraphParameters.graph.group.size(); // number of interesting vertices;
 				PrintUtility.print2LogView(
-						"Subgraph support set at " + supportcutoffResult + " ( capped at the number of interesting vertices).");
+						"Subgraph support set at " + supportcutoffResult + " (capped at the number of interesting vertices).");
 			}
 		}
 		// if the user supplied a support cutoff, keep it
