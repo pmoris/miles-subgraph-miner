@@ -4,8 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Iterator;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.uantwerp.algorithms.common.GraphParameters;
 import com.uantwerp.algorithms.exceptions.SubGraphMiningException;
 import com.uantwerp.algorithms.utilities.AlgorithmUtility;
@@ -45,33 +50,37 @@ public abstract class HashGeneration {
 	 * @throws IOException 
 	 */
 	public static void readGraph(File file) throws IOException {
-		try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-			String line;
+		
+        CSVParser parser = new CSVParserBuilder().withSeparator(GraphParameters.delimiter).build();
+
+		try (BufferedReader br = Files.newBufferedReader(file.toPath());
+				CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser)
+						.build()) {
+			String line[];
 			int lineCount = 0;
-			while ((line = reader.readLine()) != null) {
+			while ((line = reader.readNext()) != null) {
 				lineCount++;
+				int numberOfElements = line.length;
+
 				// skip empty rows
-				if (line.length() == 0) continue;	
-				
-				// split line into two vertices
-				String[] splitLine = line.split("\\s+");
+				if (numberOfElements == 0) continue;	
 				
 				// check number of entries
-				if (splitLine.length != 2) {
-					SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+				if (numberOfElements != 2) {
+					SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, Arrays.toString(line));
 				}
 				
 				// store vertices
 				GraphParameters.graph.edgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.edgeHash,
-						splitLine[0],splitLine[1]);
+						line[0],line[1]);
 				GraphParameters.graph.reverseEdgeHash = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseEdgeHash,
-									splitLine[1],splitLine[0]);
+						line[1],line[0]);
 				// If not in single label mode, add empty labels to HashSet value of vertex key in HashMap
 				if (GraphParameters.singleLabel == 0){
 					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-										splitLine[0]," ");
+							line[0]," ");
 					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-										splitLine[1]," ");
+							line[1]," ");
 					// Also add labels to HashMap of labels and assign them a value
 					if (!GraphParameters.graph.labelHash.containsKey(" "))
 						GraphParameters.graph.labelHash.put(" ", 1);
@@ -92,36 +101,39 @@ public abstract class HashGeneration {
 		// the label file is optional...
 		if (GraphParameters.labelsFile != null && GraphParameters.labelsFile.length() != 0) {
 			
-			try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-				String line;
+			CSVParser parser = new CSVParserBuilder().withSeparator(GraphParameters.delimiter).build();
+
+			try (BufferedReader br = Files.newBufferedReader(file.toPath());
+					CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser)
+							.build()) {
+				String line[];
 				int lineCount = 0;
-				while ((line = reader.readLine()) != null) {
+				while ((line = reader.readNext()) != null) {
 					lineCount++;
+					int numberOfElements = line.length;
+
 					// skip empty rows
-					if (line.length() == 0) continue;	
-					
-					// split line into two vertices
-					String[] splitLine = line.split("\\s+");
+					if (numberOfElements == 0) continue;	
 					
 					// check number of entries
-					if (splitLine.length != 2) {
-						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+					if (numberOfElements != 2) {
+						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, Arrays.toString(line));
 					}
 					
 					// Labels will be added as a HashSet to a HashMap with vertex keys
 					GraphParameters.graph.reverseVertex = HashFuctions.updateHashHashSet(GraphParameters.graph.reverseVertex,
-																							splitLine[1],splitLine[0]);
+																							line[1],line[0]);
 					GraphParameters.graph.vertex = HashFuctions.updateHashHashSet(GraphParameters.graph.vertex,
-							splitLine[0],splitLine[1]);
+							line[0],line[1]);
 					// The OneLabel HashMap will be overwritten with the last label value found for each node
-					GraphParameters.graph.vertexOneLabel.put(splitLine[0], splitLine[1]);
-					GraphParameters.graph.reverseVertexOneLabel.put(splitLine[1], splitLine[0]);
+					GraphParameters.graph.vertexOneLabel.put(line[0], line[1]);
+					GraphParameters.graph.reverseVertexOneLabel.put(line[1], line[0]);
 					// Labels will also be added to the label HashMap and given a value
-					if (!GraphParameters.graph.labelHash.containsKey(splitLine[1]))
-						GraphParameters.graph.labelHash.put(splitLine[1], 1);
+					if (!GraphParameters.graph.labelHash.containsKey(line[1]))
+						GraphParameters.graph.labelHash.put(line[1], 1);
 					else
 					// This will overwrite the previous value, so the final value for the label key will equal its frequency
-						GraphParameters.graph.labelHash.put(splitLine[1], GraphParameters.graph.labelHash.get(splitLine[1])+1);
+						GraphParameters.graph.labelHash.put(line[1], GraphParameters.graph.labelHash.get(line[1])+1);
 				}
 			}
 		} else {
@@ -143,27 +155,30 @@ public abstract class HashGeneration {
 			GraphParameters.frequentMining = false;
 			// loop through interesting nodes
 			
-			try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-				String line;
+			CSVParser parser = new CSVParserBuilder().withSeparator(GraphParameters.delimiter).build();
+
+			try (BufferedReader br = Files.newBufferedReader(file.toPath());
+					CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser)
+							.build()) {
+				String line[];
 				int lineCount = 0;
-				while ((line = reader.readLine()) != null) {
+				while ((line = reader.readNext()) != null) {
 					lineCount++;
+					int numberOfElements = line.length;
+
 					// skip empty rows
-					if (line.length() == 0) continue;	
-					
-					// split line into two vertices
-					String[] splitLine = line.split("\\s+");
-					
+					if (numberOfElements == 0) continue;	
+
 					// check number of entries
-					if (splitLine.length != 1) {
-						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+					if (numberOfElements != 1) {
+						SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, Arrays.toString(line));
 					}
 
 					// Check if nodes of interest occur in graph and add them to HashSet
-					if (GraphParameters.graph.vertex.containsKey(splitLine[0])){
-						GraphParameters.graph.group.add(splitLine[0]);
+					if (GraphParameters.graph.vertex.containsKey(line[0])){
+						GraphParameters.graph.group.add(line[0]);
 					} else
-						SubGraphMiningException.exceptionVertexNotFound(splitLine[0], "interesting");
+						SubGraphMiningException.exceptionVertexNotFound(line[0], "interesting");
 					}
 				}
 			}
@@ -195,27 +210,30 @@ public abstract class HashGeneration {
 			// if background file is provided and not empty
 			if (GraphParameters.backgroundFile != null && GraphParameters.backgroundFile.length() != 0) {
 
-				try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-					String line;
+				CSVParser parser = new CSVParserBuilder().withSeparator(GraphParameters.delimiter).build();
+
+				try (BufferedReader br = Files.newBufferedReader(file.toPath());
+						CSVReader reader = new CSVReaderBuilder(br).withCSVParser(parser)
+								.build()) {
+					String line[];
 					int lineCount = 0;
-					while ((line = reader.readLine()) != null) {
+					while ((line = reader.readNext()) != null) {
 						lineCount++;
+						int numberOfElements = line.length;
+
 						// skip empty rows
-						if (line.length() == 0) continue;	
-						
-						// split line into two vertices
-						String[] splitLine = line.split("\\s+");
+						if (numberOfElements == 0) continue;	
 						
 						// check number of entries
-						if (splitLine.length != 1) {
-							SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, line);
+						if (numberOfElements != 1) {
+							SubGraphMiningException.exceptionRowEntries(file.toPath(), lineCount, Arrays.toString(line));
 						}
 
 						// Check if background vertices occur in graph and add them to HashSet
-						if (GraphParameters.graph.vertex.containsKey(splitLine[0])) {
-							GraphParameters.graph.bgnodes.add(splitLine[0]);
+						if (GraphParameters.graph.vertex.containsKey(line[0])) {
+							GraphParameters.graph.bgnodes.add(line[0]);
 						} else
-							SubGraphMiningException.exceptionVertexNotFound(splitLine[0], "background");
+							SubGraphMiningException.exceptionVertexNotFound(line[0], "background");
 						}
 					}
 				}

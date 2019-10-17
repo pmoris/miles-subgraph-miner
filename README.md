@@ -122,7 +122,7 @@ Note that, by default, the tool runs as a the root user inside the container. On
 
 ### Input files
 
-- **Graph or network**: a space or tab separated text file where each line describes the edge between two nodes.
+- **Graph or network**: a tab separated text file where each line describes the edge between two nodes.
 
       2 1
       1 3
@@ -137,7 +137,7 @@ Note that, by default, the tool runs as a the root user inside the container. On
       5
       4
 
-- **Labels (optional)**: a space or tab separated text file where each line lists a node name followed by a label or attribute. Nodes with multiple labels should be split across multiple lines.
+- **Labels (optional)**: a tab separated text file where each line lists a node name followed by a label or attribute. Nodes with multiple labels should be split across multiple lines.
 
       1 S
       2 C
@@ -151,6 +151,8 @@ Note that, by default, the tool runs as a the root user inside the container. On
       7
       10
       15
+
+By default, tab separated text files are expected, but another delimiter can be selected. The node and label names can consist of text or numbers, but must be placed between quotation marks in case the delimiter is part of the name.
 
 ### Options
 
@@ -189,6 +191,7 @@ The following parameters can be selected on the command line:
 - `-n`/`--nested-pvalue` -> Run with a nested p-value configuration, where the significance of a child subgraph is based on the parent matches.
 - `-a`/`--algorithm <name>` -> The subgraph mining algorithm to use, the options are: `base` (default), `gspan` and `fsg` (experimental).
 - `-v`/`--verbose` -> Print additional output messages during the analysis.
+- `--delimiter` -> A custom delimiter in case the input files are not tab-separated: tab / "\t" (default), comma / ",", semicolon / ";", space / " " or pipe / "|".
 - `--statistics <filepath>` -> Store additional memory usage statistics in a file.
 - `--debug` -> Print the full stack trace for debugging purposes.
 

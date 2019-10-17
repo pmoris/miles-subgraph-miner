@@ -11,7 +11,7 @@ public abstract class FileUtility {
 	/**
 	 * 
 	 * @param path path to an input file
-	 * @return content a file object of the input file
+	 * @return a file object of the input file
 	 * 
 	 *         throws an exception when the file is empty or when the path cannot be
 	 *         resolved

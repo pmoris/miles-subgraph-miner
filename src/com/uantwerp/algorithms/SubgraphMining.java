@@ -62,6 +62,7 @@ public class SubgraphMining {
 		options.addOption("a", "algorithm", true,
 				"The type of subgraph mining algorithm: the options are \"base\", \"gspan\" and \"fsg\"");
 		options.addOption("v", "verbose", false, "Print additional intermediary output");
+		options.addOption(null, "delimiter", true, "Delimiter used for the input files:  tab \"\\t\" (default), comma \",\", semicolon \";\", space \" \" or pipe \"|\"");
 		options.addOption(null, "statistics", true, "Path for the statistics of memory usage");
 		options.addOption(null, "debug", false, "Print the full stack trace for debugging purposes");
 
