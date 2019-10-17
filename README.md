@@ -1,23 +1,23 @@
-# MULES - Mining (Un)Labeled Enriched Subgraphs
+# MILES - MIning Labeled Enriched Subgraphs
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
-- [MULES - Mining (Un)Labeled Enriched Subgraphs](#mules-mining-unlabeled-enriched-subgraphs)
+- [MILES - MIning Labeled Enriched Subgraphs](#miles-mining-labeled-enriched-subgraphs)
   - [Purpose of the tool](#purpose-of-the-tool)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
     - [Local executable](#local-executable)
     - [Compiling from source](#compiling-from-source)
     - [Docker](#docker)
-  - [How to use MULES](#how-to-use-mules)
+  - [How to use MILES](#how-to-use-miles)
     - [Quick start](#quick-start)
     - [Input files](#input-files)
     - [Options](#options)
     - [Command line options](#command-line-options)
     - [Output](#output)
-    - [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool)
+    - [MILES as a GO/pathway enrichment tool](#miles-as-a-gopathway-enrichment-tool)
       - [Generating genes of interest file from a DESeq2 analysis](#generating-genes-of-interest-file-from-a-deseq2-analysis)
   - [Example datasets](#example-datasets)
     - [Toy dataset](#toy-dataset)
@@ -42,15 +42,15 @@
 
 ## Purpose of the tool
 
-MULES is a Java tool to discover **subgraphs** (or network motifs) in a graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. For more information on enriched subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
+MILES is a Java tool to discover **subgraphs** (or network motifs) in a graph (or network) that are **significantly associated** with a given **set of vertices** (or nodes) of interest. In other words, the goal is to search for subgraphs that are enriched in a selected subset of vertices compared to the graph as a whole. For more information on enriched subgraphs and how they are measured, please refer to the [statistics section](#what-is-an-enriched-subgraph-and-what-are-the-statistics-behind-it).
 
-MULES should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
+MILES should work on most regular-sized biological networks with any number of selected vertices. Nodes can be unlabelled or (multi)-labelled. It can deal with a large variety of data types, ranging from regulatory gene networks to protein-protein interaction networks and many other situation where graph data arises, since it does not rely on any specific type of input data beyond edge and label mappings in a simple flat text format.
 
-The networks compatible with MULES can consist of various types of biological entities, such as proteins, genes, metabolites or amino acid residues, whose relation can be described through edges. The nodes of interest can originate from experimental results (e.g. a list of differentially expressed genes in an expression assay) or essentially any other method of delineating a subset within the network based on certain properties (e.g. the target proteins of a small molecule that is being studied). Given such a network and list of interesting nodes, MULES finds motifs that are significantly associated with, or enriched in, the nodes of interest. The retrieved subgraphs can either consist of only a topological structure (e.g. a feed-forward/back loop in a regulatory network) or they can include relevant biological labels (e.g. a self-regulating transcription factor).
+The networks compatible with MILES can consist of various types of biological entities, such as proteins, genes, metabolites or amino acid residues, whose relation can be described through edges. The nodes of interest can originate from experimental results (e.g. a list of differentially expressed genes in an expression assay) or essentially any other method of delineating a subset within the network based on certain properties (e.g. the target proteins of a small molecule that is being studied). Given such a network and list of interesting nodes, MILES finds motifs that are significantly associated with, or enriched in, the nodes of interest. The retrieved subgraphs can either consist of only a topological structure (e.g. a feed-forward/back loop in a regulatory network) or they can include relevant biological labels (e.g. a self-regulating transcription factor).
 
 Because this enriched subgraph mining approach is not tailored to a specific type of biological network, it can accommodate a broad range of hypotheses by placing the entities under study in a network context and analysing their role within it. In this manner, additional information, in the form of both network structure and labels derived from various annotation sources, becomes available for inference. It can be seen as an extension of more standard enrichment analysis methodologies that integrates network information in order to discover novel and biologically relevant patterns among a subset of the biological entities under study.
 
-Note that MULES can also be used to perform regular frequent subgraph mining instead of searching for enrichment in a specific subset.
+Note that MILES can also be used to perform regular frequent subgraph mining instead of searching for enrichment in a specific subset.
 
 This implementation is provided for free and is intended for research purposes. Some bugs may be present within the software and no guarantees are given! The included [example datasets](#examples) are for illustrative and testing purposes. We would appreciate any comments, bug descriptions, suggestions or success stories regarding the tool.
 
@@ -58,13 +58,13 @@ This implementation is provided for free and is intended for research purposes. 
 
 ### Prerequisites
 
-The standard JAR version of MULES requires Java version 8 or higher. Installation instructions for various operating systems can be found on the [Java website](https://www.java.com/en/download/help/download_options.xml).
+The standard JAR version of MILES requires Java version 8 or higher. Installation instructions for various operating systems can be found on the [Java website](https://www.java.com/en/download/help/download_options.xml).
 
 ### Local executable
 
 The latest version of the runnable JAR file is available from our [releases page](https://github.com/pmoris/subgraph-miner/releases).
 
-MULES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#how-to-use-mules).
+MILES requires no true installation. The JAR file can simply be invoked from the [command line](#command-line-options) (recommended). Alternatively, the file can be launched directly to open the GUI version of the tool. The required input files and analysis options are described [below](#how-to-use-miles).
 
 ### Compiling from source
 
@@ -77,21 +77,21 @@ These instructions will give you a copy of the project on your local machine for
 
 ### Docker
 
-A Dockerized version of MULES is also available.
+A Dockerized version of MILES is also available.
 
 To build the image:
 
 ```
 # Download or clone the repository
-git clone https://github.com/pmoris/mules-subgraph-miner.git && cd mules-subgraph-miner
+git clone https://github.com/pmoris/miles-subgraph-miner.git && cd miles-subgraph-miner
 # build the image locally (default user)
-docker build -f docker/Dockerfile -t mules .
+docker build -f docker/Dockerfile -t miles .
 ```
 
 To run an analysis, simply append the desired command line arguments to the `docker run` command:
 
 ```
-docker run --rm mules \
+docker run --rm miles \
 -graph datasets/example/example_graph.txt \
 --labels datasets/example/example_labels.txt \
 --interest datasets/example/example_vertexset.txt
@@ -102,7 +102,7 @@ To access input data on the host machine or to export the results of the analysi
 ```
 docker run --rm \
 -v /home/user/project/:/data \
-mules \
+miles \
 --graph /data/input-graph.txt \
 --labels /data/node-labels.txt \
 --interest /data/interesting-nodes.txt \
@@ -113,11 +113,11 @@ The above statement creates a mapping between the host directory `/home/user/pro
 
 Note that, by default, the tool runs as a the root user inside the container. On some systems this could lead to permission issues when trying to access the output files. To circumvent this issue, the docker container should be run with an additional flag that specifies the UID of the host user: `--user="$(id -u):$(id -g)"`.
 
-## How to use MULES
+## How to use MILES
 
 ### Quick start
 
-    java -jar mules-subgraph-miner.jar --graph graph_file \
+    java -jar miles-subgraph-miner.jar --graph graph_file \
     --labels label_file --interest nodes_of_interest_file --output output_file
 
 ### Input files
@@ -212,19 +212,19 @@ The output is provided in both a tab-separated text file and an interactive `cyt
 | 1ASP-2ALA,1ASP-3GLU | 21            | 106        | 4.1352053895963484E-5  | 0.04296478399790606   |
 | 1GLU-2HIS           | 19            | 234        | 2.1823565410074943E-13 | 2.415868690895296E-10 |
 
-### MULES as a GO/pathway enrichment tool
+### MILES as a GO/pathway enrichment tool
 
-MULES can be used as an alternative to traditional GO/pathway enrichment analysis tools whenever network context is available. By overlaying this topology information on top of the annotations, more information becomes available for delineating patterns that are associated with the group of interest. Here we list a few useful things to consider when using this approach for GO terms specifically:
+MILES can be used as an alternative to traditional GO/pathway enrichment analysis tools whenever network context is available. By overlaying this topology information on top of the annotations, more information becomes available for delineating patterns that are associated with the group of interest. Here we list a few useful things to consider when using this approach for GO terms specifically:
 
 - Gene ontology labels are available in the form of gene association files (`.gaf`) from [https://www.ebi.ac.uk/GOA/downloads](https://www.ebi.ac.uk/GOA/downloads)
 - It is recommended to either remap the terms to reduce the total number of subgraphs or to limit the annotations to a specific (sub-)category based on the context of the analysis and prior knowledge. The former can be achieved by remapping all terms hierachically to a specific depth (i.e. from specific to more general terms). The latter requires, a specific term of interest to be selected (e.g. immune system process) and only its direct descendants could be retained (and potentially also remapped).
-Remapping is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. `metabolic process` versus `primary metabolic process`), would otherwise be considered distinct unique labels and MULES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
+Remapping is helpful because terms that are similar or related to each other, in the eyes of a researcher (e.g. `metabolic process` versus `primary metabolic process`), would otherwise be considered distinct unique labels and MILES would not consider two subgraphs that differed only in these terms to be equivalent otherwise.
 Moreover, this will in general increase not only the speed of the analysis, but also improve the statistical testing procedure because fewer, non-important subgraphs will be tested (e.g. a researcher interested in the role of a node set of interest on the immune system should not analyse all other potential subgraphs based on non-interesting GO terms).
 In short, these methods will result in a smaller, and more focused, set of labels, which should alleviate some of the combinatorial issues plaguing larger subgraph sizes.
 
 #### Generating genes of interest file from a DESeq2 analysis
 
-If the nodes of interest are the differentially expressed genes detected by DESeq2 in R, the following code snippet can be used to export the results to a csv file that can be read by MULES.
+If the nodes of interest are the differentially expressed genes detected by DESeq2 in R, the following code snippet can be used to export the results to a csv file that can be read by MILES.
 
 
     dds <- DESeq(dds)
@@ -238,7 +238,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 ### Toy dataset
 
-    java -jar ./build/jar/mules-subgraph-miner.jar --graph datasets/example/example_graph.txt \
+    java -jar ./build/jar/miles-subgraph-miner.jar --graph datasets/example/example_graph.txt \
     --labels datasets/example/example_labels.txt --interest datasets/example/example_vertexset.txt \
     --support 2 -max-size 4 --algorithm base --verbose
 
@@ -252,7 +252,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \
+    java -jar ./build/jar/miles-subgraph-miner.jar --graph ./datasets/deg/intact_simple.txt \
     --labels ./datasets/deg/labels_human_gocat_mutiple.txt --interest ./datasets/deg/R-EXP0-EXP3_diff_up_uni.txt \
     --background ./datasets/deg/background.txt --algorithm base --max-size 3 --undirected \
     --out ./datasets/deg/deg-results.txt
@@ -266,7 +266,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx4096m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \
+    java -Xms64m -Xmx4096m -jar ./build/jar/miles-subgraph-miner.jar --graph ./datasets/pdb/SSM_GR.txt \
     --labels ./datasets/pdb/SSM_LA.txt --interest ./datasets/pdb/SSM_MN.txt \
     --algorithm base --singlelabel --nested-pvalue --undirected
 
@@ -274,12 +274,12 @@ Four example datasets are provided along with this project in the folder dataset
 
 - **Graph:** gene regulatory network of baker's yeast.
 - **Selection of interest:** 900 genes that have undergone duplication during a whole genome duplication event ~100 mya and have been retained since (Kellis et al., 2004 - DOI: [10.1038/nature02424](10.1038/nature02424)).
-- **Labels:** Uniprot-GO terms for yeast. These were reduced to 15 terms by traversing upwards in the hierarchy, in order to make the results more meaningful. In general, GO terms can be remapped to a fixed depth or even just limited to child terms of a process of interest. See [MULES as a GO/pathway enrichment tool](#mules-as-a-gopathway-enrichment-tool).
+- **Labels:** Uniprot-GO terms for yeast. These were reduced to 15 terms by traversing upwards in the hierarchy, in order to make the results more meaningful. In general, GO terms can be remapped to a fixed depth or even just limited to child terms of a process of interest. See [MILES as a GO/pathway enrichment tool](#miles-as-a-gopathway-enrichment-tool).
 - **Additional options:** The nested p-value option can be used to reduce the number of returned subgraphs to a more manageable number.
 
 <!-- -->
 
-    time java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \
+    time java -Xms64m -Xmx16384m -jar ./build/jar/miles-subgraph-miner.jar --graph ./datasets/yeast/yeastract_edges.txt \
     --labels ./datasets/yeast/yeast_gocat_mutiple.txt --interest ./datasets/yeast/node_duplicate.txt \
     --support 10 --max-size 4 --algorithm base --statistics ./yeastS10M4SingleStats.txt --output ./yeastS10M4Single.txt
 
@@ -292,7 +292,7 @@ Four example datasets are provided along with this project in the folder dataset
 
 <!-- -->
 
-    java -Xms64m -Xmx16384m -jar ./build/jar/mules-subgraph-miner.jar --graph ./datasets/bact/full_net.txt \
+    java -Xms64m -Xmx16384m -jar ./build/jar/miles-subgraph-miner.jar --graph ./datasets/bact/full_net.txt \
     --interest ./datasets/bact/phor.txt --background ./datasets/bact/tfs.txt \
     --support 10 --algorithm base --output ./bactS5M5.txt --statistics ./bactS5M5Stats.txt
 
@@ -365,7 +365,7 @@ The null hypothesis is then defined as there being no association between a vert
 
 #### Multiple testing correction
 
-Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ _S_ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed by default, which retains the desired family-wise error rate (FWER) by testing each individual hypothesis at a significance level of &alpha;/_m_. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested. MULES also provides support for the Holm procedure, which also controls the FWER rate, but is uniformly more powerful, and two false discovery rate controlling procedures ([Benjamini-Hochberg](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_hochberg1995.pdf) and [Benjamini-Yekutieli](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_yekutieli_ANNSTAT2001.pdf).)
+Note that the test as described above applies to the situation where we are comparing the distribution of instances of _one specific subgraph pattern_ _S_ across the graph. A separate test will be conducted for different unique subgraph patterns. Because of this, a multiple testing correction procedure is required. For this, the (rather conservative) **Bonferroni** method is employed by default, which retains the desired family-wise error rate (FWER) by testing each individual hypothesis at a significance level of &alpha;/_m_. In our case, the selected p-value threshold will be divided by the number of subgraph patterns that are tested. MILES also provides support for the Holm procedure, which also controls the FWER rate, but is uniformly more powerful, and two false discovery rate controlling procedures ([Benjamini-Hochberg](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_hochberg1995.pdf) and [Benjamini-Yekutieli](http://www.math.tau.ac.il/~ybenja/MyPapers/benjamini_yekutieli_ANNSTAT2001.pdf).)
 
 ## History of the algorithm
 
@@ -380,7 +380,7 @@ The original Significant Subgraph Miner algorithm was implemented in Perl by Dr.
 
 ### Citation
 
-Please cite the article listed [above](#publication) when using MULES in a publication.
+Please cite the article listed [above](#publication) when using MILES in a publication.
 
 ## Authors
 

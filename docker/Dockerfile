@@ -12,4 +12,4 @@ WORKDIR /opt/subgraphminer
 RUN ant all \
   && ln -s /data data
 
-ENTRYPOINT ["java", "-jar", "/opt/subgraphminer/build/jar/subgraphmining.jar"]
+ENTRYPOINT ["java", "-jar", "/opt/subgraphminer/build/jar/miles-subgraph-miner.jar"]

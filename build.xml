@@ -5,14 +5,14 @@
 	<property name="build.classes.dir" location="${build.dir}/classes"/>
 	<property name="build.resources.dir" location="${build.dir}/resources"/>
 	<property name="build.jar.dir" location="${build.dir}/jar"/>
-	<property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/>
+	<!-- <property name="build.subgraphMining" location="${build.jar.dir}/subgraphMining.jar"/> -->
 	<!-- <property name="test.dir" location="src/com/uantwerp/tests" /> -->
 	<!-- <property name="test.report.dir"  value="${build.dir}/junitreport"/> -->
 
 	<path id="classpath">
 		<fileset dir="lib" includes="*.jar"/>
 	</path>
-	<path id="application" location="${build.jar.dir}/subgraphMining.jar"/>
+	<!-- <path id="application" location="${build.jar.dir}/subgraphMining.jar"/> -->
 
 	<target name="compile">
 		<mkdir dir="${build.classes.dir}"/>
@@ -29,7 +29,7 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${build.jar.dir}"/>
-		<jar destfile="${build.jar.dir}/subgraphmining.jar" basedir="${build.classes.dir}">
+		<jar destfile="${build.jar.dir}/miles-subgraph-miner.jar" basedir="${build.classes.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="com.uantwerp.algorithms.SubgraphMining"/>
 			</manifest>
