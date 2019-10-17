@@ -64,6 +64,15 @@ public class SubgraphMiningGUI {
 	private JCheckBox checkBoxAllPvalues;
 	private JButton btnRun;
 	private JComboBox<String> comboBoxMultipleTesting;
+	private JComboBox<String> comboBoxDelimiter;
+
+	public JComboBox<String> getComboBoxDelimiter() {
+		return comboBoxDelimiter;
+	}
+
+	public void setComboBoxDelimiter(JComboBox<String> comboBoxDelimiter) {
+		this.comboBoxDelimiter = comboBoxDelimiter;
+	}
 
 	public JComboBox<String> getComboBoxMultipleTesting() {
 		return comboBoxMultipleTesting;
@@ -536,12 +545,12 @@ public class SubgraphMiningGUI {
 		panelOptions.add(lblMultipleTestingCorrection, gbc_lblMultipleTestingCorrection);
 
 		comboBoxMultipleTesting = new JComboBox<>();
-		GridBagConstraints gbc_comboBoxAlgorithm = new GridBagConstraints();
-		gbc_comboBoxAlgorithm.insets = new Insets(0, 0, 0, 5);
-		gbc_comboBoxAlgorithm.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxAlgorithm.gridx = 1;
-		gbc_comboBoxAlgorithm.gridy = 1;
-		panelOptions.add(comboBoxMultipleTesting, gbc_comboBoxAlgorithm);
+		GridBagConstraints gbc_comboBoxMultipleTesting = new GridBagConstraints();
+		gbc_comboBoxMultipleTesting.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxMultipleTesting.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxMultipleTesting.gridx = 1;
+		gbc_comboBoxMultipleTesting.gridy = 1;
+		panelOptions.add(comboBoxMultipleTesting, gbc_comboBoxMultipleTesting);
 		comboBoxMultipleTesting.addItem("Bonferroni");
 		comboBoxMultipleTesting.addItem("Holm");
 		comboBoxMultipleTesting.addItem("Benjamini–Hochberg");
@@ -589,12 +598,12 @@ public class SubgraphMiningGUI {
 		panelOptions.add(labelAlgorithm, gbc_labelAlgorithm);
 
 		comboBoxAlgorithm = new JComboBox<>();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 3;
-		panelOptions.add(comboBoxAlgorithm, gbc_comboBox);
+		GridBagConstraints gbc_comboBoxAlgorithm = new GridBagConstraints();
+		gbc_comboBoxAlgorithm.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxAlgorithm.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxAlgorithm.gridx = 1;
+		gbc_comboBoxAlgorithm.gridy = 3;
+		panelOptions.add(comboBoxAlgorithm, gbc_comboBoxAlgorithm);
 		comboBoxAlgorithm.addItem("base");
 		comboBoxAlgorithm.addItem("gSpan");
 		comboBoxAlgorithm.addItem("FSG");
@@ -603,7 +612,7 @@ public class SubgraphMiningGUI {
 		JPanel panelAdvanced = new JPanel();
 		tabbedPaneOptions.addTab("Advanced options", null, panelAdvanced, null);
 		GridBagLayout gbl_panelAdvanced = new GridBagLayout();
-		gbl_panelAdvanced.columnWeights = new double[] { 0.0, Double.MIN_VALUE, 0.0, 0.0 };
+		gbl_panelAdvanced.columnWeights = new double[] { 0.0, Double.MIN_VALUE, 0.0, 0.0, 1.0 };
 		gbl_panelAdvanced.rowWeights = new double[] { 0.0, 0.0, 0.0 };
 		panelAdvanced.setLayout(gbl_panelAdvanced);
 
@@ -624,6 +633,29 @@ public class SubgraphMiningGUI {
 		panelAdvanced.add(textFieldSupport, gbc_textFieldSupport);
 		textFieldSupport.setColumns(10);
 
+		// delimiter
+		JLabel lblDelimiter = new JLabel("Delimiter:");
+		lblDelimiter.setToolTipText("Delimiter used in input files.");
+		GridBagConstraints gbc_lblDelimiter = new GridBagConstraints();
+		gbc_lblDelimiter.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDelimiter.gridx = 3;
+		gbc_lblDelimiter.gridy = 0;
+		panelAdvanced.add(lblDelimiter, gbc_lblDelimiter);
+		
+		comboBoxDelimiter = new JComboBox<>();
+		GridBagConstraints gbc_comboBoxDelimiter = new GridBagConstraints();
+		gbc_comboBoxDelimiter.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxDelimiter.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxDelimiter.gridx = 4;
+		gbc_comboBoxDelimiter.gridy = 0;
+		panelAdvanced.add(comboBoxDelimiter, gbc_comboBoxDelimiter);
+		comboBoxDelimiter.addItem("tabs");
+		comboBoxDelimiter.addItem("commas");
+		comboBoxDelimiter.addItem("spaces");
+		comboBoxDelimiter.addItem("semicolons");
+		comboBoxDelimiter.addItem("pipes");
+
+		// nested p-value
 		checkBoxNestedPValue = new JCheckBox("Nested p-value", false);
 		checkBoxNestedPValue.setToolTipText("Use nested P-value configuration (default = false).");
 		GridBagConstraints gbc_checkBoxPValue = new GridBagConstraints();
@@ -637,8 +669,9 @@ public class SubgraphMiningGUI {
 		checkBoxDebug = new JCheckBox("Debug mode");
 		checkBoxDebug.setToolTipText("Print the full stack trace for debugging purposes.");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxNewCheckBox.anchor = GridBagConstraints.WEST;
+		gbc_chckbxNewCheckBox.gridwidth = 2;
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxNewCheckBox.gridx = 3;
 		gbc_chckbxNewCheckBox.gridy = 1;
 		panelAdvanced.add(checkBoxDebug, gbc_chckbxNewCheckBox);
@@ -650,7 +683,7 @@ public class SubgraphMiningGUI {
 		GridBagConstraints gbc_chckbxAllPvalues = new GridBagConstraints();
 		gbc_chckbxAllPvalues.anchor = GridBagConstraints.WEST;
 		gbc_chckbxAllPvalues.gridwidth = 2;
-		gbc_chckbxAllPvalues.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxAllPvalues.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxAllPvalues.gridx = 0;
 		gbc_chckbxAllPvalues.gridy = 2;
 		panelAdvanced.add(checkBoxAllPvalues, gbc_chckbxAllPvalues);
@@ -658,7 +691,6 @@ public class SubgraphMiningGUI {
 		checkBoxVerbose = new JCheckBox("Verbose");
 		checkBoxVerbose.setToolTipText("Show additional logging information.");
 		GridBagConstraints gbc_checkBoxVerbose = new GridBagConstraints();
-		gbc_checkBoxVerbose.insets = new Insets(0, 0, 5, 0);
 		gbc_checkBoxVerbose.anchor = GridBagConstraints.WEST;
 		gbc_checkBoxVerbose.gridwidth = 2;
 		gbc_checkBoxVerbose.gridx = 3;

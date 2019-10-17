@@ -128,6 +128,25 @@ public class ParameterConfig {
 				GraphParameters.typeAlgorithm = cmd.getOptionValue('a').toLowerCase();
 			else
 				GraphParameters.typeAlgorithm = "base";
+			if (cmd.hasOption("delimiter")) {
+				String delimiter = cmd.getOptionValue("delimiter");
+				if ( delimiter.equals("\\t") || delimiter.matches("tabs?|t|\t") )
+					GraphParameters.delimiter = '\t';
+				else if (delimiter.matches(",|commas?"))
+					GraphParameters.delimiter = ',';
+				else if (delimiter.matches("pipes?|\\|"))
+					GraphParameters.delimiter = '|';
+				else if (delimiter.matches(";|semicolons?"))
+					GraphParameters.delimiter = ';';
+				else if ( delimiter.equals("\\s") || delimiter.matches(" |spaces?") )
+					GraphParameters.delimiter = ' ';
+				else
+					SubGraphMiningException.exceptionInvalidValue("delimiter");
+				}
+			else {
+				GraphParameters.delimiter = '\t';
+			}
+			
 			/****************************************************************************/
 			//Find a way to make this part dynamical in case of no parameter
 			/****************************************************************************/			
@@ -167,7 +186,8 @@ public class ParameterConfig {
 			Boolean nestedPValue,
 			Boolean verbose,
 			String areaProgressReport,
-			Boolean debugCheckBox) {
+			Boolean debugCheckBox,
+			String delimiter) {
 
 		if (debugCheckBox)
 			SubgraphMining.DEBUG = true;
@@ -268,7 +288,23 @@ public class ParameterConfig {
 			GraphParameters.output = "none";
 		}
 		GraphParameters.typeAlgorithm = algorithm.toLowerCase();
-
+		switch (delimiter) {
+		case "tabs":
+			GraphParameters.delimiter = '\t';
+			break;
+		case "commas":
+			GraphParameters.delimiter = ',';
+			break;
+		case "spaces":
+			GraphParameters.delimiter = ' ';
+			break;
+		case "semicolons":
+			GraphParameters.delimiter = ';';
+			break;
+		case "pipes":
+			GraphParameters.delimiter = '|';
+			break;
+		}
 	}
 
 }
