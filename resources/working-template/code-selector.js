@@ -200,15 +200,17 @@
         {
           "selector": "edge",
           "style": {
-            "curve-style": "unbundled-bezier", // haystack
+            // "curve-style": "unbundled-bezier", // haystack
             "haystack-radius": "0",
             "opacity": "0.4",
             "line-color": "#bbb",
             "width": 2,
             "width": "mapData(pvalue, 0, -50, 1, 7)",
             "overlay-padding": "3px",
-            "target-arrow-shape": "triangle-backcurve",
-            "target-arrow-fill": "fill",
+            $INCLUDE-DIRECTED
+            // "mid-target-arrow-shape": "triangle-backcurve",
+            // "target-arrow-shape": "triangle-backcurve",
+            // "target-arrow-fill": "fill",
             'target-arrow-color': '#bbb',
             "arrow-scale": 3
           }
@@ -248,12 +250,12 @@
             "border-opacity": "0.85",
             "background-color": "#394855",
             "text-outline-color": "#394855",
-            "shadow-blur": "12px",
-            "shadow-color": "#000",
-            "shadow-opacity": "0.8",
-            "shadow-offset-x": "0px",
-            "shadow-offset-y": "4px",
-            "transition-property": "border-width, border-color, border-opacity, background-color, text-outline-color, shadow-blur, shadow-color, shadow-opacity, shadow-offset-x, shadow-offset-y"
+            // "shadow-blur": "12px",
+            // "shadow-color": "#000",
+            // "shadow-opacity": "0.8",
+            // "shadow-offset-x": "0px",
+            // "shadow-offset-y": "4px",
+            // "transition-property": "border-width, border-color, border-opacity, background-color, text-outline-color, shadow-blur, shadow-color, shadow-opacity, shadow-offset-x, shadow-offset-y"
           }
         },
         {

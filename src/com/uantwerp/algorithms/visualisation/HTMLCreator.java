@@ -69,6 +69,12 @@ public class HTMLCreator {
 				
 		// insert JSON data	
 		htmlString = htmlString.replace("$INCLUDE-ELEMENTS", elementsJSON);
+		
+		// insert directed/undirected arrow type
+		if (GraphParameters.undirected == 0)
+			htmlString = htmlString.replace("$INCLUDE-DIRECTED", "\"mid-target-arrow-shape\": \"triangle-backcurve\",");
+		else
+			htmlString = htmlString.replace("$INCLUDE-DIRECTED", "");
 
 		// include main side bar content and tweak content for frequent vs enriched subgraph mining
 		String sidebar;
@@ -80,7 +86,7 @@ public class HTMLCreator {
 		htmlString = htmlString.replace("$INCLUDE-SIDEBAR", sidebar);
 
 		// include output table
-		String table = createTable(outputTable);
+		String table = createHTMLTable(outputTable);
 		htmlString = htmlString.replace("$INCLUDE-TABLE", table);
 	
 		return htmlString;
@@ -113,7 +119,7 @@ public class HTMLCreator {
 		return sidebar.toString();
 	}
 
-	private static String createTable(String message) {
+	private static String createHTMLTable(String message) {
 		StringBuilder table = new StringBuilder();
 		
 		String[] lines = message.split("\\r?\\n");
@@ -123,12 +129,22 @@ public class HTMLCreator {
 		for (String columnName : headerSplit) {
 			table.append("<th>" + columnName + "</th>");
 		}
-		
+
 		table.append("</thead><tbody>");
 		for (int i = 1; i < lines.length; i++) {
 			table.append("<tr>");
 			String[] rowSplit = lines[i].split("\t");
-			for (String element : rowSplit) {
+			for (int j = 0; j < rowSplit.length; j++) {
+				// round p-values for enriched columns (not required for frequent subgraph mining)
+				String element;
+				double pvalue;
+				if (j >= 3) {
+					pvalue = Math.round(Double.parseDouble(rowSplit[j]) * 100000d) / 100000d;
+					element = Double.toString(pvalue);
+				}
+				else {
+					element = rowSplit[j];
+				}
 				table.append("<td>" + element + "</td>");
 			}
 			table.append("</tr>");

@@ -82,7 +82,7 @@ public class OutputUtility {
 	
 	public static String createTableFrequent() {
 //		create table header
-		String message = "Motif\tSupport";
+		String message = "Subgraph\tSupport";
 
 //		iterate through subgraphs in order they were generated (i.e. growing from root vertex)
 		Iterator<String> it = MiningState.supportedMotifsGraphSupport.keySet().iterator();
