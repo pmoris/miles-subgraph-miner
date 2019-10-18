@@ -275,7 +275,7 @@ public class SubgraphMiningGUI {
 	private void initialize() {
 //		Define window size
 		frame = new JFrame();
-		frame.setTitle("M(U)LES - enriched subgraph miner");
+		frame.setTitle("MILES");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //		Define menu bar and panes		
@@ -313,7 +313,7 @@ public class SubgraphMiningGUI {
 		JMenuItem mntmHelpContents = new JMenuItem(new AbstractAction("Visit help page") {
 			public void actionPerformed(ActionEvent e) {
 				// Button pressed logic goes here
-				String url = new String("https://github.com/pmoris/subgraph-miner/blob/master/README.md");
+				String url = new String("https://github.com/pmoris/miles-subgraph-miner/blob/master/README.md");
 				try {
 					Desktop.getDesktop().browse(new URI(url));
 				} catch (Exception ex) {
@@ -330,7 +330,7 @@ public class SubgraphMiningGUI {
 				// Button pressed logic goes here
 
 				try {
-					JOptionPane.showMessageDialog(frame, "M(U)LES v1.0- Adrem Data Lab - 2019");
+					JOptionPane.showMessageDialog(frame, "MILES v1.0.1 - Adrem Data Lab - 2019");
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
