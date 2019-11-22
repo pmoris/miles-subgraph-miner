@@ -373,14 +373,8 @@ The provided Java implementation was worked on by Gerardo Orellana during his ma
 
 The original Significant Subgraph Miner algorithm was implemented in Perl by Dr. Pieter Meysman and is still available at the Adrem Data Lab website and on BitBucket, alongside an example dataset: [http://adrem.ua.ac.be/sigsubgraph](http://adrem.ua.ac.be/sigsubgraph) & [https://bitbucket.org/pmeysman/sigsubgraphminer](https://bitbucket.org/pmeysman/sigsubgraphminer).
 
-<a name="publication"></a>
-
 <!-- > P. Meysman, Y. Saeys, E. Sabaghian, W. Bittremieux, Y. Van de Peer, B. Goethals and K. Laukens. Discovery of Significantly Enriched Subgraphs Associated with Selected Vertices in a Single Graph. Proceedings of the 14th International Workshop on Data Mining in Bioinformatics (BioKDD15), Sydney, 2015. -->
 > Meysman, Pieter, Yvan Saeys, Ehsan Sabaghian, Wout Bittremieux, Yves van de Peer, Bart Goethals, and Kris Laukens. 2016. “Mining the Enriched Subgraphs for Specific Vertices in a Biological Graph.” IEEE/ACM Transactions on Computational Biology and Bioinformatics, 1–1. [https://doi.org/10.1109/TCBB.2016.2576440](https://doi.org/10.1109/TCBB.2016.2576440).
-
-### Citation
-
-Please cite the article listed [above](#publication) when using MILES in a publication.
 
 ## Authors
 
@@ -388,3 +382,9 @@ Please cite the article listed [above](#publication) when using MILES in a publi
 - [Pieter Moris - UAntwerpen](https://www.uantwerpen.be/en/staff/pieter-moris/)
 - [Danh Bui-Thi - UAntwerpen](https://www.uantwerpen.be/en/staff/danh-bui-thi/)
 - [Gerardo Orellana](https://github.com/geraore)
+
+## Citation
+
+Please cite the following paper when using MILES in a publication.
+
+> Pieter Moris, Danh Bui-Thi, Kris Laukens, Pieter Meysman, MILES: a Java tool to extract node-specific enriched subgraphs in biomolecular networks, Bioinformatics, , btz849, https://doi.org/10.1093/bioinformatics/btz849
