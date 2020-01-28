@@ -38,7 +38,7 @@
 
 <!-- /code_chunk_output -->
 
-<a name="visualisation"></a> ![cytoscape.js visualisation of enriched subgraphs](./img/visualisation_example.png)
+<a name="visualisation"></a> ![cytoscape.js visualisation of enriched subgraphs](./img/visualisation-example.png)
 
 ## Purpose of the tool
 
